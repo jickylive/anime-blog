@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://blog.jicky.xyz
 permalink: :title/
 permalink_defaults:
 pretty_urls:
@@ -102,7 +102,14 @@ theme: redefine
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: ftpsync
+  host: qxu1606470020.my3w.com
+  user: qxu1606470020
+  pass: Qq803200
+  remote: /htdocs/public
+  port: 21
+  clear: false
+  verbose: false
 live2d:
   enable: true
   scriptFrom: local
