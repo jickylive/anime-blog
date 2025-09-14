@@ -1,6 +1,0 @@
-[submodule "themes/redefine"]
-	path = themes/redefine
-	url = git@gitee.com:jickylive/hexo-theme-redefine.git
-[submodule "themes/ocean"]
-	path = themes/ocean
-	url = git@gitee.com:jickylive/hexo-theme-ocean.git
