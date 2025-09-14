@@ -1,3 +1,6 @@
 node_modules
 public
 .gitmodules
+themes/ocean
+themes/redefine
+.DS_Store
