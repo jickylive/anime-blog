@@ -4,17 +4,17 @@
 
 # Site
 title: 黄氏寻宗
-subtitle: ''
+subtitle: '一个黄氏宗族历史记录网站'
 description: ''
 keywords:
 author: jicky huang
-language: zh-cn
+language: zh-CN
 timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://www.hxfund.cn/public
-root: /public/
+url: https://www.hxfund.cn
+#root: /public/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -99,6 +99,7 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: defaultone
 #theme: redefine
+#theme: ocean
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -129,3 +130,19 @@ live2d:
     show: true
   react:
     opacity: 0.7
+
+# Hexo-generator-search
+search:
+  path: search.xml
+  field: post
+  format: html
+
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
+    hub:
+    content:
+    content_limit: 140
+    content_limit_delim: ' '
+    order_by: -date	

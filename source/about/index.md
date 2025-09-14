@@ -1,14 +1,9 @@
 ---
-title: About
+title: 介绍
 date: 2025-04-09 16:23:59
 ---
 
-### Basic info
+# 黄氏寻宗
 
-I'm a good man
+## 一个黄氏宗族历史记录网站
 
-<hr >
-
-### examples
-
-This is examples
