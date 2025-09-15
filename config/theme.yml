@@ -1,0 +1,11 @@
+# Theme color
+theme_color: "#FF69B4"
+
+# Navigation menu
+menu:
+  - name: Home
+    path: /
+  - name: Archives
+    path: /archives
+  - name: About
+    path: /about
