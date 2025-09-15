@@ -7,4 +7,46 @@ categories:
 date: 2010-04-10 01:20:21
 ---
 
-　linux最早的IPv6/IPng支持代码始于kernel 2.1.8，November 1996，也算是历史悠久了，而IPv6在1998年8月10日成为IETF的草案标准。 　　Ubuntu 9.10默认是开启IPv6协议的，也就是说我们的主机是IPv4/IPv6双栈主机。可以通过检查/proc/net/if\_inet6这个文件是否存在来确定内核是否支持IPv6，如果这个文件不存在，那么你的系统极有可能是通过可加载模块来支持IPv6的。虽然kernel是支持IPv6了，但现在的网络条件下，除了教育网直接支持IPv6外，其他网络用户还是无法直接访问IPv6网站的，也就是说我们的主机成了IPv6孤岛，只能通过IPv6-in-IPv4隧道协议来访问IPv6资源。 　　有多种多样的方式来实现这种隧道，这里只介绍其中的一种站内自动隧道寻址协议ISATAP(Intra-Site Automatic Tunnel Addressing Protocol)，这是一种点对点隧道协议(point-to-point tunneling)。 　　使用ISATAP需要知道ISATAP隧道路由器的IPv4地址，IPv6地址及其网络前缀和本地的IPv4地址。可以使用教育网提供的隧道路由器，比如[上海交大](http://ipv6.sjtu.edu.cn/news/041231.php)，下面就以这个隧道路由器为例来设置本地ppp接口。 　　IPv6提供了2001:和2002:开头的地址用于IPv6-in-IPv4隧道，ISATAP一般使用2001:开头的IPv6地址. 建立隧道的脚本build\_ipv6\_tunnel如下： 1 #!/bin/bash 2 3 ipv4\_addr\=\`ifconfig ppp0 ?**grep**?**‘**inet addr**‘**??cut -d**‘**:**‘**?-f 2cut -d**‘**?**‘**?-f 1\` 4 ip tunnel add sit1 mode sit remote 202.120.58.150?**local**?${ipv4\_addr} 5 ifconfig sit1 up 6 ifconfig sit1 add 2001:da8:8000:d010:0:5efe:${ipv4\_addr}/64 7 ip \-6?route add ::/0?via 2001:da8:8000:d010::1?metric 1?dev sit1 　　ipv4\_addr就是本地ppp接口获取的IPv4地址，隧道路由器的IPv4地址为202.120.58.150，IPv6地址为2001:da8:8000:d010::1,其IPv6地址网络前缀为2001:da8:8000:d010::/64,而本地IPv6地址的host部分为0:5efe:${ipv4\_addr},这样两部分(64位网络部分和64位主机部分)合并在一起就构成了本地IPv6地址2001:da8:8000:d010:0:5efe:${ipv4\_addr}/64。这里是静态设置的本地IPv6地址，ISATAP也支持动态配置客户端IPv6地址。 　　mode sit处的sit是简单互联网转换Simple Internet Transition的缩写，当然接口名字可以随意取，不一定非要叫做sit1，但据说不能用sit0,我没测试。 　　拆除隧道的脚本delete\_ipv6\_tunnel如下： 1 #!/bin/bash 2 3 ip \-6?route del ::/0?via 2001:da8:8000:d010::1?dev sit1 4 ip link **set**?sit1 down 5 ip tunnel del sit1 　　将build\_ipv6\_tunnel置于目录/etc/ppp/ip-up.d/下，delete\_ipv6\_tunnel置于目录/etc/ppp/ip-down.d/下，就可以随ppp0接口的建立和拆除而自动的建立和拆除隧道了。 　　现在访问http://www.ipv6.org,如果看到类似“You are using IPv6 from 2001:da8:8000:d010:0:5efe:xxxx:xxxx“的信息，说明IPv6已经正常工作了。 　　如果能找到Ipv6反向代理，那就可以用IPv6来访问一些平常不能访问的站点了，比如twitter，详见”[用IPv6反向代理访问Twitter](http://internet.solidot.org/article.pl?sid=09/12/09/0347210&tid=48)“
+Linux 最早的 IPv6/IPng 支持代码始于 kernel 2.1.8（1996 年 11 月），历史悠久。IPv6 在 1998 年 8 月 10 日成为 IETF 草案标准。Ubuntu 9.10 默认开启 IPv6 协议，也就是说主机为 IPv4/IPv6 双栈。可以通过检查 `/proc/net/if_inet6` 文件是否存在来确定内核是否支持 IPv6。如果该文件不存在，系统极有可能通过可加载模块支持 IPv6。
+
+虽然内核支持 IPv6，但目前除教育网外，大多数网络用户无法直接访问 IPv6 网站。主机成了 IPv6 “孤岛”，只能通过 IPv6-in-IPv4 隧道协议访问 IPv6 资源。实现这种隧道有多种方式，这里介绍 ISATAP（Intra-Site Automatic Tunnel Addressing Protocol），一种点对点隧道协议。
+
+使用 ISATAP 需要知道隧道路由器的 IPv4 地址、IPv6 地址及其网络前缀和本地 IPv4 地址。可以使用教育网提供的隧道路由器，例如 [上海交大](http://ipv6.sjtu.edu.cn/news/041231.php)。以下以该隧道路由器为例，设置本地 ppp 接口。
+
+IPv6 提供了以 `2001:` 和 `2002:` 开头的地址用于 IPv6-in-IPv4 隧道，ISATAP 一般使用 `2001:` 开头的 IPv6 地址。建立隧道的脚本 `build_ipv6_tunnel` 如下：
+
+```bash
+#!/bin/bash
+
+ipv4_addr=$(ifconfig ppp0 | grep 'inet addr' | cut -d':' -f2 | cut -d' ' -f1)
+ip tunnel add sit1 mode sit remote 202.120.58.150 local ${ipv4_addr}
+ifconfig sit1 up
+ifconfig sit1 add 2001:da8:8000:d010:0:5efe:${ipv4_addr}/64
+ip -6 route add ::/0 via 2001:da8:8000:d010::1 metric 1 dev sit1
+```
+
+- `ipv4_addr`：本地 ppp 接口获取的 IPv4 地址
+- 隧道路由器 IPv4 地址：`202.120.58.150`
+- 隧道路由器 IPv6 地址：`2001:da8:8000:d010::1`
+- IPv6 网络前缀：`2001:da8:8000:d010::/64`
+- 本地 IPv6 地址主机部分：`0:5efe:${ipv4_addr}`
+
+两部分合并后，本地 IPv6 地址为 `2001:da8:8000:d010:0:5efe:${ipv4_addr}/64`。这里为静态设置，ISATAP 也支持动态配置客户端 IPv6 地址。
+
+`mode sit` 处的 sit 是 Simple Internet Transition 的缩写。接口名可自定义，但建议不要用 sit0。
+
+拆除隧道的脚本 `delete_ipv6_tunnel` 如下：
+
+```bash
+#!/bin/bash
+
+ip -6 route del ::/0 via 2001:da8:8000:d010::1 dev sit1
+ip link set sit1 down
+ip tunnel del sit1
+```
+
+将 `build_ipv6_tunnel` 放在 `/etc/ppp/ip-up.d/`，`delete_ipv6_tunnel` 放在 `/etc/ppp/ip-down.d/`，即可随 ppp0 接口的建立和拆除自动建立和拆除隧道。
+
+现在访问 http://www.ipv6.org，如果看到类似 “You are using IPv6 from 2001:da8:8000:d010:0:5efe:xxxx:xxxx” 的信息，说明 IPv6 已正常工作。
+
+如果能找到 IPv6 反向代理，就可以用 IPv6 访问一些平常不能访问的站点，比如 Twitter，详见 “[用IPv6反向代理访问Twitter](http://internet.solidot.org/article.pl?sid=09/12/09/0347210&tid=48)”。

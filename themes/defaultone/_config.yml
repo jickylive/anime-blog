@@ -195,9 +195,10 @@ navbar:
     Archives: 
       path: /archives 
       icon: fa-regular fa-archive # can be empty
-    Github: 
+    Gitee: 
       path: https://gitee.com/jickylive
       icon: fa-brands fa-github
+
       # submenus:
       #   Link1: /link1
       #   Link2: /link2
