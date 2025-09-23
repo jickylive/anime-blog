@@ -11,6 +11,8 @@ triggers:
         - master
   schedule:
     - cron: '* * 1 * * ? *'
+variables:
+  GEMINI_API_KEY: AIzaSyBWGtqxniBjhF-NnDs28NwOyF-eg0vDgJI
 stages:
   - name: compile
     displayName: 编译
@@ -20,7 +22,7 @@ stages:
       - step: build@nodejs
         name: build_nodejs
         displayName: Nodejs 构建
-        nodeVersion: 21.5.0
+        nodeVersion: 23.11.1
         commands:
           - npm install && rm -rf ./dist && node daily-news.js && npm run build
         artifacts:
@@ -33,6 +35,7 @@ stages:
         displayName: 上传制品
         dependArtifact: BUILD_ARTIFACT
         artifactName: output
+        strategy: {}
         dependsOn: build_nodejs
   - name: release
     displayName: 发布
@@ -45,3 +48,4 @@ stages:
         dependArtifact: output
         version: 1.0.0.0
         autoIncrement: true
+        strategy: {}
