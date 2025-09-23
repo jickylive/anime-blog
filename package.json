@@ -36,6 +36,7 @@
     "live2d-widget-model-chitose": "^1.0.5",
     "live2d-widget-model-gf": "^1.0.5",
     "live2d-widget-model-wanko": "^1.0.5",
+    "npx": "^10.2.2",
     "particles.js": "^2.0.0",
     "yarn": "^1.22.22"
   }
