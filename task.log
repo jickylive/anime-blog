@@ -1,0 +1,30 @@
+[Tue 09/23/2025 21:59:55.96] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+正在调用 Gemini API 获取新闻摘要...
+调用 Gemini API 失败: Error
+
+--- 任务执行失败 ---
+获取新闻失败
+[Tue 09/23/2025 22:00:19.99] Generating static files... 
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m292 ms[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[43mWARN [49m [33mRedefine v2.8.2 is outdated, please update to v2.8.5![0m
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+[32mINFO [39m Generated: [35msearch.xml[39m
+[32mINFO [39m 1 files generated in [36m1.35 s[39m

@@ -1,0 +1,127 @@
+require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const { exec } = require('child_process');
+
+// --- 用户配置 ---
+// 从环境变量中读取 Gemini API Key
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+// 检查 API Key 是否设置
+if (!GEMINI_API_KEY) {
+    console.error('错误：请设置 GEMINI_API_KEY 环境变量。');
+    process.exit(1); // 退出脚本
+}
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+
+// Hexo 项目的根目录
+const HEXO_ROOT = __dirname;
+// 文章要保存的目录
+const POSTS_DIR = path.join(HEXO_ROOT, 'source', '_posts');
+
+/**
+ * 以 Promise 方式执行 Shell 命令
+ * @param {string} command 要执行的命令
+ */
+function runCommand(command) {
+    return new Promise((resolve, reject) => {
+        // 在项目根目录执行命令
+        exec(command, { cwd: HEXO_ROOT }, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`执行命令时出错: ${command}\n${stderr}`);
+                return reject(error);
+            }
+            console.log(stdout);
+            resolve(stdout);
+        });
+    });
+}
+
+/**
+ * 调用 Gemini API 获取新闻摘要
+ */
+async function getNewsSummary() {
+    console.log('正在调用 Gemini API 获取新闻摘要...');
+    try {
+        const response = await axios.post(GEMINI_API_URL, {
+            contents: [{
+                parts: [{
+                    text: "请用中文总结今天的5条热点新闻摘要，每条新闻包含一个合适的标题和一段简短的描述（约100字）。请直接返回 Markdown 格式的内容，不要包含任何额外的解释或标题。"
+                }]
+            }]
+        }, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const content = response.data.candidates[0].content.parts[0].text;
+        console.log('成功获取新闻摘要。');
+        return content;
+
+    } catch (error) {
+        if (error.response) {
+            console.error('调用 Gemini API 失败:', JSON.stringify(error.response.data, null, 2));
+        } else {
+            console.error('调用 Gemini API 失败:', error.message);
+        }
+        throw new Error('获取新闻失败');
+    }
+}
+
+/**
+ * 创建并保存 Hexo 文章
+ * @param {string} content Markdown 格式的新闻内容
+ */
+function createHexoPost(content) {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    
+    const dateStr = `${year}-${month}-${day}`;
+    const fullDateStr = `${dateStr} ${now.toTimeString().split(' ')[0]}`;
+
+    const title = `今日热点新闻（${dateStr}）`;
+    const fileName = `${dateStr}-daily-news.md`;
+    const filePath = path.join(POSTS_DIR, fileName);
+
+    const frontMatter = `---` +
+`title: ${title}` +
+`date: ${fullDateStr}` +
+`tags:` +
+`  - DailyNews` +
+`  - Automation` +
+`---
+
+`;
+
+    const fileContent = frontMatter + content;
+    fs.writeFileSync(filePath, fileContent);
+    console.log(`成功创建新的 Hexo 文章: ${filePath}`);
+}
+
+/**
+ * 主函数
+ */
+async function main() {
+    try {
+        const newsContent = await getNewsSummary();
+        createHexoPost(newsContent);
+
+        console.log('\n--- 开始构建静态文件 ---');
+        await runCommand('hexo generate');
+        
+        console.log('\n--- 开始部署网站 ---');
+        await runCommand('hexo deploy');
+
+        console.log('\n--- 任务成功完成 ---');
+
+    } catch (error) {
+        console.error('\n--- 任务执行失败 ---');
+        console.error(error.message);
+        // 退出进程并返回错误码，方便自动化脚本识别
+        process.exit(1); 
+    }
+}
+
+main();

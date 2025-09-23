@@ -110,7 +110,7 @@ deploy:
   pass: Qq803200
   remote: /htdocs/public
   port: 21
-  clear: true
+  clear: false
   verbose: true
 live2d:
   enable: true
