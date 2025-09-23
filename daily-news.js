@@ -5,12 +5,12 @@ const axios = require('axios');
 const { exec } = require('child_process');
 
 // --- 用户配置 ---
-// 从环境变量中读取 Gemini API Key
+// 优先读取环境变量中的 GEMINI_API_KEY
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // 检查 API Key 是否设置
 if (!GEMINI_API_KEY) {
-    console.error('错误：请设置 GEMINI_API_KEY 环境变量。');
+    console.error('错误：未检测到 GEMINI_API_KEY。请在流水线环境变量或 .env 文件中设置该值。');
     process.exit(1); // 退出脚本
 }
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
