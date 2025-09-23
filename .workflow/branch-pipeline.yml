@@ -24,7 +24,7 @@ stages:
         displayName: Nodejs 构建
         nodeVersion: 23.11.1
         commands:
-          - npm install  && npm run build
+          - npm install  && mkdir ./dist && npm run build
         artifacts:
           - name: BUILD_ARTIFACT
             path:
