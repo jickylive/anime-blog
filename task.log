@@ -28,3 +28,949 @@
 [32mINFO [39m [32mCDN available: CDNJS[0m
 [32mINFO [39m Generated: [35msearch.xml[39m
 [32mINFO [39m 1 files generated in [36m1.35 s[39m
+[Fri 09/26/2025 22:39:19.52] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+正在调用 Gemini API 获取新闻摘要...
+调用 Gemini API 失败: {
+  "error": {
+    "code": 404,
+    "message": "Publisher Model `projects/generativelanguage-ga/locations/us-central1/publishers/google/models/gemini-1.5-flash-002` was not found or your project does not have access to it. Please ensure you are using a valid model version. For more information, see: https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions",
+    "status": "NOT_FOUND"
+  }
+}
+
+--- 任务执行失败 ---
+获取新闻失败
+[Fri 09/26/2025 22:39:24.10] Generating static files... 
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m287 ms[39m
+[32mINFO [39m Generated: [35msearch.xml[39m
+[32mINFO [39m 1 files generated in [36m1.33 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[43mWARN [49m [33mRedefine v2.8.2 is outdated, please update to v2.8.5![0m
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+[Fri 09/26/2025 22:45:10.41] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+正在调用 Gemini API 获取新闻摘要...
+调用 Gemini API 失败: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-2.0-flash-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+--- 任务执行失败 ---
+获取新闻失败
+[Fri 09/26/2025 22:45:15.96] Generating static files... 
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m278 ms[39m
+[32mINFO [39m 0 files generated in [36m1.35 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[43mWARN [49m [33mRedefine v2.8.2 is outdated, please update to v2.8.5![0m
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+[Fri 09/26/2025 22:46:06.93] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+正在调用 Gemini API 获取新闻摘要...
+成功获取新闻摘要。
+成功创建新的 Hexo 文章: e:\anime-blog-demo1\source\_posts\2025-09-26-daily-news.md
+
+--- 开始构建静态文件 ---
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m298 ms[39m
+[32mINFO [39m Generated: [35mabout/index.html[39m
+[32mINFO [39m Generated: [35mtags/index.html[39m
+[32mINFO [39m Generated: [35mmasonry/index.html[39m
+[32mINFO [39m Generated: [35mlinks/index.html[39m
+[32mINFO [39m Generated: [35msample-page/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/23/2025-09-23-daily-news/index.html[39m
+[32mINFO [39m Generated: [35m404.html[39m
+[32mINFO [39m Generated: [35m2025/09/22/20250922/index.html[39m
+[32mINFO [39m Generated: [35matom.xml[39m
+[32mINFO [39m Generated: [35m2025/09/14/onekey/index.html[39m
+[32mINFO [39m Generated: [35mprivacy-policy/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/14/migration-hexo-post/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/14/huang/index.html[39m
+[32mINFO [39m Generated: [35m2020/07/04/黄姓起源/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/04/footer/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/14/Digital_assets/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/14/hello-world/index.html[39m
+[32mINFO [39m Generated: [35m2020/06/21/日食/index.html[39m
+[32mINFO [39m Generated: [35m2019/10/01/欢迎使用-hxfund-cn-邮箱系统/index.html[39m
+[32mINFO [39m Generated: [35m2019/04/18/丰收之歌/index.html[39m
+[32mINFO [39m Generated: [35m2020/06/06/test/index.html[39m
+[32mINFO [39m Generated: [35m2019/05/03/惠东港口海龟自然保护区/index.html[39m
+[32mINFO [39m Generated: [35m2019/10/01/使用lets-encrypt让自己的博客启用https（基于debian7apache2）/index.html[39m
+[32mINFO [39m Generated: [35m2019/04/15/用程序来控制一个网页，实现自动输入等操作/index.html[39m
+[32mINFO [39m Generated: [35m2019/04/18/家长开放日/index.html[39m
+[32mINFO [39m Generated: [35m2019/04/15/vba-ie对象的操作方法/index.html[39m
+[32mINFO [39m Generated: [35m2018/08/11/国家海洋预报台发布海边旅游八大注意，遇到离岸/index.html[39m
+[32mINFO [39m Generated: [35m2019/04/12/搭建安全的docker-private-registry-v2指南lets-encrypt/index.html[39m
+[32mINFO [39m Generated: [35m2019/04/05/docker-上的-ipsec-vpn-服务器/index.html[39m
+[32mINFO [39m Generated: [35m2018/05/05/systemd-入门教程：实战篇/index.html[39m
+[32mINFO [39m Generated: [35m2018/06/09/七彩阳光书友队第二期书友会/index.html[39m
+[32mINFO [39m Generated: [35m2018/05/05/systemd-入门教程：命令篇/index.html[39m
+[32mINFO [39m Generated: [35m2017/10/04/ss405/index.html[39m
+[32mINFO [39m Generated: [35m2018/04/01/docker-get-started-part-3-services/index.html[39m
+[32mINFO [39m Generated: [35m2017/10/04/ss406/index.html[39m
+[32mINFO [39m Generated: [35m2016/03/06/百家姓/index.html[39m
+[32mINFO [39m Generated: [35m2017/09/09/深圳航空/index.html[39m
+[32mINFO [39m Generated: [35m2017/09/03/ocserv-lets-encrypt-证书认证/index.html[39m
+[32mINFO [39m Generated: [35m2016/03/06/failed-to-start-mysql-service-unit-mysql-service-is-masked/index.html[39m
+[32mINFO [39m Generated: [35m2016/03/03/接送上学/index.html[39m
+[32mINFO [39m Generated: [35m2016/03/06/systemctl命令完全指南/index.html[39m
+[32mINFO [39m Generated: [35m2016/03/04/ubuntu完全教程/index.html[39m
+[32mINFO [39m Generated: [35m2016/02/16/phddns/index.html[39m
+[32mINFO [39m Generated: [35m2016/02/09/在centos-6-5上配置cisco-anyconnect-vpn/index.html[39m
+[32mINFO [39m Generated: [35m2015/10/03/android-6/index.html[39m
+[32mINFO [39m Generated: [35m2016/02/08/snova-nodejspaasinstallation-wiki/index.html[39m
+[32mINFO [39m Generated: [35m2015/09/27/centos-6-4-用openswan-ipsec和xl2tpd搭建l2tp-vpn（适用于kvm-vps）/index.html[39m
+[32mINFO [39m Generated: [35m2015/09/27/shadowsocks搭建、优化及客户端设置教程/index.html[39m
+[32mINFO [39m Generated: [35m2014/05/31/google/index.html[39m
+[32mINFO [39m Generated: [35m2015/09/27/centos6安装ocservopenconnectcisco-anyconnect-vpn/index.html[39m
+[32mINFO [39m Generated: [35m2014/06/01/丰乳肥臀-pdf/index.html[39m
+[32mINFO [39m Generated: [35m2015/03/19/dd-wrt-pptp-client-setup/index.html[39m
+[32mINFO [39m Generated: [35m2014/05/31/单-单身女子怎么防止被陌生人打死？/index.html[39m
+[32mINFO [39m Generated: [35m2013/11/11/谷神养生/index.html[39m
+[32mINFO [39m Generated: [35m2013/11/12/马帮菜/index.html[39m
+[32mINFO [39m Generated: [35m2013/11/11/take-a-look-at-my-check-in-at-on-my-way-to-shangrila/index.html[39m
+[32mINFO [39m Generated: [35m2013/11/11/check-out-谷神养生-on-foursquare/index.html[39m
+[32mINFO [39m Generated: [35m2013/11/11/虎跳峡/index.html[39m
+[32mINFO [39m Generated: [35m2013/08/17/psftp常用命令/index.html[39m
+[32mINFO [39m Generated: [35m2010/07/17/linux-interfaces文件配置/index.html[39m
+[32mINFO [39m Generated: [35m2012/08/04/ec2-ami实例-配置-vpn（pptp）/index.html[39m
+[32mINFO [39m Generated: [35m2010/07/17/ubuntu下的apache的配置详解/index.html[39m
+[32mINFO [39m Generated: [35m2010/07/15/ubuntu8-04做pxe安装服务器/index.html[39m
+[32mINFO [39m Generated: [35m2010/07/15/ubuntu安装jdk全过程（仅供参考）/index.html[39m
+[32mINFO [39m Generated: [35m2010/07/16/dhcpd-conf-man配置手册-5-所有参数列表a-m/index.html[39m
+[32mINFO [39m Generated: [35m2012/08/04/setting-up-openvpn-on-amazons-ec2posted-on-june-23-2009-by-holger-eilhard/index.html[39m
+[32mINFO [39m Generated: [35m2010/04/10/tor与privoxy安装设置指南-出自ubuntu中文/index.html[39m
+[32mINFO [39m Generated: [35m2010/04/10/ubuntu系统为ppp接口配置ipv6隧道ipv6-in-ipv4-tunnel/index.html[39m
+[32mINFO [39m Generated: [35m2010/04/10/ubuntu-9-10-安装tor/index.html[39m
+[32mINFO [39m Generated: [35m2010/04/10/adsl（pppoe）接入指南/index.html[39m
+[32mINFO [39m Generated: [35m2010/04/10/华中科技大学的教育网/index.html[39m
+[32mINFO [39m Generated: [35m2010/04/10/zt-ipv6资源（通过安装miredo访问）mplayer播放ipv6下的一些在线视/index.html[39m
+[32mINFO [39m Generated: [35marchives/index.html[39m
+[32mINFO [39m Generated: [35m2010/01/24/hello-world-2/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/2/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/4/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/3/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/7/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/5/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/6/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/01/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/07/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/page/2/index.html[39m
+[32mINFO [39m Generated: [35marchives/2012/08/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/04/index.html[39m
+[32mINFO [39m Generated: [35marchives/2012/index.html[39m
+[32mINFO [39m Generated: [35marchives/2013/11/index.html[39m
+[32mINFO [39m Generated: [35marchives/2014/index.html[39m
+[32mINFO [39m Generated: [35marchives/2014/05/index.html[39m
+[32mINFO [39m Generated: [35marchives/2013/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/09/index.html[39m
+[32mINFO [39m Generated: [35marchives/2014/06/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/03/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/index.html[39m
+[32mINFO [39m Generated: [35marchives/2016/index.html[39m
+[32mINFO [39m Generated: [35marchives/2016/03/index.html[39m
+[32mINFO [39m Generated: [35marchives/2016/02/index.html[39m
+[32mINFO [39m Generated: [35marchives/2017/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/10/index.html[39m
+[32mINFO [39m Generated: [35marchives/2017/09/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/index.html[39m
+[32mINFO [39m Generated: [35marchives/2017/10/index.html[39m
+[32mINFO [39m Generated: [35marchives/2013/08/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/05/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/04/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/06/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/08/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/04/index.html[39m
+[32mINFO [39m Generated: [35marchives/2020/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/10/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/05/index.html[39m
+[32mINFO [39m Generated: [35marchives/2020/07/index.html[39m
+[32mINFO [39m Generated: [35marchives/2020/06/index.html[39m
+[32mINFO [39m Generated: [35marchives/2025/index.html[39m
+[32mINFO [39m Generated: [35marchives/2025/09/index.html[39m
+[32mINFO [39m Generated: [35mcategories/IT技术/page/4/index.html[39m
+[32mINFO [39m Generated: [35mcategories/IT技术/page/2/index.html[39m
+[32mINFO [39m Generated: [35mcategories/IT技术/index.html[39m
+[32mINFO [39m Generated: [35mcategories/IT技术/page/3/index.html[39m
+[32mINFO [39m Generated: [35mcategories/生活点滴/index.html[39m
+[32mINFO [39m Generated: [35mcategories/乱七八糟/index.html[39m
+[32mINFO [39m Generated: [35mcategories/uncategorized/index.html[39m
+[32mINFO [39m Generated: [35mcategories/新闻速递/index.html[39m
+[32mINFO [39m Generated: [35mcategories/旅途精彩/index.html[39m
+[32mINFO [39m Generated: [35mcategories/菩提树下/index.html[39m
+[32mINFO [39m Generated: [35mpage/3/index.html[39m
+[32mINFO [39m Generated: [35mpage/2/index.html[39m
+[32mINFO [39m Generated: [35mindex.html[39m
+[32mINFO [39m Generated: [35mpage/4/index.html[39m
+[32mINFO [39m Generated: [35mpage/6/index.html[39m
+[32mINFO [39m Generated: [35mpage/5/index.html[39m
+[32mINFO [39m Generated: [35mpage/7/index.html[39m
+[32mINFO [39m Generated: [35mtags/域名/index.html[39m
+[32mINFO [39m Generated: [35mtags/七彩阳光书友队/index.html[39m
+[32mINFO [39m Generated: [35mtags/PPPOE/index.html[39m
+[32mINFO [39m Generated: [35mtags/ADSL/index.html[39m
+[32mINFO [39m Generated: [35mtags/Ubuntu/index.html[39m
+[32mINFO [39m Generated: [35mtags/虚拟主机/index.html[39m
+[32mINFO [39m Generated: [35mtags/Linux/index.html[39m
+[32mINFO [39m Generated: [35mtags/VPN/index.html[39m
+[32mINFO [39m Generated: [35mtags/CentOS/index.html[39m
+[32mINFO [39m Generated: [35mtags/Network/index.html[39m
+[32mINFO [39m Generated: [35mtags/L2TP/index.html[39m
+[32mINFO [39m Generated: [35mtags/Openswan/index.html[39m
+[32mINFO [39m Generated: [35mtags/xl2tpd/index.html[39m
+[32mINFO [39m Generated: [35mtags/Android/index.html[39m
+[32mINFO [39m Generated: [35mtags/Marshmallow/index.html[39m
+[32mINFO [39m Generated: [35mtags/openconnect/index.html[39m
+[32mINFO [39m Generated: [35mtags/Firmware/index.html[39m
+[32mINFO [39m Generated: [35mtags/ocserv/index.html[39m
+[32mINFO [39m Generated: [35mtags/Foursquare/index.html[39m
+[32mINFO [39m Generated: [35mtags/AnyConnect/index.html[39m
+[32mINFO [39m Generated: [35mtags/Check-in/index.html[39m
+[32mINFO [39m Generated: [35mtags/谷神养生/index.html[39m
+[32mINFO [39m Generated: [35mtags/DD-WRT/index.html[39m
+[32mINFO [39m Generated: [35mtags/Docker/index.html[39m
+[32mINFO [39m Generated: [35mtags/Swarm/index.html[39m
+[32mINFO [39m Generated: [35mtags/PPTP/index.html[39m
+[32mINFO [39m Generated: [35mtags/Router/index.html[39m
+[32mINFO [39m Generated: [35mtags/Services/index.html[39m
+[32mINFO [39m Generated: [35mtags/Compose/index.html[39m
+[32mINFO [39m Generated: [35mtags/EC2/index.html[39m
+[32mINFO [39m Generated: [35mtags/IPsec/index.html[39m
+[32mINFO [39m Generated: [35mtags/AMI/index.html[39m
+[32mINFO [39m Generated: [35mtags/Libreswan/index.html[39m
+[32mINFO [39m Generated: [35mtags/MySQL/index.html[39m
+[32mINFO [39m Generated: [35mtags/Footer/index.html[39m
+[32mINFO [39m Generated: [35mtags/systemd/index.html[39m
+[32mINFO [39m Generated: [35mtags/Video/index.html[39m
+[32mINFO [39m Generated: [35mtags/Copyright/index.html[39m
+[32mINFO [39m Generated: [35mtags/ICP/index.html[39m
+[32mINFO [39m Generated: [35mtags/Funny/index.html[39m
+[32mINFO [39m Generated: [35mtags/黄姓/index.html[39m
+[32mINFO [39m Generated: [35mtags/Quick-Start/index.html[39m
+[32mINFO [39m Generated: [35mtags/Hexo/index.html[39m
+[32mINFO [39m Generated: [35mtags/dhcpd/index.html[39m
+[32mINFO [39m Generated: [35mtags/起源/index.html[39m
+[32mINFO [39m Generated: [35mtags/江夏/index.html[39m
+[32mINFO [39m Generated: [35mtags/interfaces/index.html[39m
+[32mINFO [39m Generated: [35mtags/幸福/index.html[39m
+[32mINFO [39m Generated: [35mtags/热点新闻/index.html[39m
+[32mINFO [39m Generated: [35mtags/生活品质/index.html[39m
+[32mINFO [39m Generated: [35mtags/国际时事/index.html[39m
+[32mINFO [39m Generated: [35mtags/财经动态/index.html[39m
+[32mINFO [39m Generated: [35mtags/DailyNews/index.html[39m
+[32mINFO [39m Generated: [35mtags/北欧/index.html[39m
+[32mINFO [39m Generated: [35mtags/Automation/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/26/2025-09-26-daily-news/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/15/email/index.html[39m
+[32mINFO [39m Generated: [35m2019/10/01/hello-world-3/index.html[39m
+[32mINFO [39m Generated: [35msearch.xml[39m
+[32mINFO [39m 193 files generated in [36m1.4 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+
+
+--- 开始部署网站 ---
+[32mINFO [39m Validating config
+[32mINFO [39m Deploying: [35mftpsync[39m
+Connected to 121.42.118.49:21 (No encryption)
+< 220 Welcom to www.net.cn.
+
+> OPTS UTF8 ON
+< 530 Please login with USER and PASS.
+
+Login security: No encryption
+> USER qxu1606470020
+< 331 Please specify the password.
+
+> PASS ###
+< 230 Login successful.
+
+> FEAT
+< 211-Features:
+ EPRT
+
+<  EPSV
+ MDTM
+ PASV
+ REST STREAM
+ SIZE
+
+<  TVFS
+ UTF8
+211 End
+
+> TYPE I
+< 200 Switching to Binary mode.
+
+> STRU F
+< 200 Structure set to F.
+
+> OPTS UTF8 ON
+< 200 Always in UTF8 mode.
+
+> CWD /
+< 250 Directory successfully changed.
+
+> MKD htdocs
+< 550 Create directory operation failed.
+
+> CWD htdocs
+< 250 Directory successfully changed.
+
+> MKD public
+< 550 Create directory operation failed.
+
+> CWD public
+< 250 Directory successfully changed.
+
+> PWD
+< 257 "/htdocs/public"
+
+> MKD 2010
+< 550 Create directory operation failed.
+
+> CWD 2010
+< 250 Directory successfully changed.
+
+> MKD 01
+< 550 Create directory operation failed.
+
+> CWD 01
+< 250 Directory successfully changed.
+
+> MKD 24
+< 550 Create directory operation failed.
+
+> CWD 24
+< 250 Directory successfully changed.
+
+> MKD hello-world-2
+< 550 Create directory operation failed.
+
+> CWD hello-world-2
+< 250 Directory successfully changed.
+
+Trying to find optimal transfer strategy...
+> EPSV
+< 229 Entering Extended Passive Mode (|||40004|).
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,67).
+
+Optimal transfer strategy found.
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40003 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD 04
+< 550 Create directory operation failed.
+
+> CWD 04
+< 250 Directory successfully changed.
+
+> MKD 10
+< 550 Create directory operation failed.
+
+> CWD 10
+< 250 Directory successfully changed.
+
+> MKD adsl（pppoe）接入指南
+< 550 Create directory operation failed.
+
+> CWD adsl（pppoe）接入指南
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,68).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40004 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD tor与privoxy安装设置指南-出自ubuntu中文
+< 550 Create directory operation failed.
+
+> CWD tor与privoxy安装设置指南-出自ubuntu中文
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,75).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40011 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD ubuntu-9-10-安装tor
+< 550 Create directory operation failed.
+
+> CWD ubuntu-9-10-安装tor
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,80).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40016 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD ubuntu系统为ppp接口配置ipv6隧道ipv6-in-ipv4-tunnel
+< 550 Create directory operation failed.
+
+> CWD ubuntu系统为ppp接口配置ipv6隧道ipv6-in-ipv4-tunnel
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,67).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40003 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD zt-ipv6资源（通过安装miredo访问）mplayer播放ipv6下的一些在线视
+< 550 Create directory operation failed.
+
+> CWD zt-ipv6资源（通过安装miredo访问）mplayer播放ipv6下的一些在线视
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,69).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40005 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD 华中科技大学的教育网
+< 550 Create directory operation failed.
+
+> CWD 华中科技大学的教育网
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,82).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40018 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD 07
+< 550 Create directory operation failed.
+
+> CWD 07
+< 250 Directory successfully changed.
+
+> MKD 15
+< 550 Create directory operation failed.
+
+> CWD 15
+< 250 Directory successfully changed.
+
+> MKD ubuntu8-04做pxe安装服务器
+< 550 Create directory operation failed.
+
+> CWD ubuntu8-04做pxe安装服务器
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,64).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40000 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD ubuntu安装jdk全过程（仅供参考）
+< 550 Create directory operation failed.
+
+> CWD ubuntu安装jdk全过程（仅供参考）
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,78).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40014 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD 16
+< 550 Create directory operation failed.
+
+> CWD 16
+< 250 Directory successfully changed.
+
+> MKD dhcpd-conf-man配置手册-5-所有参数列表a-m
+< 550 Create directory operation failed.
+
+> CWD dhcpd-conf-man配置手册-5-所有参数列表a-m
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,70).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40006 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD 17
+< 550 Create directory operation failed.
+
+> CWD 17
+< 250 Directory successfully changed.
+
+> MKD linux-interfaces文件配置
+< 550 Create directory operation failed.
+
+> CWD linux-interfaces文件配置
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,79).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40015 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD ubuntu下的apache的配置详解
+< 550 Create directory operation failed.
+
+> CWD ubuntu下的apache的配置详解
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,67).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40003 (No encryption)
+< 226 Transfer complete.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> CDUP
+< 250 Directory successfully changed.
+
+> MKD 2012
+< 550 Create directory operation failed.
+
+> CWD 2012
+< 250 Directory successfully changed.
+
+> MKD 08
+< 550 Create directory operation failed.
+
+> CWD 08
+< 250 Directory successfully changed.
+
+> MKD 04
+< 550 Create directory operation failed.
+
+> CWD 04
+< 250 Directory successfully changed.
+
+> MKD ec2-ami实例-配置-vpn（pptp）
+< 550 Create directory operation failed.
+
+> CWD ec2-ami实例-配置-vpn（pptp）
+< 250 Directory successfully changed.
+
+> PASV
+< 227 Entering Passive Mode(127,0,0,1,156,72).
+
+> STOR index.html
+< 150 Ok to send data.
+
+Uploading to 121.42.118.49:40008 (No encryption)
+> QUIT
+[32mINFO [39m Deploy done: [35mftpsync[39m
+
+
+--- 任务成功完成 ---
+[Fri 09/26/2025 22:53:58.90] Generating static files... 
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m280 ms[39m
+[32mINFO [39m 0 files generated in [36m1.38 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[43mWARN [49m [33mRedefine v2.8.2 is outdated, please update to v2.8.5![0m
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+[Fri 09/26/2025 23:00:53.57] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: ⚙️  override existing env vars with { override: true }
+正在调用 Gemini API 获取新闻摘要...
+成功获取新闻摘要。
+成功创建新的 Hexo 文章: e:\anime-blog-demo1\source\_posts\2025-09-26-daily-news.md
+
+--- 开始构建静态文件 ---
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m296 ms[39m
+[32mINFO [39m Generated: [35marchives/index.html[39m
+[32mINFO [39m Generated: [35matom.xml[39m
+[32mINFO [39m Generated: [35m2025/09/23/2025-09-23-daily-news/index.html[39m
+[32mINFO [39m Generated: [35m2025/09/26/2025-09-26-daily-news/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/2/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/3/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/4/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/5/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/7/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/index.html[39m
+[32mINFO [39m Generated: [35marchives/page/6/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/01/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/04/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/page/2/index.html[39m
+[32mINFO [39m Generated: [35marchives/2012/index.html[39m
+[32mINFO [39m Generated: [35marchives/2010/07/index.html[39m
+[32mINFO [39m Generated: [35marchives/2013/11/index.html[39m
+[32mINFO [39m Generated: [35marchives/2012/08/index.html[39m
+[32mINFO [39m Generated: [35marchives/2013/index.html[39m
+[32mINFO [39m Generated: [35marchives/2014/index.html[39m
+[32mINFO [39m Generated: [35marchives/2013/08/index.html[39m
+[32mINFO [39m Generated: [35marchives/2014/05/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/index.html[39m
+[32mINFO [39m Generated: [35marchives/2014/06/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/03/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/09/index.html[39m
+[32mINFO [39m Generated: [35marchives/2016/index.html[39m
+[32mINFO [39m Generated: [35marchives/2015/10/index.html[39m
+[32mINFO [39m Generated: [35marchives/2016/02/index.html[39m
+[32mINFO [39m Generated: [35marchives/2017/09/index.html[39m
+[32mINFO [39m Generated: [35marchives/2016/03/index.html[39m
+[32mINFO [39m Generated: [35marchives/2017/10/index.html[39m
+[32mINFO [39m Generated: [35marchives/2017/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/05/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/06/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/04/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/08/index.html[39m
+[32mINFO [39m Generated: [35marchives/2018/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/04/index.html[39m
+[32mINFO [39m Generated: [35marchives/2020/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/05/index.html[39m
+[32mINFO [39m Generated: [35marchives/2019/10/index.html[39m
+[32mINFO [39m Generated: [35marchives/2020/06/index.html[39m
+[32mINFO [39m Generated: [35marchives/2025/index.html[39m
+[32mINFO [39m Generated: [35marchives/2020/07/index.html[39m
+[32mINFO [39m Generated: [35marchives/2025/09/index.html[39m
+[32mINFO [39m Generated: [35mtags/Automation/index.html[39m
+[32mINFO [39m Generated: [35mindex.html[39m
+[32mINFO [39m Generated: [35mtags/DailyNews/index.html[39m
+[32mINFO [39m Generated: [35msearch.xml[39m
+[32mINFO [39m 51 files generated in [36m1.41 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+
+
+--- 开始部署网站 ---
+^C[Fri 09/26/2025 23:08:41.71] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: ⚙️  override existing env vars with { override: true }
+正在调用 Gemini API 获取新闻摘要...
+成功获取新闻摘要。
+成功创建新的 Hexo 文章: e:\anime-blog-demo1\source\_posts\2025-09-26-daily-news.md
+
+--- 开始构建静态文件 ---
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m301 ms[39m
+[32mINFO [39m Generated: [35matom.xml[39m
+[32mINFO [39m Generated: [35mindex.html[39m
+[32mINFO [39m Generated: [35m2025/09/26/2025-09-26-daily-news/index.html[39m
+[32mINFO [39m Generated: [35msearch.xml[39m
+[32mINFO [39m 4 files generated in [36m1.27 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+
+
+--- 开始部署网站 ---
+^C[Fri 09/26/2025 23:19:51.35] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+正在调用 Gemini API 获取新闻摘要...
+调用 Gemini API 失败: dateStr is not defined
+
+--- 任务执行失败 ---
+获取新闻失败
+[Fri 09/26/2025 23:19:51.45] Generating static files... 
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m281 ms[39m
+[32mINFO [39m 0 files generated in [36m1.39 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[43mWARN [49m [33mRedefine v2.8.2 is outdated, please update to v2.8.5![0m
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+[Fri 09/26/2025 23:27:30.19] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+正在调用 Gemini API 获取新闻摘要...
+成功获取新闻摘要。
+
+--- 任务执行失败 ---
+now is not defined
+[Fri 09/26/2025 23:27:40.99] Generating static files... 
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m289 ms[39m
+[32mINFO [39m 0 files generated in [36m1.34 s[39m
+[32mINFO [39m [43mWARN [49m [33mRedefine v2.8.2 is outdated, please update to v2.8.5![0m
+
+Node.js v22.19.0
+[Fri 09/26/2025 23:31:09.91] Running daily news task... 
+[32mINFO [39m [Fri 09/26/2025 23:37:24.73] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+正在调用 Gemini API 获取${dateStr}新闻摘要...
+成功获取新闻摘要。
+成功创建新的 Hexo 文章: e:\anime-blog-demo1\source\_posts\2025-09-26-daily-news.md
+
+--- 开始构建静态文件 ---
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m303 ms[39m
+[32mINFO [39m Generated: [35m2025/09/26/2025-09-26-daily-news/index.html[39m
+[32mINFO [39m Generated: [35matom.xml[39m
+[32mINFO [39m Generated: [35mindex.html[39m
+[32mINFO [39m Generated: [35msearch.xml[39m
+[32mINFO [39m 4 files generated in [36m1.41 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+
+
+--- 开始部署网站 ---
+^C[Fri 09/26/2025 23:38:56.36] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: ⚙️  override existing env vars with { override: true }
+正在调用 Gemini API 获取${dateStr}新闻摘要...
+成功获取新闻摘要。
+成功创建新的 Hexo 文章: e:\anime-blog-demo1\source\_posts\2025-09-26-daily-news.md
+
+--- 开始构建静态文件 ---
+[32mINFO [39m Validating config
+[32mINFO [39m Start processing
+[32mINFO [39m Files loaded in [36m300 ms[39m
+[32mINFO [39m Generated: [35matom.xml[39m
+[32mINFO [39m Generated: [35m2025/09/26/2025-09-26-daily-news/index.html[39m
+[32mINFO [39m Generated: [35mindex.html[39m
+[32mINFO [39m Generated: [35msearch.xml[39m
+[32mINFO [39m 4 files generated in [36m1.38 s[39m
+[32mINFO [39m 
+      +======================================================================================+
+      |                                                                                      |
+      |    _____ _   _ _____ __  __ _____   ____  _____ ____  _____ _____ ___ _   _ _____    |
+      |   |_   _| | | | ____|  \/  | ____| |  _ \| ____|  _ \| ____|  ___|_ _| \ | | ____|   |
+      |     | | | |_| |  _| | |\/| |  _|   | |_) |  _| | | | |  _| | |_   | ||  \| |  _|     |
+      |     | | |  _  | |___| |  | | |___  |  _ <| |___| |_| | |___|  _|  | || |\  | |___    |
+      |     |_| |_| |_|_____|_|  |_|_____| |_| \_\_____|____/|_____|_|   |___|_| \_|_____|   |
+      |                                                                                      |
+      |                            current v2.8.2  latest v2.8.5                             |
+      |                  https://github.com/EvanNotFound/hexo-theme-redefine                 |
+      +======================================================================================+
+                      
+[32mINFO [39m [32mCDN available: NPMMirror (Recommended)[0m
+[32mINFO [39m [32mCDN available: ZStatic[0m
+[32mINFO [39m [32mCDN available: CDNJS[0m
+
+
+--- 开始部署网站 ---
+^C[Fri 09/26/2025 23:41:26.95] Running daily news task... 
+[dotenv@17.2.2] injecting env (1) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+正在调用 Gemini API 获取NaN新闻摘要...
+成功获取新闻摘要。
+成功创建新的 Hexo 文章: e:\anime-blog-demo1\source\_posts\2025-09-26-daily-news.md
+
+--- 开始构建静态文件 ---
+^C

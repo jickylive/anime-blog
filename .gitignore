@@ -3,3 +3,5 @@ public
 db.json
 .DS_Store
 *.lock
+task.log
+db.json
