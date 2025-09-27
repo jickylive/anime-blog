@@ -48,15 +48,15 @@ async function getNewsSummary() {
     const day = now.getDate().toString().padStart(2, '0');
     
     const dateStr = `${year}-${month}-${day}`;
-    console.log('正在调用 Gemini API 获取%d新闻摘要...', dateStr);
+    console.log('正在调用 Gemini API 获取${dateStr}新闻摘要...');
     try {
         const response = await axios.post(GEMINI_API_URL, {
             contents: [{
                 parts: [{
                     text: `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。` + 
-                    `请用中文总结${dateStr}的5条热点新闻摘要，每条新闻包含一个合适的标题和一段简短的描述（约100字）。` +
-                    `请直接返回 Markdown 格式的内容用于hexo部署静态网站，不要包含任何额外的解释或标题。` + 
-                    `在每条新闻标题前加上 引用的互联网地址。文尾加入免责声明：以上内容均来自互联网，如有侵权请联系删除。`
+                    `请用中文总结${dateStr}今日的5条热点新闻摘要，每条新闻包含一个合适的标题和一段简短的描述（约100字）。` +
+                    `请直接返回 Markdown 格式的内容用于hexo部署静态网站。` + 
+                    `文尾加入免责声明：以上内容互联网AI生成，如有侵权请联系删除。`
                 }]
             }]
         }, {
@@ -122,7 +122,7 @@ async function main() {
         await runCommand('hexo generate');
         
         console.log('\n--- 开始部署网站 ---');
-        await runCommand('hexo deploy');
+        // await runCommand('hexo deploy');
 
         console.log('\n--- 任务成功完成 ---');
 
