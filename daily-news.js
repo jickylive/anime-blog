@@ -7,6 +7,7 @@ const { exec } = require('child_process');
 // --- 用户配置 ---
 // 优先读取环境变量中的 GEMINI_API_KEY
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const PROXY_API_KEY = process.env.PROXY_API_KEY;
 
 // 检查 API Key 是否设置
 if (!GEMINI_API_KEY) {
