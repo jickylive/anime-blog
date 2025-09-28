@@ -1,0 +1,47 @@
+# ... (其他配置保持不变)
+
+build:
+  stage: build
+  image: node:${{ env.NODE_VERSION }} 
+  when:
+    condition: ${GITEE_PIPELINE_EVENT == 'schedule'}
+  
+  steps:
+    - name: 导入 SSH 私钥
+      # 这是一个标准的 shell 脚本块，用于设置 SSH 客户端
+      run: |
+        # 1. 创建 .ssh 目录并设置权限
+        mkdir -p ~/.ssh
+        # 2. 将私钥内容写入文件
+        echo "${{ secrets.GIT_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        # 3. 设置私钥文件权限
+        chmod 600 ~/.ssh/id_rsa
+        # 4. 将 Gitee 的主机密钥添加到 known_hosts，避免连接时确认
+        ssh-keyscan gitee.com >> ~/.ssh/known_hosts
+      
+    - name: 安装依赖
+      run: npm install
+    
+    - name: 运行 Node.js 脚本生成数据/页面
+      run: node daily_news_proxy.js
+      
+    - name: 检查并提交新生成的文件
+      run: |
+        # 配置 Git
+        git config --global user.email "gitee_pipeline@example.com"
+        git config --global user.name "Gitee Pipeline Bot"
+        
+        # 检查文件是否有变化
+        git add ${{ env.OUTPUT_DIR }}
+        git status --porcelain
+        
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "检测到文件变化，开始提交..."
+          git commit -m "chore(pipeline): Daily news data update [skip ci]" 
+          
+          # 使用 SSH URL 进行推送！这是关键
+          # GITEE_REPO_URL_SSH 是 Gitee Go 内置的环境变量，指向 SSH 形式的仓库地址
+          git push ${GITEE_REPO_URL_SSH} ${GITEE_BRANCH} 
+        else
+          echo "文件没有变化，跳过提交。"
+        fi
