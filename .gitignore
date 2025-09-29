@@ -2,7 +2,6 @@ node_modules
 public
 db.json
 .DS_Store
-*.lock
 task.log
 db.json
 .env
