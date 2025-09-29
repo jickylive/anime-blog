@@ -1,0 +1,21 @@
+name: Cloudflare 定时构建 (Daily Build)
+
+on:
+  # 使用 schedule 触发器来设置定时任务
+  # cron 表达式 '0 0 * * *' 表示每天的 00:00 UTC (世界标准时间) 运行一次
+  # 如果想改为北京时间早上 8 点运行，cron 表达式为 '0 0 * * *' + 8 小时 = '0 8 * * *'
+  # 注意：GitHub Actions 的 cron 默认基于 UTC
+  schedule:
+    - cron: '0 0 * * *' 
+  
+  # 允许您手动点击触发
+  workflow_dispatch:
+
+jobs:
+  daily_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 触发 Cloudflare Pages 部署挂钩
+        # 使用 curl 命令向您的 Deploy Hook URL 发送 POST 请求
+        # ${{ secrets.CLOUDFLARE_DAILY_HOOK }} 是我们刚才在 GitHub Secrets 中设置的 URL
+        run: curl -X POST ${{ secrets.CLOUDFLARE_DAILY_HOOK }}
