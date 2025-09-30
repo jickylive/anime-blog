@@ -10,16 +10,16 @@ const { exec } = require('child_process');
 
 // --- 用户配置 ---
 // 优先读取环境变量中的 GEMINI_API_KEY
-const  GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const  PROXY_API_KEY = process.env.PROXY_API_KEY;
+let  GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+let  PROXY_API_KEY = process.env.PROXY_API_KEY;
 
 // 如果 GEMINI_API_KEY 在环境变量中未找到，则尝试从 .env 文件加载
-// if (!GEMINI_API_KEY) {
-//     // 只有当没有设置环境变量时，才去加载 .env 文件
-//     require('dotenv').config(); 
-//     GEMINI_API_KEY = process.env.GEMINI_API_KEY; // 重新尝试从加载后的环境变量中读取
-//     PROXY_API_KEY = process.env.PROXY_API_KEY;   // 重新尝试从加载后的环境变量中读取
-// }
+if (!GEMINI_API_KEY) {
+    // 只有当没有设置环境变量时，才去加载 .env 文件
+    require('dotenv').config(); 
+    GEMINI_API_KEY = process.env.GEMINI_API_KEY; // 重新尝试从加载后的环境变量中读取
+    PROXY_API_KEY = process.env.PROXY_API_KEY;   // 重新尝试从加载后的环境变量中读取
+}
 
 // 检查 API Key 是否设置
 if (!GEMINI_API_KEY) {
@@ -54,14 +54,15 @@ function runCommand(command) {
 /**
  * 调用 Gemini API 获取新闻摘要
  */
-async function getNewsSummary() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    
-    const dateStr = `${year}-${month}-${day}`;
-    console.log('正在调用 Gemini API 获取${dateStr}新闻摘要...');
+async function getNewsSummary(dateStr) {// 接受 dateStr 作为参数
+    // 不再在函数内部计算日期
+    // const now = new Date();
+    // const year = now.getFullYear();
+    // const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    // const day = now.getDate().toString().padStart(2, '0');    
+    // const dateStr = `${year}-${month}-${day}`;
+
+    console.log(`正在调用 Gemini API 获取${dateStr}新闻摘要...`);
     try {
         const response = await axios.post(GEMINI_API_URL, {
             contents: [{
@@ -94,13 +95,14 @@ async function getNewsSummary() {
  * 创建并保存 Hexo 文章
  * @param {string} content Markdown 格式的新闻内容
  */
-function createHexoPost(content) {
+function createHexoPost(content, dateStr) {// 接受 dateStr 作为参数
     const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    
-    const dateStr = `${year}-${month}-${day}`;
+    // 不再在函数内部计算日期
+    // const year = now.getFullYear();
+    // const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    // const day = now.getDate().toString().padStart(2, '0');    
+    // const dateStr = `${year}-${month}-${day}`;
+
     const fullDateStr = `${dateStr} ${now.toTimeString().split(' ')[0]}`;
 
     const title = `今日热点新闻（${dateStr}）`;
@@ -127,9 +129,16 @@ function createHexoPost(content) {
  */
 async function main() {
     try {
-        
-        const newsContent = await getNewsSummary();
-        createHexoPost(newsContent);
+        // ======================= 在 main 中计算一次日期 =======================
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = (now.getMonth() + 1).toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+        const dateStr = `${year}-${month}-${day}`;
+        // ====================================================================
+
+        const newsContent = await getNewsSummary(dateStr);
+        createHexoPost(newsContent,dateStr);
 
         console.log('\n--- 开始构建静态文件 ---');
         await runCommand('npm run build');

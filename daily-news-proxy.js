@@ -45,13 +45,12 @@ function runCommand(command) {
 /**
  * 调用 Gemini API 获取新闻摘要 (通过 Cloudflare 代理)
  */
-async function getNewsSummary() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    
-    const dateStr = `${year}-${month}-${day}`;
+async function getNewsSummary(dateStr) {
+    // const now = new Date();
+    // const year = now.getFullYear();
+    // const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    // const day = now.getDate().toString().padStart(2, '0');    
+    // const dateStr = `${year}-${month}-${day}`;
     console.log(`正在通过 Cloudflare 代理调用 Gemini API 获取 ${dateStr} 新闻摘要...`);
     try {
         const response = await axios.post(GEMINI_API_URL, {
@@ -98,26 +97,25 @@ async function getNewsSummary() {
  * 创建并保存 Hexo 文章
  * @param {string} content Markdown 格式的新闻内容
  */
-function createHexoPost(content) {
+function createHexoPost(content, dateStr) {// 接受 dateStr 作为参数
     const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    
-    const dateStr = `${year}-${month}-${day}`;
-    const fullDateStr = `${dateStr} ${now.toTimeString().split(' ')[0]}`;
+    // const year = now.getFullYear();
+    // const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    // const day = now.getDate().toString().padStart(2, '0');    
+    // const dateStr = `${year}-${month}-${day}`;
 
+    const fullDateStr = `${dateStr} ${now.toTimeString().split(' ')[0]}`;   
     const title = `今日热点新闻（${dateStr}）`;
     const fileName = `${dateStr}-daily-news.md`;
     const filePath = path.join(POSTS_DIR, fileName);
 
     const frontMatter = `---\n` +
-`title: ${title}\n` +
-`date: ${fullDateStr}\n` +
-`tags:\n` +
-`  - DailyNews\n` +
-`  - Automation\n` +
-`---\n\n`;
+                        `title: ${title}\n` +
+                        `date: ${fullDateStr}\n` +
+                        `tags:\n` +
+                        `  - DailyNews\n` +
+                        `  - Automation\n` +
+                        `---\n\n`;
 
     const fileContent = frontMatter + content;
     fs.writeFileSync(filePath, fileContent);
@@ -129,9 +127,14 @@ function createHexoPost(content) {
  */
 async function main() {
     try {
-        
-        const newsContent = await getNewsSummary();
-        createHexoPost(newsContent);
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');    
+    const dateStr = `${year}-${month}-${day}`; 
+
+        const newsContent = await getNewsSummary(dateStr);
+        createHexoPost(newsContent,dateStr);
 
         console.log('\n--- 开始构建静态文件 ---');
         await runCommand('hexo generate');
