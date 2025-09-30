@@ -29,6 +29,13 @@ jobs:
 
       - name: Install dependencies (if any)
         run: npm install # 如果你的 daily-news.js 有依赖，需要安装
+        
+      # ===============================================================
+      # 新增步骤：安装 Hexo CLI
+      - name: Install Hexo CLI
+        run: npm install -g hexo-cli
+      # ===============================================================
+
 
       - name: Run daily-news.js script
         run: node daily-news.js
