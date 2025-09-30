@@ -110,14 +110,12 @@ function createHexoPost(content, dateStr) {// 接受 dateStr 作为参数
     const filePath = path.join(POSTS_DIR, fileName);
 
     const frontMatter = `---\n` +
-`title: ${title}\n` +
-`date: ${fullDateStr}\n` +
-`tags:\n` +
-`  - DailyNews\n` +
-`  - Automation\n` +
-`---\n
-
-`;
+            `title: ${title}\n` +
+            `date: ${fullDateStr}\n` +
+            `tags:\n` +
+            `  - DailyNews\n` +
+            `  - Automation\n` +
+            `---\n\n`;
 
     const fileContent = frontMatter + content;
     fs.writeFileSync(filePath, fileContent);
@@ -141,7 +139,7 @@ async function main() {
         createHexoPost(newsContent,dateStr);
 
         console.log('\n--- 开始构建静态文件 ---');
-        await runCommand('npm run build');
+        await runCommand('npx hexo generate');
         
         console.log('\n--- 开始部署网站 ---');
         // await runCommand('hexo deploy');
