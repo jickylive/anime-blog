@@ -132,7 +132,7 @@ async function main() {
         createHexoPost(newsContent);
 
         console.log('\n--- 开始构建静态文件 ---');
-        await runCommand('hexo generate');
+        await runCommand('npm run build');
         
         console.log('\n--- 开始部署网站 ---');
         // await runCommand('hexo deploy');
