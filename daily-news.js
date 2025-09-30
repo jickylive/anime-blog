@@ -10,16 +10,16 @@ const { exec } = require('child_process');
 
 // --- 用户配置 ---
 // 优先读取环境变量中的 GEMINI_API_KEY
-let GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-let PROXY_API_KEY = process.env.PROXY_API_KEY;
+const  GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const  PROXY_API_KEY = process.env.PROXY_API_KEY;
 
 // 如果 GEMINI_API_KEY 在环境变量中未找到，则尝试从 .env 文件加载
-if (!GEMINI_API_KEY) {
-    // 只有当没有设置环境变量时，才去加载 .env 文件
-    require('dotenv').config(); 
-    GEMINI_API_KEY = process.env.GEMINI_API_KEY; // 重新尝试从加载后的环境变量中读取
-    PROXY_API_KEY = process.env.PROXY_API_KEY;   // 重新尝试从加载后的环境变量中读取
-}
+// if (!GEMINI_API_KEY) {
+//     // 只有当没有设置环境变量时，才去加载 .env 文件
+//     require('dotenv').config(); 
+//     GEMINI_API_KEY = process.env.GEMINI_API_KEY; // 重新尝试从加载后的环境变量中读取
+//     PROXY_API_KEY = process.env.PROXY_API_KEY;   // 重新尝试从加载后的环境变量中读取
+// }
 
 // 检查 API Key 是否设置
 if (!GEMINI_API_KEY) {
