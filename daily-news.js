@@ -138,11 +138,11 @@ async function main() {
         const newsContent = await getNewsSummary(dateStr);
         createHexoPost(newsContent,dateStr);
 
-        console.log('\n--- 开始构建静态文件 ---');
-        await runCommand('npx hexo generate');
+        // console.log('\n--- 开始构建静态文件 ---');
+        // await runCommand('npx hexo generate');
         
-        console.log('\n--- 开始部署网站 ---');
-        // await runCommand('hexo deploy');
+        // console.log('\n--- 开始部署网站 ---');
+        // // await runCommand('hexo deploy');
 
         console.log('\n--- 任务成功完成 ---');
 
