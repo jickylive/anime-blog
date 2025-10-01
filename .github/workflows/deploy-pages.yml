@@ -1,0 +1,50 @@
+# .github/workflows/deploy-pages.yml
+
+name: Deploy to GitHub Pages
+
+on:
+  # 触发条件：当有代码推送到 main 分支时
+  push:
+    branches:
+      - main
+  
+  # 也允许手动触发
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 检出 main 分支的最新代码
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+
+      # 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      # 安装依赖
+      - name: Install dependencies
+        run: npm install
+
+      # 运行 hexo generate 来构建静态网站
+      - name: Build static site
+        run: npx hexo generate # 或者 npm run build
+
+      # 部署到 pages 分支
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: pages
+          force_orphan: true
+        env:
+          # 再次明确设置用于推送的令牌，尽管 checkout 步骤已经设置了
+          # 但为了 Git 推送命令的顺利执行，建议也在这里设置 SSH 或 HTTPS 凭证
+          # 这里的 GITHUB_TOKEN 会通过 actions/checkout@v4 自动配置 HTTPS 凭证
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
