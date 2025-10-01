@@ -189,15 +189,16 @@ function createHexoPost(content, dateStr) {// 接受 dateStr 作为参数
     const fileName = `${dateStr}-daily-news.md`;
     const filePath = path.join(POSTS_DIR, fileName);
 
-    const frontMatter = `---\n` +
-            `title: ${title}\n` +
-            `date: ${fullDateStr}\n` +
-            `tags:\n` +
-            `  - DailyNews\n` +
-            `  - Automation\n` +
-            `---\n\n`;
+    // const frontMatter = `---\n` +
+    //         `title: ${title}\n` +
+    //         `date: ${fullDateStr}\n` +
+    //         `tags:\n` +
+    //         `  - DailyNews\n` +
+    //         `  - Automation\n` +
+    //         `---\n\n`;
 
-    const fileContent = frontMatter + content;
+    // const fileContent = frontMatter + content;
+    const fileContent = content
     fs.writeFileSync(filePath, fileContent);
     console.log(`成功创建新的 Hexo 文章: ${filePath}`);
 }
