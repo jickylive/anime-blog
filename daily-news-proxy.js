@@ -24,6 +24,35 @@ const HEXO_ROOT = __dirname;
 // 文章要保存的目录
 const POSTS_DIR = path.join(HEXO_ROOT, 'source', '_posts');
 
+// --- 新增代码开始 ---
+/**
+ * 从本地 JSON 文件加载提升词
+ * @returns {string[]} 返回提升词数组
+ */
+function loadPromotionWordsFromFile() {
+    const filePath = path.join(__dirname, 'promotions.json');
+    const fallbackWords = ["本文由 Google Gemini AI 生成"]; // 备用词组
+
+    try {
+        // 使用同步读取，因为这是脚本启动时的初始化步骤，简单明了
+        if (fs.existsSync(filePath)) {
+            const data = fs.readFileSync(filePath, 'utf8');
+            const config = JSON.parse(data);
+            // 确保 geminiWords 存在且是一个非空数组
+            if (Array.isArray(config.geminiWords) && config.geminiWords.length > 0) {
+                console.log('成功从 promotions.json 加载提升词。');
+                return config.geminiWords;
+            }
+        }
+        console.warn('警告: promotions.json 文件不存在或格式不正确，将使用备用提升词。');
+        return fallbackWords;
+    } catch (error) {
+        console.error('读取 promotions.json 文件失败:', error.message);
+        return fallbackWords; // 出错时返回备用词组
+    }
+}
+// --- 新增代码结束 ---
+
 /**
  * 以 Promise 方式执行 Shell 命令
  * @param {string} command 要执行的命令
@@ -52,15 +81,26 @@ async function getNewsSummary(dateStr) {
     // const day = now.getDate().toString().padStart(2, '0');    
     // const dateStr = `${year}-${month}-${day}`;
     console.log(`正在通过 Cloudflare 代理调用 Gemini API 获取 ${dateStr} 新闻摘要...`);
+
+    // --- 修改点：加载并随机选择一个提升词 ---
+    const promotionWords = loadPromotionWordsFromFile();
+    const selectedWord = promotionWords[Math.floor(Math.random() * promotionWords.length)];
+    console.log(`本次使用的提升词: "${selectedWord}"`);
+
+    // --- 修改点：将提升词注入到 Prompt 中 ---    
+    const promptText = `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。` + 
+                     `请用中文总结 ${dateStr} 今日的5条热点新闻摘要，每条新闻包含一个合适的标题和一段简短的描述（约100字）。` +
+                     `简要介绍历史上的今天，增加文章的多样性。` +
+                     `请直接返回 Markdown 格式的内容用于 Hexo 部署静态网站。` +
+                     `在文章的末尾，请加上一句推广语：“${selectedWord}”。` + // 注入动态提升词
+                     `最后，在推广语后面新起一行，加上免责声明：以上内容由互联网 AI 生成，如有侵权请联系删除。`;
+
     try {
         const response = await axios.post(GEMINI_API_URL, {
             // 请求体 (body) 保持不变
             contents: [{
                 parts: [{
-                    text: `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。` + 
-                          `请用中文总结 ${dateStr} 今日的5条热点新闻摘要，每条新闻包含一个合适的标题和一段简短的描述（约100字）。` +
-                          `请直接返回 Markdown 格式的内容用于 Hexo 部署静态网站。` + 
-                          `文尾加入免责声明：以上内容由互联网 AI 生成，如有侵权请联系删除。`
+                    text: promptText // 使用包含提升词的新 Prompt
                 }]
             }]
         }, {
