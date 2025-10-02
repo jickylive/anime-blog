@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme defaultone">
+    
+            <meta name="author" content="jicky huang">
+            <!-- preconnect -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <!-- Source Sans Pro font -->
+            <link
+                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+            <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
+
+            
+                                    <!--- Seo Part-->
+                                    
+                                        <link rel="canonical" href="https://www.hxfund.cn/2012/08/04/setting-up-openvpn-on-amazons-ec2posted-on-june-23-2009-by-holger-eilhard/"/>
+                                            <meta name="robots" content="index,follow">
+                                            <meta name="googlebot" content="index,follow">
+                                            <meta name="revisit-after" content="1 days">
+
+                                            
+                                                
+                                                    
+                                                        <meta name="description" content="This is your blog.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Setting up OpenVPN on Amazon’s EC2Posted on June 23, 2009 by Holger Eilhard">
+<meta property="og:url" content="https://www.hxfund.cn/2012/08/04/setting-up-openvpn-on-amazons-ec2posted-on-june-23-2009-by-holger-eilhard/index.html">
+<meta property="og:site_name" content="黄氏寻宗">
+<meta property="og:description" content="This is your blog.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.hxfund.cn/images/og.webp">
+<meta property="article:published_time" content="2012-08-04T14:31:28.000Z">
+<meta property="article:modified_time" content="2025-10-02T14:11:45.851Z">
+<meta property="article:author" content="jicky huang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.hxfund.cn/images/og.webp">
+                                                            
+                                                                
+                                                                        <!--- Icon Part-->
+                                                                        <link rel="icon" type="image/png"
+                                                                            href="/images/favicon.png"
+                                                                            sizes="192x192">
+                                                                        <link rel="apple-touch-icon" sizes="180x180"
+                                                                            href="/images/favicon.png">
+                                                                        <meta name="theme-color"
+                                                                            content="#A31F34">
+                                                                        <link rel="shortcut icon" href="/images/favicon.png">
+                                                                            <!--- Page Info-->
+                                                                            
+                                                                                <title>
+                                                                                    
+                                                                                        Setting up OpenVPN on Amazon’s EC2Posted on June 23, 2009 by Holger Eilhard | 黄氏寻宗
+                                                                                                
+                                                                                </title>
+
+                                                                                
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+                                                                                    <!--- Inject Part-->
+                                                                                    
+
+                                                                                                                        
+<link rel="stylesheet" href="/css/style.css">
+
+
+                                                                                                                            
+                                                                                                                                        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+                                                                                                                                            
+
+                                                                                                                                                
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+                                                                                                                                                    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+                                                                                                                                                        <!--- Font Part-->
+                                                                                                                                                        
+                                                                                                                                                            <link
+                                                                                                                                                                href=""
+                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                            
+                                                                                                                                                                
+                                                                                                                                                                        
+                                                                                                                                                                            <link
+                                                                                                                                                                                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                                            
+                                                                                                                                                                                
+                                                                                                                                                                                    <link
+                                                                                                                                                                                        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                        rel="stylesheet">
+                                                                                                                                                                                    
+                                                                                                                                                                                        
+                                                                                                                                                                                            <link
+                                                                                                                                                                                                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                                                            
+                                                                                                                                                                                                
+                                                                                                                                                                                                    
+<script src="/js/build/libs/anime.min.js"></script>
+
+                                                                                                                                                                                                        
+
+                                                                                                                                                                                                            <script id="hexo-configurations">
+    window.config = {"hostname":"www.hxfund.cn","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"Recommended Reading","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"},"english":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"},"title":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/og.webp","description":"This is your blog."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/main_bg_ligth.png","dark":"/images/main_bg.png"},"title":"黄氏寻宗","subtitle":{"text":["Welcome"],"hitokoto":{"enable":true,"show_author":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":true,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":"https://github.com/EvanNotFound/hexo-theme-redefine","instagram":null,"zhihu":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":50},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Gitee":{"path":"https://gitee.com/jickylive","icon":"fa-brands fa-github"},"Album":{"icon":"fa-solid fa-image","path":"/masonry/"},"Links":{"path":"/links/","icon":"fa-solid fa-link"},"About":{"path":"/about","icon":"fa-solid fa-circle-info"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":3,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":false,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":true};
+  </script>
+
+                                                                                                                                                                                                                <!--- Fontawesome Part-->
+                                                                                                                                                                                                                
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+                                                                                                                                                                                                                    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+                                                                                                                                                                                                                        
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+                                                                                                                                                                                                                            
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                    
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="黄氏寻宗" type="application/atom+xml">
+</head>
+
+	<body>
+		<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        黄氏寻宗
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/favicon.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                黄氏寻宗
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   target="_blank" rel="noopener" href="https://gitee.com/jickylive"
+                                        >
+                                    <i class="fa-brands fa-github fa-fw"></i>
+                                    GITEE
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    ALBUM
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/links/"
+                                        >
+                                    <i class="fa-solid fa-link fa-fw"></i>
+                                    链接
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/about"
+                                        >
+                                    <i class="fa-solid fa-circle-info fa-fw"></i>
+                                    关于
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           target="_blank" rel="noopener" href="https://gitee.com/jickylive"
+                        >
+                            <span>
+                                GITEE
+                            </span>
+                            
+                                <i class="fa-brands fa-github fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                ALBUM
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/links/"
+                        >
+                            <span>
+                                链接
+                            </span>
+                            
+                                <i class="fa-solid fa-link fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/about"
+                        >
+                            <span>
+                                关于
+                            </span>
+                            
+                                <i class="fa-solid fa-circle-info fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <!-- <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">57</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a> -->
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20"
+        href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">
+            74
+        </div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Setting up OpenVPN on Amazon’s EC2Posted on June 23, 2009 by Holger Eilhard</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/avatar-0.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">jicky huang</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2012-08-04 22:31:28</span>
+        <span class="mobile">2012-08-04 22:31:28</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-10-02 22:11:45</span>
+            <span class="mobile">2025-10-02 22:11:45</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/IT%E6%8A%80%E6%9C%AF/">IT技术</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>Setting up OpenVPN on Amazon’s EC2Posted on <a class="link"   target="_blank" rel="noopener" href="http://holgr.com/blog/2009/06/setting-up-openvpn-on-amazons-ec2/"  title="23:46">June 23, 2009<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> by <a class="link"   target="_blank" rel="noopener" href="http://holgr.com/blog/author/admin/"  title="View all posts by Holger Eilhard">Holger Eilhard<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://holgr.com/blog/wp-content/uploads/2009/06/Amazon-Web-Services-1024x714.png"
+                      alt="Amazon Web Services" title="Amazon Web Services"
+                > There are multiple situations where a VPN server can come in handy. For example: you’re in a hotel and want to be sure nobody is sniffing your packets. Amazon has given us a great base system to build on: the Elastic Compute Cloud, or just EC2. I set up a server for another basic need: free speech. I hope this small howto, that in no way is meant to be complete or fool proof, will give those in need a way to get the news out! You can find the Getting Started Guide for Amazon’s EC2 over <a class="link"   target="_blank" rel="noopener" href="http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/" >here<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. There’s also a web-based <a class="link"   target="_blank" rel="noopener" href="https://console.aws.amazon.com/ec2/home#c=EC2&s=Instances" >administration console<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> if you don’t want to use the command line tools. <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://holgr.com/blog/wp-content/uploads/2009/06/AWS-Management-Console-1024x720.png"
+                      alt="AWS Management Console" title="AWS Management Console"
+                > <strong>Setting up the server</strong> I’ll be using the basic Fedora Core 8 (AMI Id: <em>ami-3c47a355</em>) in this example. Of course you can use whatever linux image you want, but the commands I’m using might differ, so YMMV. First thing I did was get all the recent system updates:</p>
+<blockquote>
+<p>yum update</p>
+</blockquote>
+<p>Say yes when you’re asked to install the updates. Now you have to install openvpn itself:</p>
+<blockquote>
+<p>yum install openvpn</p>
+</blockquote>
+<p>Again, say yes when asked to install. The configuration files for OpenVPN go to <em>&#x2F;etc&#x2F;openvpn</em>. Now, in my case I created the server for someone in Iran, so they could get around the blocked. The person had problems with using a certificate to authenticate so we had to go with a preshared key. You create the needed key file with:</p>
+<blockquote>
+<p>openvpn —genkey —secret &#x2F;etc&#x2F;openvpn&#x2F;openvpn-key.txt</p>
+</blockquote>
+<p>Securely copy this file over to the client machine that will access the server, e.g. using scp. The main configuration file is in <em>&#x2F;etc&#x2F;openvpn&#x2F;openvpn.conf</em>. My config looks as follows:</p>
+<blockquote>
+<p>port 1194 proto udp dev tun secret openvpn-key.txt ifconfig 192.168.2.1 192.168.2.2 keepalive 10 120 comp-lzo persist-key persist-tun status server-tcp.log verb 3</p>
+</blockquote>
+<p>Finally you have to (re)start the openvpn server by entering the following command: service openvpn restart   <strong>The client side</strong> For Windows I was using openvpn including the GUI, that you can find <a class="link"   target="_blank" rel="noopener" href="http://openvpn.se/" >here<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. For Mac OS X you can use <a class="link"   target="_blank" rel="noopener" href="http://tunnelblick.net/" >Tunnelblick<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Both have the ability to use more than a single VPN configuration. This way you could for example set up a VPN server in the US and EU. Here are the Windows instructions (which are basically identical to those of Tunnelblick). Get the secrets file (<em>openvpn-key.txt</em>) and move it to the openvpn&#x2F;config directory on your PC. Along with that file you need the actual configuration file, the file extension has to be .ovpn. So for example use <em>AmazonEC2.ovpn</em>. My config includes the following:</p>
+<blockquote>
+<p>dev tun proto udp remote INSERT-YOUR-COMPLETE-PUBLIC-EC2-HOSTNAME-HERE 1194 resolv-retry infinite nobind secret openvpn-key.txt ifconfig 192.168.2.2 192.168.2.1 comp-lzo verb 3 dhcp-option DNS 172.16.0.23 redirect-gateway def1</p>
+</blockquote>
+<p>After this has been done, you have to allow incoming packets for the port and protocol. These can be configured in the Amazon AWS Management Console under “Security Groups”. In my example I’m using Port 1194&#x2F;udp. You have to see if these ports are accessible from your client, which usually is the case, but if your provider (or government) decides to block this, you have to set matching alternatives on the server, client and the Management Console. <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://holgr.com/blog/wp-content/uploads/2009/06/Security-Groups-1024x720.png"
+                      alt="Security Groups" title="Security Groups"
+                > Now, after all files have been created and you set up the Amazon security group you should be able to connect to the VPN server. But you’ll notice that you are not able to access the internet just yet. The traffic goes to the Amazon host but it can’t get any further. For this you need to enable masquerading and IP forwarding on the server. So, it’s back to the command line once again. Change the directory <em>&#x2F;etc&#x2F;sysconfig</em> and edit - or if necessary create - a file called iptables, which includes the firewall configuration. For the basic needs it’s enough to enable masquerading using the following lines:</p>
+<blockquote>
+<p>*nat :POSTROUTING ACCEPT [0:0] :PREROUTING ACCEPT [0:0] :OUTPUT ACCEPT [0:0] -A POSTROUTING -s 192.168.2.0&#x2F;24 -d 0.0.0.0&#x2F;0 -o eth0 -j MASQUERADE COMMIT</p>
+</blockquote>
+<p>Reload the firewall and make it start on boot by entering: service iptables restart chkconfig iptables on The last thing before you get traffic accross the net through the VPN is to enable IP forwarding in the initialization file for openvpn. This is found in <em>&#x2F;etc&#x2F;init.d&#x2F;openvpn</em>. On line 121 you find a commented command that reads:</p>
+<blockquote>
+<p>#echo 1 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;ip_forward</p>
+</blockquote>
+<p>Remove the ‘#’ so it only reads:</p>
+<blockquote>
+<p>echo 1 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;ip_forward</p>
+</blockquote>
+<p>Restart the openvpn once again and make it start upon boot by entering:</p>
+<blockquote>
+<p>service openvpn restart chkconfig openvpn on</p>
+</blockquote>
+<p>Now, you should be able to access the internet through the VPN. Try opening your favorite browser and go to a website. To check if the traffic actually goes through the EC2 host you can tap into the data stream by entering the following on the server:</p>
+<blockquote>
+<p>tcpdump dst port 80 or src port 80</p>
+</blockquote>
+<p>This will show any traffic that goes in or out over port 80. You’ll see something like this (I used google.com in this example):</p>
+<blockquote>
+<p>tcpdump: verbose output suppressed, use -v or -vv for full protocol decode listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes 16:00:58.931975 IP domU-12-31-39-04-51-13.compute-1.internal.exbit-escp &gt; he-in-f147.google.com.http: S 683836316:683836316(0) win 64240 16:00:58.934843 IP he-in-f147.google.com.http &gt; domU-12-31-39-04-51-13.compute-1.internal.exbit-escp: S 4130254439:4130254439(0) ack 683836317 win 5720 16:00:59.041912 IP domU-12-31-39-04-51-13.compute-1.internal.exbit-escp &gt; he-in-f147.google.com.http: . ack 1 win 64240 16:00:59.046925 IP domU-12-31-39-04-51-13.compute-1.internal.exbit-escp &gt; he-in-f147.google.com.http: P 1:499(498) ack 1 win 64240 16:00:59.049763 IP he-in-f147.google.com.http &gt; domU-12-31-39-04-51-13.compute-1.internal.exbit-escp: . ack 499 win 6432</p>
+</blockquote>
+<p>At this point you’re basically golden and have a working VPN. <strong>One more thing (okay, actually two)</strong> Now, two things that might happen to you is that you a) don’t want to change your client config to match the remote hostname which usually changes when you terminate (shutdown) your EC2 instance and b) don’t want to make all these changes between termating your instances. Point a) is pretty simple to accomplish: get yourself a dynamic DNS for example at dyndns.com and a program that automatically runs when you boot the instance. For FC8 there’s a tool called inadyn. Again install it using yum and make it start during bootup with:</p>
+<blockquote>
+<p>yum -y install inadyn chkconfig inadyn on</p>
+</blockquote>
+<p>The configuration is found in <em>&#x2F;etc&#x2F;inadyn.conf</em>. It’s pretty much self-describing. Enter your credentials that you used at dyndns and enter your chosen hostname and finally start the service:</p>
+<blockquote>
+<p>service inadyn start</p>
+</blockquote>
+<p>Within a matter of seconds you should be able to access your host via the dynamic DNS hostname. Point b) requires a bit more work. Remember that once you terminate an EC2 instance you will lose any changes that you’ve made to it. So you’ll want to create your own AMI. How you do that is described in Amazon’s <a class="link"   target="_blank" rel="noopener" href="http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/" >Getting Started Guide<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Create your instance only after you are sure to have a working setup. When you’re done with these steps, you have a openvpn server that you can boot whenever you need it. Remember that a running instance will cost you at least 0.10 USD per hour, even if it’s doing nothing! Make sure you terminate it when you do not need it. I’m sure this guide is incomplete and the VPN setup can be optimized but I wrote it basically within 30 minutes. If you find anything wrong that shouldn’t be in here let me know in the comments. Thanks!</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> Setting up OpenVPN on Amazon’s EC2Posted on June 23, 2009 by Holger Eilhard</li>
+        <li><strong>作者:</strong> jicky huang</li>
+        <li><strong>创建于
+                :</strong> 2012-08-04 22:31:28</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2025-10-02 22:11:45
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://www.hxfund.cn/2012/08/04/setting-up-openvpn-on-amazons-ec2posted-on-june-23-2009-by-holger-eilhard/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2012/08/04/ec2-ami%E5%AE%9E%E4%BE%8B-%E9%85%8D%E7%BD%AE-vpn%EF%BC%88pptp%EF%BC%89/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">EC2 AMI实例 配置 VPN（PPTP）</span>
+						<span class="post-nav-item">上一篇</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2010/07/17/linux-interfaces%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">linux interfaces文件配置</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">目录</div>
+		<div class="page-title">Setting up OpenVPN on Amazon’s EC2Posted on June 23, 2009 by Holger Eilhard</div>
+		
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container text-center" style="padding: 16px 0;">
+        <div style="line-height:1.2;">
+            &copy; 2025 <a href="/">jicky</a> | All rights reserved.
+        </div>
+        <div style="line-height:1.2; margin-top: 8px;">
+            Powered by <a href="/">jicky</a>
+        </div>
+        <div style="line-height:1.2; margin-top: 8px;">
+            <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备16014739号-1</a>
+        </div>
+    </div>
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+			
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+    
+
+                
+                    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+                        
+
+                            
+                                
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+                                    
+
+                                        
+                                            
+<script src="/js/build/tools/runtime.js"></script>
+
+                                                
+<script src="/js/build/libs/odometer.min.js"></script>
+
+                                                    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+                                                        
+
+                                                            
+                                                                
+<script src="/js/build/libs/Typed.min.js"></script>
+
+                                                                    
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+                                                                        
+
+                                                                            
+
+                                                                                                        
+                                                                                                            
+<script src="/js/build/libs/minimasonry.min.js"></script>
+
+                                                                                                                
+<script src="/js/build/plugins/masonry.js" type="module"></script>
+
+                                                                                                                    
+
+                                                                                                                        
+
+                                                                                                                                    
+                                                                                                                                        
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+                                                                                                                                            
+
+                                                                                                                                                
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+                                                                                                                                                    
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+                                                                                                                                                        
+
+                                                                                                                                                                    
+
+                                                                                                                                                                                
+                                                                                                                                                                                    
+<script src="/js/build/layouts/setup-cursor.js" type="module"></script>
+
+                                                                                                                                                                                        
+				
+							<div id="particles-js"
+								style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; background: transparent;">
+							</div>
+							
+								<script>
+									document.addEventListener('DOMContentLoaded', function () {
+										const mainDiv = document.getElementById("particles-js");
+										console.log("Particles.js initialization started");
+										console.log("Main div:", mainDiv);
+
+										if (mainDiv) {
+											console.log("Initializing particles.js");
+											particlesJS("particles-js", {
+												"particles": {
+													"number": {
+														"value": 100,
+														"density": {
+															"enable": true,
+															"value_area": 800
+														}
+													},
+													"color": {
+														"value": "#ffffff"
+													},
+													"shape": {
+														"type": "circle",
+														"stroke": {
+															"width": 0,
+															"color": "#000000"
+														},
+														"polygon": {
+															"nb_sides": 5
+														}
+													},
+													"opacity": {
+														"value": 0.5,
+														"random": true,
+														"anim": {
+															"enable": true,
+															"speed": 1,
+															"opacity_min": 0.1,
+															"sync": false
+														}
+													},
+													"size": {
+														"value": 3,
+														"random": true,
+														"anim": {
+															"enable": true,
+															"speed": 2,
+															"size_min": 0.1,
+															"sync": false
+														}
+													},
+													"line_linked": {
+														"enable": false,
+														"distance": 150,
+														"color": "#ffffff",
+														"opacity": 0.4,
+														"width": 1
+													},
+													"move": {
+														"enable": true,
+														"speed": 1,
+														"direction": "bottom",
+														"random": true,
+														"straight": false,
+														"out_mode": "out",
+														"bounce": false,
+														"attract": {
+															"enable": false,
+															"rotateX": 600,
+															"rotateY": 1200
+														}
+													}
+												},
+												"interactivity": {
+													"detect_on": "canvas",
+													"events": {
+														"onhover": {
+															"enable": false,
+															"mode": "repulse"
+														},
+														"onclick": {
+															"enable": false,
+															"mode": "push"
+														},
+														"resize": true
+													},
+													"modes": {
+														"grab": {
+															"distance": 400,
+															"line_linked": {
+																"opacity": 1
+															}
+														},
+														"bubble": {
+															"distance": 400,
+															"size": 40,
+															"duration": 2,
+															"opacity": 8,
+															"speed": 3
+														},
+														"repulse": {
+															"distance": 200
+														},
+														"push": {
+															"particles_nb": 4
+														},
+														"remove": {
+															"particles_nb": 2
+														}
+													}
+												},
+												"retina_detect": true
+											});
+											console.log("Particles.js initialization completed");
+										} else {
+											console.log("Particles.js container not found");
+										}
+									});
+								</script>
+								
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+
+</html>

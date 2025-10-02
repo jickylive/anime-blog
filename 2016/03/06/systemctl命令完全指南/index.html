@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme defaultone">
+    
+            <meta name="author" content="jicky huang">
+            <!-- preconnect -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <!-- Source Sans Pro font -->
+            <link
+                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+            <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
+
+            
+                                    <!--- Seo Part-->
+                                    
+                                        <link rel="canonical" href="https://www.hxfund.cn/2016/03/06/systemctl命令完全指南/"/>
+                                            <meta name="robots" content="index,follow">
+                                            <meta name="googlebot" content="index,follow">
+                                            <meta name="revisit-after" content="1 days">
+
+                                            
+                                                
+                                                    
+                                                        <meta name="description" content="This is your blog.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="systemctl命令完全指南">
+<meta property="og:url" content="https://www.hxfund.cn/2016/03/06/systemctl%E5%91%BD%E4%BB%A4%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="黄氏寻宗">
+<meta property="og:description" content="This is your blog.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.hxfund.cn/images/og.webp">
+<meta property="article:published_time" content="2016-03-06T04:38:49.000Z">
+<meta property="article:modified_time" content="2025-10-02T14:11:45.851Z">
+<meta property="article:author" content="jicky huang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.hxfund.cn/images/og.webp">
+                                                            
+                                                                
+                                                                        <!--- Icon Part-->
+                                                                        <link rel="icon" type="image/png"
+                                                                            href="/images/favicon.png"
+                                                                            sizes="192x192">
+                                                                        <link rel="apple-touch-icon" sizes="180x180"
+                                                                            href="/images/favicon.png">
+                                                                        <meta name="theme-color"
+                                                                            content="#A31F34">
+                                                                        <link rel="shortcut icon" href="/images/favicon.png">
+                                                                            <!--- Page Info-->
+                                                                            
+                                                                                <title>
+                                                                                    
+                                                                                        systemctl命令完全指南 | 黄氏寻宗
+                                                                                                
+                                                                                </title>
+
+                                                                                
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+                                                                                    <!--- Inject Part-->
+                                                                                    
+
+                                                                                                                        
+<link rel="stylesheet" href="/css/style.css">
+
+
+                                                                                                                            
+                                                                                                                                        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+                                                                                                                                            
+
+                                                                                                                                                
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+                                                                                                                                                    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+                                                                                                                                                        <!--- Font Part-->
+                                                                                                                                                        
+                                                                                                                                                            <link
+                                                                                                                                                                href=""
+                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                            
+                                                                                                                                                                
+                                                                                                                                                                        
+                                                                                                                                                                            <link
+                                                                                                                                                                                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                                            
+                                                                                                                                                                                
+                                                                                                                                                                                    <link
+                                                                                                                                                                                        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                        rel="stylesheet">
+                                                                                                                                                                                    
+                                                                                                                                                                                        
+                                                                                                                                                                                            <link
+                                                                                                                                                                                                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                                                            
+                                                                                                                                                                                                
+                                                                                                                                                                                                    
+<script src="/js/build/libs/anime.min.js"></script>
+
+                                                                                                                                                                                                        
+
+                                                                                                                                                                                                            <script id="hexo-configurations">
+    window.config = {"hostname":"www.hxfund.cn","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"Recommended Reading","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"},"english":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"},"title":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/og.webp","description":"This is your blog."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/main_bg_ligth.png","dark":"/images/main_bg.png"},"title":"黄氏寻宗","subtitle":{"text":["Welcome"],"hitokoto":{"enable":true,"show_author":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":true,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":"https://github.com/EvanNotFound/hexo-theme-redefine","instagram":null,"zhihu":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":50},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Gitee":{"path":"https://gitee.com/jickylive","icon":"fa-brands fa-github"},"Album":{"icon":"fa-solid fa-image","path":"/masonry/"},"Links":{"path":"/links/","icon":"fa-solid fa-link"},"About":{"path":"/about","icon":"fa-solid fa-circle-info"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":3,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":false,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":true};
+  </script>
+
+                                                                                                                                                                                                                <!--- Fontawesome Part-->
+                                                                                                                                                                                                                
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+                                                                                                                                                                                                                    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+                                                                                                                                                                                                                        
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+                                                                                                                                                                                                                            
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                    
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="黄氏寻宗" type="application/atom+xml">
+</head>
+
+	<body>
+		<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        黄氏寻宗
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/favicon.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                黄氏寻宗
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   target="_blank" rel="noopener" href="https://gitee.com/jickylive"
+                                        >
+                                    <i class="fa-brands fa-github fa-fw"></i>
+                                    GITEE
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    ALBUM
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/links/"
+                                        >
+                                    <i class="fa-solid fa-link fa-fw"></i>
+                                    链接
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/about"
+                                        >
+                                    <i class="fa-solid fa-circle-info fa-fw"></i>
+                                    关于
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           target="_blank" rel="noopener" href="https://gitee.com/jickylive"
+                        >
+                            <span>
+                                GITEE
+                            </span>
+                            
+                                <i class="fa-brands fa-github fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                ALBUM
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/links/"
+                        >
+                            <span>
+                                链接
+                            </span>
+                            
+                                <i class="fa-solid fa-link fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/about"
+                        >
+                            <span>
+                                关于
+                            </span>
+                            
+                                <i class="fa-solid fa-circle-info fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <!-- <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">57</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a> -->
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20"
+        href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">
+            74
+        </div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">systemctl命令完全指南</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/avatar-0.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">jicky huang</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2016-03-06 12:38:49</span>
+        <span class="mobile">2016-03-06 12:38:49</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-10-02 22:11:45</span>
+            <span class="mobile">2025-10-02 22:11:45</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/IT%E6%8A%80%E6%9C%AF/">IT技术</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="systemctl命令完全指南"><a href="#systemctl命令完全指南" class="headerlink" title="systemctl命令完全指南"></a>systemctl命令完全指南</h1><p>Systemctl 是一个 systemd 工具，主要负责控制 systemd 系统和服务管理器。Systemd 是一个系统管理守护进程、工具和库的集合，用于取代 System V 初始进程。Systemd 的功能是用于集中管理和配置类 UNIX 系统。在 Linux 生态系统中，Systemd 被部署到了大多数的标准 Linux 发行版中，只有为数不多的几个发行版尚未部署。Systemd 通常是所有其它守护进程的父进程，但并非总是如此。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://www.linuxdiyf.com/linux/uploads/allimg/150731/2-150I1095131a8.jpg"
+                      alt="systemd 架构图"
+                ></p>
+<h2 id="使用-Systemctl-管理-Linux-服务"><a href="#使用-Systemctl-管理-Linux-服务" class="headerlink" title="使用 Systemctl 管理 Linux 服务"></a>使用 Systemctl 管理 Linux 服务</h2><p>本文旨在阐明在运行 systemd 的系统上“如何控制系统和服务”。</p>
+<hr>
+<h2 id="Systemd-初体验和-Systemctl-基础"><a href="#Systemd-初体验和-Systemctl-基础" class="headerlink" title="Systemd 初体验和 Systemctl 基础"></a>Systemd 初体验和 Systemctl 基础</h2><h3 id="1-检查-systemd-是否安装及版本"><a href="#1-检查-systemd-是否安装及版本" class="headerlink" title="1. 检查 systemd 是否安装及版本"></a>1. 检查 systemd 是否安装及版本</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd --version</span><br></pre></td></tr></table></figure></div>
+
+<p>输出示例：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemd 215</span><br><span class="line">+PAM +AUDIT +SELINUX +IMA +SYSVINIT +LIBCRYPTSETUP +GCRYPT +ACL +XZ -SECCOMP -APPARMOR</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-检查-systemd-和-systemctl-的安装位置"><a href="#2-检查-systemd-和-systemctl-的安装位置" class="headerlink" title="2. 检查 systemd 和 systemctl 的安装位置"></a>2. 检查 systemd 和 systemctl 的安装位置</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">whereis systemd</span><br><span class="line">whereis systemctl</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-检查-systemd-是否运行"><a href="#3-检查-systemd-是否运行" class="headerlink" title="3. 检查 systemd 是否运行"></a>3. 检查 systemd 是否运行</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -eaf | grep [s]ystemd</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>注意：systemd 作为父进程（PID&#x3D;1）运行。</p>
+</blockquote>
+<h3 id="4-分析-systemd-启动进程"><a href="#4-分析-systemd-启动进程" class="headerlink" title="4. 分析 systemd 启动进程"></a>4. 分析 systemd 启动进程</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-analyze</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="5-分析启动时各进程耗时"><a href="#5-分析启动时各进程耗时" class="headerlink" title="5. 分析启动时各进程耗时"></a>5. 分析启动时各进程耗时</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-analyze blame</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="6-分析启动时的关键链"><a href="#6-分析启动时的关键链" class="headerlink" title="6. 分析启动时的关键链"></a>6. 分析启动时的关键链</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-analyze critical-chain</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>重要：Systemctl 接受服务（.service）、挂载点（.mount）、套接口（.socket）和设备（.device）作为单元。</p>
+</blockquote>
+<hr>
+<h2 id="Systemctl-常用操作"><a href="#Systemctl-常用操作" class="headerlink" title="Systemctl 常用操作"></a>Systemctl 常用操作</h2><h3 id="7-列出所有可用单元"><a href="#7-列出所有可用单元" class="headerlink" title="7. 列出所有可用单元"></a>7. 列出所有可用单元</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="8-列出所有运行中单元"><a href="#8-列出所有运行中单元" class="headerlink" title="8. 列出所有运行中单元"></a>8. 列出所有运行中单元</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="9-列出所有失败单元"><a href="#9-列出所有失败单元" class="headerlink" title="9. 列出所有失败单元"></a>9. 列出所有失败单元</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl --failed</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="10-检查某单元是否启用"><a href="#10-检查某单元是否启用" class="headerlink" title="10. 检查某单元是否启用"></a>10. 检查某单元是否启用</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl is-enabled crond.service</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="11-检查服务是否运行"><a href="#11-检查服务是否运行" class="headerlink" title="11. 检查服务是否运行"></a>11. 检查服务是否运行</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.service</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="控制和管理服务"><a href="#控制和管理服务" class="headerlink" title="控制和管理服务"></a>控制和管理服务</h2><h3 id="12-列出所有服务"><a href="#12-列出所有服务" class="headerlink" title="12. 列出所有服务"></a>12. 列出所有服务</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --<span class="built_in">type</span>=service</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="13-启动、重启、停止、重载服务及检查状态"><a href="#13-启动、重启、停止、重载服务及检查状态" class="headerlink" title="13. 启动、重启、停止、重载服务及检查状态"></a>13. 启动、重启、停止、重载服务及检查状态</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl start httpd.service</span><br><span class="line">systemctl restart httpd.service</span><br><span class="line">systemctl stop httpd.service</span><br><span class="line">systemctl reload httpd.service</span><br><span class="line">systemctl status httpd.service</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>注意：start、restart、stop、reload 命令无输出，status 命令有输出。</p>
+</blockquote>
+<h3 id="14-启用-禁用服务（开机自启）"><a href="#14-启用-禁用服务（开机自启）" class="headerlink" title="14. 启用&#x2F;禁用服务（开机自启）"></a>14. 启用&#x2F;禁用服务（开机自启）</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl is-active httpd.service</span><br><span class="line">systemctl <span class="built_in">enable</span> httpd.service</span><br><span class="line">systemctl <span class="built_in">disable</span> httpd.service</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="15-屏蔽-取消屏蔽服务"><a href="#15-屏蔽-取消屏蔽服务" class="headerlink" title="15. 屏蔽&#x2F;取消屏蔽服务"></a>15. 屏蔽&#x2F;取消屏蔽服务</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl mask httpd.service</span><br><span class="line">systemctl unmask httpd.service</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="16-杀死服务"><a href="#16-杀死服务" class="headerlink" title="16. 杀死服务"></a>16. 杀死服务</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">kill</span> httpd</span><br><span class="line">systemctl status httpd</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="控制和管理挂载点"><a href="#控制和管理挂载点" class="headerlink" title="控制和管理挂载点"></a>控制和管理挂载点</h2><h3 id="17-列出所有挂载点"><a href="#17-列出所有挂载点" class="headerlink" title="17. 列出所有挂载点"></a>17. 列出所有挂载点</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --<span class="built_in">type</span>=mount</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="18-挂载、卸载、重载挂载点及检查状态"><a href="#18-挂载、卸载、重载挂载点及检查状态" class="headerlink" title="18. 挂载、卸载、重载挂载点及检查状态"></a>18. 挂载、卸载、重载挂载点及检查状态</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl start tmp.mount</span><br><span class="line">systemctl stop tmp.mount</span><br><span class="line">systemctl restart tmp.mount</span><br><span class="line">systemctl reload tmp.mount</span><br><span class="line">systemctl status tmp.mount</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="19-启用-禁用挂载点"><a href="#19-启用-禁用挂载点" class="headerlink" title="19. 启用&#x2F;禁用挂载点"></a>19. 启用&#x2F;禁用挂载点</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl is-active tmp.mount</span><br><span class="line">systemctl <span class="built_in">enable</span> tmp.mount</span><br><span class="line">systemctl <span class="built_in">disable</span> tmp.mount</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="20-屏蔽-取消屏蔽挂载点"><a href="#20-屏蔽-取消屏蔽挂载点" class="headerlink" title="20. 屏蔽&#x2F;取消屏蔽挂载点"></a>20. 屏蔽&#x2F;取消屏蔽挂载点</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl mask tmp.mount</span><br><span class="line">systemctl unmask tmp.mount</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="控制和管理套接口"><a href="#控制和管理套接口" class="headerlink" title="控制和管理套接口"></a>控制和管理套接口</h2><h3 id="21-列出所有套接口"><a href="#21-列出所有套接口" class="headerlink" title="21. 列出所有套接口"></a>21. 列出所有套接口</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --<span class="built_in">type</span>=socket</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="22-启动、重启、停止、重载套接口及检查状态"><a href="#22-启动、重启、停止、重载套接口及检查状态" class="headerlink" title="22. 启动、重启、停止、重载套接口及检查状态"></a>22. 启动、重启、停止、重载套接口及检查状态</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl start cups.socket</span><br><span class="line">systemctl restart cups.socket</span><br><span class="line">systemctl stop cups.socket</span><br><span class="line">systemctl reload cups.socket</span><br><span class="line">systemctl status cups.socket</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="23-启用-禁用套接口"><a href="#23-启用-禁用套接口" class="headerlink" title="23. 启用&#x2F;禁用套接口"></a>23. 启用&#x2F;禁用套接口</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl is-active cups.socket</span><br><span class="line">systemctl <span class="built_in">enable</span> cups.socket</span><br><span class="line">systemctl <span class="built_in">disable</span> cups.socket</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="24-屏蔽-取消屏蔽套接口"><a href="#24-屏蔽-取消屏蔽套接口" class="headerlink" title="24. 屏蔽&#x2F;取消屏蔽套接口"></a>24. 屏蔽&#x2F;取消屏蔽套接口</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl mask cups.socket</span><br><span class="line">systemctl unmask cups.socket</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="服务的-CPU-利用率（分配额）"><a href="#服务的-CPU-利用率（分配额）" class="headerlink" title="服务的 CPU 利用率（分配额）"></a>服务的 CPU 利用率（分配额）</h2><h3 id="25-获取服务-CPU-分配额"><a href="#25-获取服务-CPU-分配额" class="headerlink" title="25. 获取服务 CPU 分配额"></a>25. 获取服务 CPU 分配额</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl show -p CPUShares httpd.service</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>默认 CPU 分配份额为 1024。</p>
+</blockquote>
+<h3 id="26-设置服务-CPU-分配份额"><a href="#26-设置服务-CPU-分配份额" class="headerlink" title="26. 设置服务 CPU 分配份额"></a>26. 设置服务 CPU 分配份额</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl set-property httpd.service CPUShares=2000</span><br><span class="line">systemctl show -p CPUShares httpd.service</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>设置后会生成 <code>/etc/systemd/system/httpd.service.d/90-CPUShares.conf</code> 文件。</p>
+</blockquote>
+<h3 id="27-检查服务所有配置细节"><a href="#27-检查服务所有配置细节" class="headerlink" title="27. 检查服务所有配置细节"></a>27. 检查服务所有配置细节</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl show httpd</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="28-分析服务关键链"><a href="#28-分析服务关键链" class="headerlink" title="28. 分析服务关键链"></a>28. 分析服务关键链</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-analyze critical-chain httpd.service</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="29-获取服务依赖列表"><a href="#29-获取服务依赖列表" class="headerlink" title="29. 获取服务依赖列表"></a>29. 获取服务依赖列表</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-dependencies httpd.service</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="控制组相关"><a href="#控制组相关" class="headerlink" title="控制组相关"></a>控制组相关</h2><h3 id="30-按等级列出控制组"><a href="#30-按等级列出控制组" class="headerlink" title="30. 按等级列出控制组"></a>30. 按等级列出控制组</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-cgls</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="31-按-CPU、内存、I-O-列出控制组"><a href="#31-按-CPU、内存、I-O-列出控制组" class="headerlink" title="31. 按 CPU、内存、I&#x2F;O 列出控制组"></a>31. 按 CPU、内存、I&#x2F;O 列出控制组</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-cgtop</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="控制系统运行等级"><a href="#控制系统运行等级" class="headerlink" title="控制系统运行等级"></a>控制系统运行等级</h2><h3 id="32-启动系统救援模式"><a href="#32-启动系统救援模式" class="headerlink" title="32. 启动系统救援模式"></a>32. 启动系统救援模式</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl rescue</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="33-进入紧急模式"><a href="#33-进入紧急模式" class="headerlink" title="33. 进入紧急模式"></a>33. 进入紧急模式</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl emergency</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="34-列出当前运行等级"><a href="#34-列出当前运行等级" class="headerlink" title="34. 列出当前运行等级"></a>34. 列出当前运行等级</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl get-default</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="35-启动图形模式（运行等级5）"><a href="#35-启动图形模式（运行等级5）" class="headerlink" title="35. 启动图形模式（运行等级5）"></a>35. 启动图形模式（运行等级5）</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl isolate runlevel5.target</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">systemctl isolate graphical.target</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="36-启动多用户模式（运行等级3）"><a href="#36-启动多用户模式（运行等级3）" class="headerlink" title="36. 启动多用户模式（运行等级3）"></a>36. 启动多用户模式（运行等级3）</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl isolate runlevel3.target</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">systemctl isolate multi-user.target</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="37-设置默认运行等级"><a href="#37-设置默认运行等级" class="headerlink" title="37. 设置默认运行等级"></a>37. 设置默认运行等级</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl set-default runlevel3.target</span><br><span class="line">systemctl set-default runlevel5.target</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="38-重启、停止、挂起、休眠系统"><a href="#38-重启、停止、挂起、休眠系统" class="headerlink" title="38. 重启、停止、挂起、休眠系统"></a>38. 重启、停止、挂起、休眠系统</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl reboot</span><br><span class="line">systemctl halt</span><br><span class="line">systemctl <span class="built_in">suspend</span></span><br><span class="line">systemctl hibernate</span><br><span class="line">systemctl hybrid-sleep</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="运行等级说明"><a href="#运行等级说明" class="headerlink" title="运行等级说明"></a>运行等级说明</h2><ul>
+<li>Runlevel 0 : 关闭系统</li>
+<li>Runlevel 1 : 救援&#x2F;维护模式</li>
+<li>Runlevel 3 : 多用户，无图形系统</li>
+<li>Runlevel 4 : 多用户，无图形系统</li>
+<li>Runlevel 5 : 多用户，图形化系统</li>
+<li>Runlevel 6 : 关闭并重启机器</li>
+</ul>
+<hr>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="http://www.linuxdiyf.com/linux/11642.html" >教大家几个基本 systemctl 的用法<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="http://www.linuxdiyf.com/linux/3800.html" >CentOS 7 上 systemctl 的用法<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="http://www.linuxdiyf.com/linux/1075.html" >在 CentOS 7 上利用 systemctl 添加自定义系统服务<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+</ul>
+<p>via: <a class="link"   target="_blank" rel="noopener" href="http://www.linuxdiyf.com/linux/13088.html" >http://www.linuxdiyf.com/linux/13088.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> systemctl命令完全指南</li>
+        <li><strong>作者:</strong> jicky huang</li>
+        <li><strong>创建于
+                :</strong> 2016-03-06 12:38:49</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2025-10-02 22:11:45
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://www.hxfund.cn/2016/03/06/systemctl命令完全指南/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2016/03/06/failed-to-start-mysql-service-unit-mysql-service-is-masked/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Failed to start mysql.service: Unit mysql.service is masked.</span>
+						<span class="post-nav-item">上一篇</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2016/03/04/ubuntu%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Ubuntu完全教程</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">目录</div>
+		<div class="page-title">systemctl命令完全指南</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#systemctl%E5%91%BD%E4%BB%A4%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="nav-text">systemctl命令完全指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Systemctl-%E7%AE%A1%E7%90%86-Linux-%E6%9C%8D%E5%8A%A1"><span class="nav-text">使用 Systemctl 管理 Linux 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Systemd-%E5%88%9D%E4%BD%93%E9%AA%8C%E5%92%8C-Systemctl-%E5%9F%BA%E7%A1%80"><span class="nav-text">Systemd 初体验和 Systemctl 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A3%80%E6%9F%A5-systemd-%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E5%8F%8A%E7%89%88%E6%9C%AC"><span class="nav-text">1. 检查 systemd 是否安装及版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A3%80%E6%9F%A5-systemd-%E5%92%8C-systemctl-%E7%9A%84%E5%AE%89%E8%A3%85%E4%BD%8D%E7%BD%AE"><span class="nav-text">2. 检查 systemd 和 systemctl 的安装位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%A3%80%E6%9F%A5-systemd-%E6%98%AF%E5%90%A6%E8%BF%90%E8%A1%8C"><span class="nav-text">3. 检查 systemd 是否运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%86%E6%9E%90-systemd-%E5%90%AF%E5%8A%A8%E8%BF%9B%E7%A8%8B"><span class="nav-text">4. 分析 systemd 启动进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%88%86%E6%9E%90%E5%90%AF%E5%8A%A8%E6%97%B6%E5%90%84%E8%BF%9B%E7%A8%8B%E8%80%97%E6%97%B6"><span class="nav-text">5. 分析启动时各进程耗时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%88%86%E6%9E%90%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84%E5%85%B3%E9%94%AE%E9%93%BE"><span class="nav-text">6. 分析启动时的关键链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Systemctl-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-text">Systemctl 常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E5%8F%AF%E7%94%A8%E5%8D%95%E5%85%83"><span class="nav-text">7. 列出所有可用单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E8%BF%90%E8%A1%8C%E4%B8%AD%E5%8D%95%E5%85%83"><span class="nav-text">8. 列出所有运行中单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E5%A4%B1%E8%B4%A5%E5%8D%95%E5%85%83"><span class="nav-text">9. 列出所有失败单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E6%A3%80%E6%9F%A5%E6%9F%90%E5%8D%95%E5%85%83%E6%98%AF%E5%90%A6%E5%90%AF%E7%94%A8"><span class="nav-text">10. 检查某单元是否启用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E6%A3%80%E6%9F%A5%E6%9C%8D%E5%8A%A1%E6%98%AF%E5%90%A6%E8%BF%90%E8%A1%8C"><span class="nav-text">11. 检查服务是否运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%92%8C%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1"><span class="nav-text">控制和管理服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E6%9C%8D%E5%8A%A1"><span class="nav-text">12. 列出所有服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E5%90%AF%E5%8A%A8%E3%80%81%E9%87%8D%E5%90%AF%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E9%87%8D%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%8F%8A%E6%A3%80%E6%9F%A5%E7%8A%B6%E6%80%81"><span class="nav-text">13. 启动、重启、停止、重载服务及检查状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-%E5%90%AF%E7%94%A8-%E7%A6%81%E7%94%A8%E6%9C%8D%E5%8A%A1%EF%BC%88%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%EF%BC%89"><span class="nav-text">14. 启用&#x2F;禁用服务（开机自启）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-%E5%B1%8F%E8%94%BD-%E5%8F%96%E6%B6%88%E5%B1%8F%E8%94%BD%E6%9C%8D%E5%8A%A1"><span class="nav-text">15. 屏蔽&#x2F;取消屏蔽服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-%E6%9D%80%E6%AD%BB%E6%9C%8D%E5%8A%A1"><span class="nav-text">16. 杀死服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%92%8C%E7%AE%A1%E7%90%86%E6%8C%82%E8%BD%BD%E7%82%B9"><span class="nav-text">控制和管理挂载点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#17-%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E6%8C%82%E8%BD%BD%E7%82%B9"><span class="nav-text">17. 列出所有挂载点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-%E6%8C%82%E8%BD%BD%E3%80%81%E5%8D%B8%E8%BD%BD%E3%80%81%E9%87%8D%E8%BD%BD%E6%8C%82%E8%BD%BD%E7%82%B9%E5%8F%8A%E6%A3%80%E6%9F%A5%E7%8A%B6%E6%80%81"><span class="nav-text">18. 挂载、卸载、重载挂载点及检查状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-%E5%90%AF%E7%94%A8-%E7%A6%81%E7%94%A8%E6%8C%82%E8%BD%BD%E7%82%B9"><span class="nav-text">19. 启用&#x2F;禁用挂载点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-%E5%B1%8F%E8%94%BD-%E5%8F%96%E6%B6%88%E5%B1%8F%E8%94%BD%E6%8C%82%E8%BD%BD%E7%82%B9"><span class="nav-text">20. 屏蔽&#x2F;取消屏蔽挂载点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%92%8C%E7%AE%A1%E7%90%86%E5%A5%97%E6%8E%A5%E5%8F%A3"><span class="nav-text">控制和管理套接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#21-%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E5%A5%97%E6%8E%A5%E5%8F%A3"><span class="nav-text">21. 列出所有套接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-%E5%90%AF%E5%8A%A8%E3%80%81%E9%87%8D%E5%90%AF%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E9%87%8D%E8%BD%BD%E5%A5%97%E6%8E%A5%E5%8F%A3%E5%8F%8A%E6%A3%80%E6%9F%A5%E7%8A%B6%E6%80%81"><span class="nav-text">22. 启动、重启、停止、重载套接口及检查状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-%E5%90%AF%E7%94%A8-%E7%A6%81%E7%94%A8%E5%A5%97%E6%8E%A5%E5%8F%A3"><span class="nav-text">23. 启用&#x2F;禁用套接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-%E5%B1%8F%E8%94%BD-%E5%8F%96%E6%B6%88%E5%B1%8F%E8%94%BD%E5%A5%97%E6%8E%A5%E5%8F%A3"><span class="nav-text">24. 屏蔽&#x2F;取消屏蔽套接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84-CPU-%E5%88%A9%E7%94%A8%E7%8E%87%EF%BC%88%E5%88%86%E9%85%8D%E9%A2%9D%EF%BC%89"><span class="nav-text">服务的 CPU 利用率（分配额）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#25-%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1-CPU-%E5%88%86%E9%85%8D%E9%A2%9D"><span class="nav-text">25. 获取服务 CPU 分配额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#26-%E8%AE%BE%E7%BD%AE%E6%9C%8D%E5%8A%A1-CPU-%E5%88%86%E9%85%8D%E4%BB%BD%E9%A2%9D"><span class="nav-text">26. 设置服务 CPU 分配份额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#27-%E6%A3%80%E6%9F%A5%E6%9C%8D%E5%8A%A1%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%E7%BB%86%E8%8A%82"><span class="nav-text">27. 检查服务所有配置细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#28-%E5%88%86%E6%9E%90%E6%9C%8D%E5%8A%A1%E5%85%B3%E9%94%AE%E9%93%BE"><span class="nav-text">28. 分析服务关键链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#29-%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96%E5%88%97%E8%A1%A8"><span class="nav-text">29. 获取服务依赖列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E7%BB%84%E7%9B%B8%E5%85%B3"><span class="nav-text">控制组相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#30-%E6%8C%89%E7%AD%89%E7%BA%A7%E5%88%97%E5%87%BA%E6%8E%A7%E5%88%B6%E7%BB%84"><span class="nav-text">30. 按等级列出控制组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#31-%E6%8C%89-CPU%E3%80%81%E5%86%85%E5%AD%98%E3%80%81I-O-%E5%88%97%E5%87%BA%E6%8E%A7%E5%88%B6%E7%BB%84"><span class="nav-text">31. 按 CPU、内存、I&#x2F;O 列出控制组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F%E8%BF%90%E8%A1%8C%E7%AD%89%E7%BA%A7"><span class="nav-text">控制系统运行等级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#32-%E5%90%AF%E5%8A%A8%E7%B3%BB%E7%BB%9F%E6%95%91%E6%8F%B4%E6%A8%A1%E5%BC%8F"><span class="nav-text">32. 启动系统救援模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-%E8%BF%9B%E5%85%A5%E7%B4%A7%E6%80%A5%E6%A8%A1%E5%BC%8F"><span class="nav-text">33. 进入紧急模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#34-%E5%88%97%E5%87%BA%E5%BD%93%E5%89%8D%E8%BF%90%E8%A1%8C%E7%AD%89%E7%BA%A7"><span class="nav-text">34. 列出当前运行等级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#35-%E5%90%AF%E5%8A%A8%E5%9B%BE%E5%BD%A2%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%BF%90%E8%A1%8C%E7%AD%89%E7%BA%A75%EF%BC%89"><span class="nav-text">35. 启动图形模式（运行等级5）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#36-%E5%90%AF%E5%8A%A8%E5%A4%9A%E7%94%A8%E6%88%B7%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%BF%90%E8%A1%8C%E7%AD%89%E7%BA%A73%EF%BC%89"><span class="nav-text">36. 启动多用户模式（运行等级3）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#37-%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E8%BF%90%E8%A1%8C%E7%AD%89%E7%BA%A7"><span class="nav-text">37. 设置默认运行等级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#38-%E9%87%8D%E5%90%AF%E3%80%81%E5%81%9C%E6%AD%A2%E3%80%81%E6%8C%82%E8%B5%B7%E3%80%81%E4%BC%91%E7%9C%A0%E7%B3%BB%E7%BB%9F"><span class="nav-text">38. 重启、停止、挂起、休眠系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%AD%89%E7%BA%A7%E8%AF%B4%E6%98%8E"><span class="nav-text">运行等级说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container text-center" style="padding: 16px 0;">
+        <div style="line-height:1.2;">
+            &copy; 2025 <a href="/">jicky</a> | All rights reserved.
+        </div>
+        <div style="line-height:1.2; margin-top: 8px;">
+            Powered by <a href="/">jicky</a>
+        </div>
+        <div style="line-height:1.2; margin-top: 8px;">
+            <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备16014739号-1</a>
+        </div>
+    </div>
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+			
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+    
+
+                
+                    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+                        
+
+                            
+                                
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+                                    
+
+                                        
+                                            
+<script src="/js/build/tools/runtime.js"></script>
+
+                                                
+<script src="/js/build/libs/odometer.min.js"></script>
+
+                                                    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+                                                        
+
+                                                            
+                                                                
+<script src="/js/build/libs/Typed.min.js"></script>
+
+                                                                    
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+                                                                        
+
+                                                                            
+
+                                                                                                        
+                                                                                                            
+<script src="/js/build/libs/minimasonry.min.js"></script>
+
+                                                                                                                
+<script src="/js/build/plugins/masonry.js" type="module"></script>
+
+                                                                                                                    
+
+                                                                                                                        
+
+                                                                                                                                    
+                                                                                                                                        
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+                                                                                                                                            
+
+                                                                                                                                                
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+                                                                                                                                                    
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+                                                                                                                                                        
+
+                                                                                                                                                                    
+
+                                                                                                                                                                                
+                                                                                                                                                                                    
+<script src="/js/build/layouts/setup-cursor.js" type="module"></script>
+
+                                                                                                                                                                                        
+				
+							<div id="particles-js"
+								style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; background: transparent;">
+							</div>
+							
+								<script>
+									document.addEventListener('DOMContentLoaded', function () {
+										const mainDiv = document.getElementById("particles-js");
+										console.log("Particles.js initialization started");
+										console.log("Main div:", mainDiv);
+
+										if (mainDiv) {
+											console.log("Initializing particles.js");
+											particlesJS("particles-js", {
+												"particles": {
+													"number": {
+														"value": 100,
+														"density": {
+															"enable": true,
+															"value_area": 800
+														}
+													},
+													"color": {
+														"value": "#ffffff"
+													},
+													"shape": {
+														"type": "circle",
+														"stroke": {
+															"width": 0,
+															"color": "#000000"
+														},
+														"polygon": {
+															"nb_sides": 5
+														}
+													},
+													"opacity": {
+														"value": 0.5,
+														"random": true,
+														"anim": {
+															"enable": true,
+															"speed": 1,
+															"opacity_min": 0.1,
+															"sync": false
+														}
+													},
+													"size": {
+														"value": 3,
+														"random": true,
+														"anim": {
+															"enable": true,
+															"speed": 2,
+															"size_min": 0.1,
+															"sync": false
+														}
+													},
+													"line_linked": {
+														"enable": false,
+														"distance": 150,
+														"color": "#ffffff",
+														"opacity": 0.4,
+														"width": 1
+													},
+													"move": {
+														"enable": true,
+														"speed": 1,
+														"direction": "bottom",
+														"random": true,
+														"straight": false,
+														"out_mode": "out",
+														"bounce": false,
+														"attract": {
+															"enable": false,
+															"rotateX": 600,
+															"rotateY": 1200
+														}
+													}
+												},
+												"interactivity": {
+													"detect_on": "canvas",
+													"events": {
+														"onhover": {
+															"enable": false,
+															"mode": "repulse"
+														},
+														"onclick": {
+															"enable": false,
+															"mode": "push"
+														},
+														"resize": true
+													},
+													"modes": {
+														"grab": {
+															"distance": 400,
+															"line_linked": {
+																"opacity": 1
+															}
+														},
+														"bubble": {
+															"distance": 400,
+															"size": 40,
+															"duration": 2,
+															"opacity": 8,
+															"speed": 3
+														},
+														"repulse": {
+															"distance": 200
+														},
+														"push": {
+															"particles_nb": 4
+														},
+														"remove": {
+															"particles_nb": 2
+														}
+													}
+												},
+												"retina_detect": true
+											});
+											console.log("Particles.js initialization completed");
+										} else {
+											console.log("Particles.js container not found");
+										}
+									});
+								</script>
+								
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+
+</html>

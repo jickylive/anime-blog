@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme defaultone">
+    
+            <meta name="author" content="jicky huang">
+            <!-- preconnect -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <!-- Source Sans Pro font -->
+            <link
+                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+            <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js"></script>
+
+            
+                                    <!--- Seo Part-->
+                                    
+                                        <link rel="canonical" href="https://www.hxfund.cn/2019/04/15/用程序来控制一个网页，实现自动输入等操作/"/>
+                                            <meta name="robots" content="index,follow">
+                                            <meta name="googlebot" content="index,follow">
+                                            <meta name="revisit-after" content="1 days">
+
+                                            
+                                                
+                                                    
+                                                        <meta name="description" content="This is your blog.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用程序来控制一个网页，实现自动输入等操作">
+<meta property="og:url" content="https://www.hxfund.cn/2019/04/15/%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%9D%A5%E6%8E%A7%E5%88%B6%E4%B8%80%E4%B8%AA%E7%BD%91%E9%A1%B5%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E8%BE%93%E5%85%A5%E7%AD%89%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="黄氏寻宗">
+<meta property="og:description" content="This is your blog.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.hxfund.cn/images/og.webp">
+<meta property="article:published_time" content="2019-04-15T13:08:17.000Z">
+<meta property="article:modified_time" content="2025-10-02T14:11:45.853Z">
+<meta property="article:author" content="jicky huang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.hxfund.cn/images/og.webp">
+                                                            
+                                                                
+                                                                        <!--- Icon Part-->
+                                                                        <link rel="icon" type="image/png"
+                                                                            href="/images/favicon.png"
+                                                                            sizes="192x192">
+                                                                        <link rel="apple-touch-icon" sizes="180x180"
+                                                                            href="/images/favicon.png">
+                                                                        <meta name="theme-color"
+                                                                            content="#A31F34">
+                                                                        <link rel="shortcut icon" href="/images/favicon.png">
+                                                                            <!--- Page Info-->
+                                                                            
+                                                                                <title>
+                                                                                    
+                                                                                        用程序来控制一个网页，实现自动输入等操作 | 黄氏寻宗
+                                                                                                
+                                                                                </title>
+
+                                                                                
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+                                                                                    <!--- Inject Part-->
+                                                                                    
+
+                                                                                                                        
+<link rel="stylesheet" href="/css/style.css">
+
+
+                                                                                                                            
+                                                                                                                                        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+                                                                                                                                            
+
+                                                                                                                                                
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+                                                                                                                                                    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+                                                                                                                                                        <!--- Font Part-->
+                                                                                                                                                        
+                                                                                                                                                            <link
+                                                                                                                                                                href=""
+                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                            
+                                                                                                                                                                
+                                                                                                                                                                        
+                                                                                                                                                                            <link
+                                                                                                                                                                                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                                            
+                                                                                                                                                                                
+                                                                                                                                                                                    <link
+                                                                                                                                                                                        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                        rel="stylesheet">
+                                                                                                                                                                                    
+                                                                                                                                                                                        
+                                                                                                                                                                                            <link
+                                                                                                                                                                                                href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+                                                                                                                                                                                                rel="stylesheet">
+                                                                                                                                                                                            
+                                                                                                                                                                                                
+                                                                                                                                                                                                    
+<script src="/js/build/libs/anime.min.js"></script>
+
+                                                                                                                                                                                                        
+
+                                                                                                                                                                                                            <script id="hexo-configurations">
+    window.config = {"hostname":"www.hxfund.cn","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"Recommended Reading","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"},"english":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"},"title":{"enable":true,"family":"'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif","url":"https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/og.webp","description":"This is your blog."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/main_bg_ligth.png","dark":"/images/main_bg.png"},"title":"黄氏寻宗","subtitle":{"text":["Welcome"],"hitokoto":{"enable":true,"show_author":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":true,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":"https://github.com/EvanNotFound/hexo-theme-redefine","instagram":null,"zhihu":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":50},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Gitee":{"path":"https://gitee.com/jickylive","icon":"fa-brands fa-github"},"Album":{"icon":"fa-solid fa-image","path":"/masonry/"},"Links":{"path":"/links/","icon":"fa-solid fa-link"},"About":{"path":"/about","icon":"fa-solid fa-circle-info"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":3,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":false,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":true};
+  </script>
+
+                                                                                                                                                                                                                <!--- Fontawesome Part-->
+                                                                                                                                                                                                                
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+                                                                                                                                                                                                                    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+                                                                                                                                                                                                                        
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+                                                                                                                                                                                                                            
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                    
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="黄氏寻宗" type="application/atom+xml">
+</head>
+
+	<body>
+		<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        黄氏寻宗
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/favicon.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                黄氏寻宗
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   target="_blank" rel="noopener" href="https://gitee.com/jickylive"
+                                        >
+                                    <i class="fa-brands fa-github fa-fw"></i>
+                                    GITEE
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    ALBUM
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/links/"
+                                        >
+                                    <i class="fa-solid fa-link fa-fw"></i>
+                                    链接
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/about"
+                                        >
+                                    <i class="fa-solid fa-circle-info fa-fw"></i>
+                                    关于
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           target="_blank" rel="noopener" href="https://gitee.com/jickylive"
+                        >
+                            <span>
+                                GITEE
+                            </span>
+                            
+                                <i class="fa-brands fa-github fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                ALBUM
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/links/"
+                        >
+                            <span>
+                                链接
+                            </span>
+                            
+                                <i class="fa-solid fa-link fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/about"
+                        >
+                            <span>
+                                关于
+                            </span>
+                            
+                                <i class="fa-solid fa-circle-info fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <!-- <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">57</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a> -->
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20"
+        href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">
+            74
+        </div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">用程序来控制一个网页，实现自动输入等操作</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/avatar-0.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">jicky huang</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2019-04-15 21:08:17</span>
+        <span class="mobile">2019-04-15 21:08:17</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-10-02 22:11:45</span>
+            <span class="mobile">2025-10-02 22:11:45</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/IT%E6%8A%80%E6%9C%AF/">IT技术</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p><strong>附：看到有朋友自己弄的时候出错了，所以我做了两个demo，一个excel版，另一个c＃版，有需要的朋友可以到文章最后下载参考一下。另外，文章改了一些疏漏。</strong></p>
+<p>首先今天要说的东西跟游戏无关，你是不是有时候会遇到，在某个网页上重复着几十次的简单而又无聊的录入或点击等工作？比如你的程序需要测试，需要注册大量的测试邮箱。比如你的老板是个变态，让你去各个论坛发大量的垃圾贴子（最无耻行为，纯属举例）。或者，你需要定时的到某一个网页上执行某一些行为，比如上班下班的出勤打卡系统，等等吧，</p>
+<p>如果有，那么我今天所介绍的或许会对你有帮助。<br>当然，如果你要操作的这些网页都是自己开发的，那么无所谓了，你在多开发个工具就行了，但是我说的上面这些都是第三方的网页，你控制不了它们，如果遇到上上述情况，而你是一个挨踢程序员，而你又选择老老实实的重复着这些无聊又费时的工作，那你就真该挨踢了。<br>要实现这些功能，你只需要用程序控制这些网页，让网页听你的就行了。要动手实现这一系列的功能，你需要做几个简单的准备。<br>1，OS环境：Windows<br>2，IE浏览器<br>3，工具：Excel或者Visual Studio<br>先来看看如何用Excel来控制一个网页。<br>新建一个Excel并且进入VBA，标准模式，什么？不知道VBA？你可以找我的两个老师问一下，他们一个姓百，另一个姓谷，诶？你说你也认识？那大家都是自己人了，你什么时候请吃饭啊？<br>如下图。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://lufylegend.com/lufylegend_blog_img/png/76.png"
+                     
+                ><br>我是日文系统，中文的你对照着自己来吧…<br>要对IE进行操作，首先需要引入两个插件<br>HTML Object Library<br>Microsoft Internet Controls<br>如图<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://lufylegend.com/lufylegend_blog_img/png/77.png"
+                     
+                ><br>打开IE，你只需要下面几行代码</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> Main()</span><br><span class="line">    <span class="keyword">Dim</span> ie <span class="keyword">As</span> <span class="type">Object</span></span><br><span class="line">    <span class="keyword">Set</span> ie = CreateObject(<span class="string">&quot;InternetExplorer.Application&quot;</span>)</span><br><span class="line">    ie.Visible = <span class="literal">True</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure></div>
+
+<p>比如我要打开百度，那就这样</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ie.Navigate <span class="string">&quot;http://www.baidu.com&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>接着你需要等待页面加载</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">While</span> ie.ReadyState &lt;&gt; <span class="number">4</span> <span class="built_in">Or</span> ie.Busy = <span class="literal">True</span></span><br><span class="line">DoEvents</span><br><span class="line">Wend</span><br></pre></td></tr></table></figure></div>
+
+<p>好了，百度打开了，是不是很简单，不过你也会说，打开个网页算什么，随便一个程序都可以吧，好吧，咱们下面来实现自动搜索。<br>首先，咱们用VBA在百度的输入框里输入几个文字，百度的输入框的代码如下</p>
+<div class="code-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;wd&quot;</span> <span class="attr">id</span>=<span class="string">&quot;kw1&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;100&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:474px;&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>那我们就可以通过这个id来对输入框进行输入，如下</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ie.Document.getElementById(<span class="string">&quot;kw1&quot;</span>).value = <span class="string">&quot;hellow world&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>如果你上面都没有出错的话，”hellow world”应该已经被加入到输入框里了。<br>那么下面用VBA来点击搜索按钮，进行搜索。百度的搜索按钮代码如下</p>
+<div class="code-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;百度一下&quot;</span> <span class="attr">id</span>=<span class="string">&quot;su1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn&quot;</span> <span class="attr">onmousedown</span>=<span class="string">&quot;this.className=&#x27;btn btn_h&#x27;&quot;</span> <span class="attr">onmouseout</span>=<span class="string">&quot;this.className=&#x27;btn&#x27;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>看到id了吧，那就简单了，下面这样来点击它</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ie.Document.getElementById(<span class="string">&quot;su1&quot;</span>).click</span><br></pre></td></tr></table></figure></div>
+
+<p>怎么样，自动搜索完成了吧<br>当然，这只是一个最简单的例子而已，如果没有id怎么办？你也可以下下面这样用它</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ie.document.all</span><br><span class="line">ie.document.body</span><br><span class="line">ie.document.getElementsByName</span><br><span class="line">ie.document.getElementsByTagName</span><br></pre></td></tr></table></figure></div>
+
+<p>看到了吧，和JS很像，如果你不愿意查相关的API的话，那你就拿JS的操作方法往上面套用吧<br>下面来看另一个页面的结构，比如下面这样</p>
+<div class="code-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">&quot;25%,50%,25%&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">&quot;frame_a.htm&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">&quot;frame_b.htm&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">&quot;frame_c.htm&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>如果你要操作这个页面的子页面，也很简单</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> objFRAME <span class="keyword">As</span> FramesCollection</span><br><span class="line"><span class="keyword">Set</span> objFRAME = ie.document.frames</span><br><span class="line"><span class="keyword">Dim</span> HW <span class="keyword">As</span> HTMLWindow2</span><br><span class="line"><span class="keyword">Set</span> HW = objFRAME(<span class="number">1</span>)</span><br><span class="line">HW.document.all</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
+
+<p>这个是操作索引为1的子页面，当然你也可以循环所有的子页面，来做的要做的事。<br>上面所介绍的都是先打开一个页面，然后再进行操作，如果需要操作一个已经打开的页面，你需要这样。</p>
+<div class="code-container" data-rel="Vb"><figure class="iseeu highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> objShell  <span class="keyword">As</span> <span class="type">Object</span></span><br><span class="line"><span class="keyword">Dim</span> objIE     <span class="keyword">As</span> <span class="type">Object</span></span><br><span class="line"><span class="keyword">Dim</span> n         <span class="keyword">As</span> <span class="type">Integer</span></span><br><span class="line"><span class="keyword">Set</span> objShell = CreateObject(<span class="string">&quot;Shell.Application&quot;</span>)</span><br><span class="line"><span class="keyword">For</span> n = objShell.Windows.Count <span class="keyword">To</span> <span class="number">1</span> <span class="keyword">Step</span> -<span class="number">1</span></span><br><span class="line"><span class="keyword">Set</span> objIE = objShell.Windows(n - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">If</span> objIE <span class="built_in">Is</span> <span class="literal">Nothing</span> <span class="keyword">Then</span></span><br><span class="line"><span class="keyword">Exit</span> <span class="keyword">For</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">If</span> Right(UCase(objIE.FullName), <span class="number">12</span>) = <span class="string">&quot;IEXPLORE.EXE&quot;</span> <span class="keyword">Then</span></span><br><span class="line">Debug.Print objIE.document.URL <span class="comment">&#x27;测试，输入URL</span></span><br><span class="line"><span class="keyword">If</span> objIE.document.URL = <span class="string">&quot;http://www.baidu.com&quot;</span> <span class="keyword">Then</span> <span class="comment">&#x27;看看是不是你要的页面</span></span><br><span class="line"><span class="comment">&#x27;找到你要操作的页面了，开始处理</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">Next</span></span><br><span class="line"><span class="keyword">Set</span> objShell = <span class="literal">Nothing</span></span><br></pre></td></tr></table></figure></div>
+
+<p>excel就说这么多了。  </p>
+<p>下面用.net来做，既然前面用了VBA，这里我就不用VB再重复了，换用C＃来实现。<br>打开Visual Studio，新建一个项目，同样，这次你需要引入三个插件<br>HTML Object Library<br>Microsoft Internet Controls<br>Microsoft Shell Controls And Automation<br>如图</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://lufylegend.com/lufylegend_blog_img/png/78.png"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://lufylegend.com/lufylegend_blog_img/png/79.png"
+                     
+                ></p>
+<p>启动IE，并打开百度</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SHDocVw.InternetExplorer ie = <span class="keyword">new</span> SHDocVw.InternetExplorer();</span><br><span class="line">ie.DocumentComplete += ie_DocumentComplete;<span class="comment">//等待页面读取事件</span></span><br><span class="line">ie.Navigate(<span class="string">&quot;http://www.baidu.com&quot;</span>);</span><br><span class="line">ie.Visible = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>等待页面读取你需要加一个事件</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ie_DocumentComplete</span>(<span class="params"><span class="built_in">object</span> pDisp, <span class="keyword">ref</span> <span class="built_in">object</span> URL</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    ie_Read = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>然后在设置了URL之后，调用下面的compWait();函数进行等待</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">bool</span> ie_Read = <span class="literal">false</span>;</span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">compWait</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span> (ie_Read != <span class="literal">true</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                Application.DoEvents();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br></pre></td></tr></table></figure></div>
+
+<p>获取Document</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shtml.HTMLDocument doc = ie.Document;</span><br></pre></td></tr></table></figure></div>
+
+<p>同样，在输入框里输入文字</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doc.getElementById(<span class="string">&quot;kw1&quot;</span>).<span class="keyword">value</span> = <span class="string">&quot;hellow world&quot;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>开始搜索。</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doc.getElementById(<span class="string">&quot;su1&quot;</span>).click();</span><br></pre></td></tr></table></figure></div>
+
+<p>下面利用c＃如何来操作已经打开的浏览器呢？看下面代码</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> SHDocVw.<span class="function">InternetExplorer <span class="title">getInternetExploer</span>(<span class="params"><span class="built_in">string</span> url</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">var</span> shell = <span class="keyword">new</span> Shell32.Shell();</span><br><span class="line"><span class="keyword">var</span> windows = (SHDocVw.IShellWindows)shell.Windows();</span><br><span class="line">SHDocVw.InternetExplorer ie;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="built_in">object</span> window <span class="keyword">in</span> windows)</span><br><span class="line">&#123;</span><br><span class="line">ie = window <span class="keyword">as</span> SHDocVw.InternetExplorer;</span><br><span class="line"><span class="keyword">if</span> (ie != <span class="literal">null</span> &amp;&amp; </span><br><span class="line"><span class="built_in">string</span>.Equals(System.IO.Path.GetFileName(ie.FullName),</span><br><span class="line"><span class="string">&quot;iexplore.exe&quot;</span>, StringComparison.CurrentCultureIgnoreCase))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (ie.LocationURL == url)</span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">return</span> ie;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>好了，其他的方法如</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">doc.body</span><br><span class="line">doc.getElementsByName</span><br><span class="line">doc.getElementsByTagName</span><br></pre></td></tr></table></figure></div>
+
+<p>等等，自己套用一下就可以了<br>接下来是frame操作，如下</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mshtml.HTMLDocument doc2 = ie.Document;</span><br><span class="line"><span class="keyword">var</span> frame = doc2.frames.item(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">var</span> doc = frame.Document;</span><br><span class="line">doc.getElementById</span><br></pre></td></tr></table></figure></div>
+
+<p>完了，操作方法基本上都大同小异吧。<br>在使用.net来操作浏览器的时候，我发现操作同一个页面时，如果页面发生刷新或者跳转等动作后，程序经常会出bug，网上搜索了一下，发现还真不是我一个人，那如何来避免呢？<br>因为使用.net来第一次操作页面的时候是肯定不会出错的，必须是2次或2次以上才会出现错误，所以我们可以做两个程序，在一个程序中调用另一个，调用完之后，就把它关闭掉，这样每次都相当于启动一个新程序，就不会出bug了。<br>启动一个新程序用下面代码</p>
+<div class="code-container" data-rel="Csharp"><figure class="iseeu highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">runSubWindow</span>(<span class="params">String command</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">ProcessStartInfo psInfo = <span class="keyword">new</span> ProcessStartInfo();</span><br><span class="line">psInfo.FileName = command; </span><br><span class="line">psInfo.CreateNoWindow = <span class="literal">true</span>;</span><br><span class="line">psInfo.UseShellExecute = <span class="literal">false</span>;</span><br><span class="line">psInfo.RedirectStandardOutput = <span class="literal">true</span>;</span><br><span class="line">Process p = Process.Start(psInfo);</span><br><span class="line"><span class="built_in">string</span> output = p.StandardOutput.ReadToEnd();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>?</p>
+<p>传入你的程序的路径，就可以打开它了。</p>
+<p>有了上面的知识，你可以自由的发挥了，比如你做一个定时程序，在上班时间自动打卡，然后自己接着睡一会儿….嘘！！这绝对不是我说的。</p>
+<p>demo源码下载</p>
+<p><a class="link"   target="_blank" rel="noopener" href="http://lufylegend.com/lufylegend_download/IE.zip" >http://lufylegend.com/lufylegend_download&#x2F;IE.zip<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>今天就介绍这么多了，欢迎继续关注我的博客</p>
+<p><strong>转载请注明：</strong><a class="link"   target="_blank" rel="noopener" href="http://blog.csdn.net/lufy_legend" >转自lufy_legend的博客http://blog.csdn.net/lufy_legend<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> 用程序来控制一个网页，实现自动输入等操作</li>
+        <li><strong>作者:</strong> jicky huang</li>
+        <li><strong>创建于
+                :</strong> 2019-04-15 21:08:17</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2025-10-02 22:11:45
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://www.hxfund.cn/2019/04/15/用程序来控制一个网页，实现自动输入等操作/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2019/04/15/vba-ie%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">VBA IE对象的操作方法</span>
+						<span class="post-nav-item">上一篇</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2019/04/12/%E6%90%AD%E5%BB%BA%E5%AE%89%E5%85%A8%E7%9A%84docker-private-registry-v2%E6%8C%87%E5%8D%97lets-encrypt/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">搭建安全的docker private registry v2指南(Let’s Encrypt)</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">目录</div>
+		<div class="page-title">用程序来控制一个网页，实现自动输入等操作</div>
+		
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container text-center" style="padding: 16px 0;">
+        <div style="line-height:1.2;">
+            &copy; 2025 <a href="/">jicky</a> | All rights reserved.
+        </div>
+        <div style="line-height:1.2; margin-top: 8px;">
+            Powered by <a href="/">jicky</a>
+        </div>
+        <div style="line-height:1.2; margin-top: 8px;">
+            <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备16014739号-1</a>
+        </div>
+    </div>
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+			
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+    
+
+                
+                    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+                        
+
+                            
+                                
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+                                    
+
+                                        
+                                            
+<script src="/js/build/tools/runtime.js"></script>
+
+                                                
+<script src="/js/build/libs/odometer.min.js"></script>
+
+                                                    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+                                                        
+
+                                                            
+                                                                
+<script src="/js/build/libs/Typed.min.js"></script>
+
+                                                                    
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+                                                                        
+
+                                                                            
+
+                                                                                                        
+                                                                                                            
+<script src="/js/build/libs/minimasonry.min.js"></script>
+
+                                                                                                                
+<script src="/js/build/plugins/masonry.js" type="module"></script>
+
+                                                                                                                    
+
+                                                                                                                        
+
+                                                                                                                                    
+                                                                                                                                        
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+                                                                                                                                            
+
+                                                                                                                                                
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+                                                                                                                                                    
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+                                                                                                                                                        
+
+                                                                                                                                                                    
+
+                                                                                                                                                                                
+                                                                                                                                                                                    
+<script src="/js/build/layouts/setup-cursor.js" type="module"></script>
+
+                                                                                                                                                                                        
+				
+							<div id="particles-js"
+								style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; background: transparent;">
+							</div>
+							
+								<script>
+									document.addEventListener('DOMContentLoaded', function () {
+										const mainDiv = document.getElementById("particles-js");
+										console.log("Particles.js initialization started");
+										console.log("Main div:", mainDiv);
+
+										if (mainDiv) {
+											console.log("Initializing particles.js");
+											particlesJS("particles-js", {
+												"particles": {
+													"number": {
+														"value": 100,
+														"density": {
+															"enable": true,
+															"value_area": 800
+														}
+													},
+													"color": {
+														"value": "#ffffff"
+													},
+													"shape": {
+														"type": "circle",
+														"stroke": {
+															"width": 0,
+															"color": "#000000"
+														},
+														"polygon": {
+															"nb_sides": 5
+														}
+													},
+													"opacity": {
+														"value": 0.5,
+														"random": true,
+														"anim": {
+															"enable": true,
+															"speed": 1,
+															"opacity_min": 0.1,
+															"sync": false
+														}
+													},
+													"size": {
+														"value": 3,
+														"random": true,
+														"anim": {
+															"enable": true,
+															"speed": 2,
+															"size_min": 0.1,
+															"sync": false
+														}
+													},
+													"line_linked": {
+														"enable": false,
+														"distance": 150,
+														"color": "#ffffff",
+														"opacity": 0.4,
+														"width": 1
+													},
+													"move": {
+														"enable": true,
+														"speed": 1,
+														"direction": "bottom",
+														"random": true,
+														"straight": false,
+														"out_mode": "out",
+														"bounce": false,
+														"attract": {
+															"enable": false,
+															"rotateX": 600,
+															"rotateY": 1200
+														}
+													}
+												},
+												"interactivity": {
+													"detect_on": "canvas",
+													"events": {
+														"onhover": {
+															"enable": false,
+															"mode": "repulse"
+														},
+														"onclick": {
+															"enable": false,
+															"mode": "push"
+														},
+														"resize": true
+													},
+													"modes": {
+														"grab": {
+															"distance": 400,
+															"line_linked": {
+																"opacity": 1
+															}
+														},
+														"bubble": {
+															"distance": 400,
+															"size": 40,
+															"duration": 2,
+															"opacity": 8,
+															"speed": 3
+														},
+														"repulse": {
+															"distance": 200
+														},
+														"push": {
+															"particles_nb": 4
+														},
+														"remove": {
+															"particles_nb": 2
+														}
+													}
+												},
+												"retina_detect": true
+											});
+											console.log("Particles.js initialization completed");
+										} else {
+											console.log("Particles.js container not found");
+										}
+									});
+								</script>
+								
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+
+</html>
