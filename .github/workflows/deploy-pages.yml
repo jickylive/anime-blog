@@ -7,6 +7,11 @@ on:
   push:
     branches:
       - main
+    # 使用 paths 关键字进行过滤
+    paths:
+      - 'source/**'  # 监控 source 目录及其所有子文件和子目录
+      # - 'package.json'     # 也可以监控根目录下的特定文件
+      # - 'src/shared/**'    # 如果前端也依赖共享代码，可以加上      
   
   # 也允许手动触发
   workflow_dispatch:
