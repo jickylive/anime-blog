@@ -12,7 +12,8 @@ on:
 
 jobs:
   create-new-post-pr:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest|instance-20220911-2339
+    runs-on: instance-20220911-2339
     # ===============================================================
     # ⚠️ 新增这个 permissions 块，明确赋予写入权限
     permissions:
