@@ -44,9 +44,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # 运行 hexo clean 清理旧文件
+      - name: Clean old files
+        run: npx hexo clean # 或者 npm run clean
+
+
       # 运行 hexo generate 来构建静态网站
       - name: Build static site
         run: npx hexo generate # 或者 npm run build
+
+      # 运行 hexo deploy 部署到aliyun虚拟主机
+      - name: BDeploy to aliyun
+        run: npx hexo deploy # 或者 npm run deploy
+
 
       # 部署到 pages 分支
       - name: Deploy to GitHub Pages
