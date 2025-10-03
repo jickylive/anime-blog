@@ -1,0 +1,9 @@
+deploy:
+  type: ftpsync
+  host: qxu1606470020.my3w.com
+  user: qxu1606470020
+  pass: Qq803200
+  remote: /htdocs/public
+  port: 21
+  clear: false
+  verbose: true
