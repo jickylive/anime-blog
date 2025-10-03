@@ -8,6 +8,8 @@ on:
     paths:
       - 'source/**'
       - 'public/**'
+  # 也允许手动触发
+  workflow_dispatch:
 
 jobs:
   deploy:
