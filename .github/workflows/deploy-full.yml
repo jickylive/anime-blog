@@ -1,5 +1,5 @@
-# .github/workflows/deploy-to-aliyun.yml
-name: Deploy to Aliyun - Blog Subdirectory
+# .github/workflows/deploy-full.yml
+name: Deploy to hxfund.cn (Blog + Backend)
 
 on:
   push:
@@ -12,36 +12,35 @@ on:
       - '_config*.yml'
   workflow_dispatch:
     inputs:
-      environment:
-        description: '部署环境'
+      deploy_target:
+        description: '部署目标'
         required: true
-        default: 'production'
+        default: 'all'
         type: choice
         options:
-          - production
-          - staging
+          - all
+          - blog-only
+          - backend-only
 
 # 并发控制
 concurrency:
-  group: deploy-blog-${{ github.ref }}
+  group: deploy-full-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  # ============================================
+  # 构建 Hexo 博客
+  # ============================================
+  build:
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
 
-    environment:
-      name: production
-      url: https://www.hxfund.cn/blog/
-
-    env:
-      NODE_ENV: production
+    timeout-minutes: 15
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -68,12 +67,44 @@ jobs:
           npm ci --only=production --ignore-scripts
           npm install --only=dev
 
-      - name: Generate static files
+      - name: Generate Hexo static files
         run: |
           npx hexo clean
           npx hexo generate --bail
+        env:
+          NODE_ENV: production
 
-      - name: Deploy to Virtual Host via FTP (/blog)
+      - name: Upload Hexo artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hexo-blog
+          path: public/
+          retention-days: 7
+          if-no-files-found: error
+
+  # ============================================
+  # 部署 Hexo 博客到虚拟主机（子目录 /blog）
+  # ============================================
+  deploy-blog:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.event.inputs.deploy_target != 'backend-only' }}
+
+    permissions:
+      contents: read
+
+    environment:
+      name: production
+      url: https://www.hxfund.cn/blog/
+
+    steps:
+      - name: Download Hexo artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: hexo-blog
+          path: public/
+
+      - name: Deploy Hexo to Virtual Host (/blog)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -90,4 +121,4 @@ jobs:
 
       - name: Deployment notification
         if: always()
-        run: echo "::notice::部署到虚拟主机 /blog ${{ job.status }}"
+        run: echo "::notice::部署博客到 /blog ${{ job.status }}"

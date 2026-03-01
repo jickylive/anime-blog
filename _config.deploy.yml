@@ -1,9 +1,12 @@
+# Hexo 部署配置 - hxfund.cn/blog (虚拟主机子目录)
+# 此文件包含敏感信息，已添加到 .gitignore，请勿提交到 Git
+
 deploy:
   type: ftpsync
-  host: qxu1606470020.my3w.com
-  user: qxu1606470020
-  pass: Qq803200
-  remote: /htdocs/public
-  port: 21
+  host: ${FTP_HOST}
+  user: ${FTP_USER}
+  pass: ${FTP_PASSWORD}
+  port: ${FTP_PORT}
+  remote: ${FTP_REMOTE}  # /htdocs/public/blog
   clear: false
   verbose: true

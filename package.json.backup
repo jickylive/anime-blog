@@ -7,27 +7,21 @@
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "server": "hexo server",
-    "renew": "node ./scripts/daily-news-proxy.js && hexo clean && hexo generate",
-    "news": "node ./scripts/daily-news.js",
-    "news:proxy": "node ./scripts/daily-news-proxy.js",
-    "news:copilot": "node ./scripts/copilot-news.js",
-    "check": "./scripts/health-check.sh",
-    "dns": "./scripts/dns-setup.sh",
-    "config:deploy": "node ./scripts/generate_deploy_config.js"
+    "renew": "node ./daily-news-proxy.js && hexo clean && hexo generate"
   },
   "hexo": {
-    "version": "8.1.1"
+    "version": "7.3.0"
   },
   "dependencies": {
     "axios": "^1.13.5",
     "cursor-effects": "^1.0.17",
     "dotenv": "^17.2.2",
-    "hexo": "^8.1.1",
+    "hexo": "^7.3.0",
     "hexo-cli": "^4.3.2",
     "hexo-deployer-ftpsync": "^0.2.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
-    "hexo-generator-feed": "^4.0.0",
+    "hexo-generator-feed": "^3.0.0",
     "hexo-generator-index-pin-top": "^0.2.2",
     "hexo-generator-searchdb": "^1.5.0",
     "hexo-generator-tag": "^2.0.0",
@@ -36,7 +30,7 @@
     "hexo-migrator-rss": "^1.1.0",
     "hexo-migrator-wordpress": "^2.1.2",
     "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-marked": "^7.0.1",
+    "hexo-renderer-marked": "^7.0.0",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",

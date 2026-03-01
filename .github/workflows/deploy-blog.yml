@@ -1,5 +1,5 @@
-# .github/workflows/deploy-to-aliyun.yml
-name: Deploy to Aliyun - Blog Subdirectory
+# .github/workflows/deploy-blog.yml
+name: Deploy Hexo Blog - /blog/
 
 on:
   push:

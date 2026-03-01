@@ -1,10 +1,32 @@
-node_modules
-*/node_modules
-prompt-service
-public
+# 依赖
+node_modules/
+package-lock.json
+
+# 生成文件
+public/
 db.json
-.DS_Store
-task.log
-db.json
+
+# 敏感信息
 .env
+.env.*
+! .env.example
 _config.deploy.yml
+
+# 日志
+*.log
+task.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 临时文件
+tmp/
+temp/

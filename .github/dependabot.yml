@@ -1,0 +1,48 @@
+version: 2
+updates:
+  # npm 依赖更新
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "jickylive"
+    labels:
+      - "dependencies"
+      - "security"
+    commit-message:
+      prefix: "chore(deps)"
+    # 忽略某些包的更新
+    ignore:
+      - dependency-name: "hexo"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "hexo-cli"
+        update-types: ["version-update:semver-major"]
+    # 分组更新
+    groups:
+      hexo-packages:
+        patterns:
+          - "hexo*"
+      security-patches:
+        update-types:
+          - "patch"
+          - "minor"
+
+  # GitHub Actions 更新
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci(actions)"

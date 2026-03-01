@@ -1,73 +1,73 @@
 # .github/workflows/deploy-pages.yml
-
 name: Deploy to GitHub Pages
 
 on:
-  # 触发条件：当有代码推送到 main 分支时
   push:
     branches:
       - main
-    # 使用 paths 关键字进行过滤
     paths:
-      - 'source/**'  # 监控 source 目录及其所有子文件和子目录
-      # - 'package.json'     # 也可以监控根目录下的特定文件
-      # - 'src/shared/**'    # 如果前端也依赖共享代码，可以加上      
-  
-  # 也允许手动触发
+      - 'source/**'
+      - 'public/**'
+      - 'package*.json'
+      - '_config*.yml'
   workflow_dispatch:
+
+# 并发控制
+concurrency:
+  group: deploy-pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: self-hosted
-    # ===============================================================
-    # ⚠️ 新增这个 permissions 块，明确赋予写入权限
-    permissions:
-      contents: write # 允许工作流写入仓库内容
-      # 如果你的工作流还涉及到 issue, pull-requests, packages 等，可能需要更多权限
-      pull-requests: write # 如果你需要创建 PR
-    # ===============================================================
 
-    
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      # 检出 main 分支的最新代码
       - name: Checkout main branch
         uses: actions/checkout@v4
 
-      # 设置 Node.js 环境
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
           cache: 'npm'
 
-      # 安装依赖
+      - name: Cache node modules
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm install
 
-      # 运行 hexo clean 清理旧文件
       - name: Clean old files
-        run: npx hexo clean # 或者 npm run clean
+        run: npx hexo clean
 
-
-      # 运行 hexo generate 来构建静态网站
       - name: Build static site
-        run: npx hexo generate # 或者 npm run build
+        run: npx hexo generate
 
-      # 运行 hexo deploy 部署到aliyun虚拟主机
-      - name: BDeploy to aliyun
-        run: npx hexo deploy # 或者 npm run deploy
-
-
-      # 部署到 pages 分支
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        id: deployment
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: pages
           force_orphan: true
-        env:
-          # 再次明确设置用于推送的令牌，尽管 checkout 步骤已经设置了
-          # 但为了 Git 推送命令的顺利执行，建议也在这里设置 SSH 或 HTTPS 凭证
-          # 这里的 GITHUB_TOKEN 会通过 actions/checkout@v4 自动配置 HTTPS 凭证
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deployment notification
+        if: always()
+        run: echo "::notice::部署到 GitHub Pages ${{ job.status }}"
