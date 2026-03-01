@@ -19,9 +19,9 @@
     "version": "8.1.1"
   },
   "dependencies": {
-    "axios": "^1.13.5",
-    "cursor-effects": "^1.0.17",
-    "dotenv": "^17.2.2",
+    "axios": "^1.13.6",
+    "cursor-effects": "^1.0.18",
+    "dotenv": "^17.3.1",
     "hexo": "^8.1.1",
     "hexo-cli": "^4.3.2",
     "hexo-deployer-ftpsync": "^0.2.0",
