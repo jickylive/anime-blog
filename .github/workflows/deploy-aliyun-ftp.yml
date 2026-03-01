@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           port: ${{ secrets.FTP_PORT || 21 }}
           local-dir: public/
-          server-dir: /htdocs/public/blog/
+          server-dir: /htdocs/blog/
           exclude: |
             **/.git*
             **/.git*/**
