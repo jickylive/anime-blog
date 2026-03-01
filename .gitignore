@@ -11,6 +11,7 @@ db.json
 .env.*
 ! .env.example
 _config.deploy.yml
+_config.local.yml
 
 # 日志
 *.log
