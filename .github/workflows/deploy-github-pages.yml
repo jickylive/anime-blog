@@ -1,0 +1,59 @@
+# .github/workflows/deploy-github-pages.yml
+# 部署到GitHub Pages
+name: Deploy to GitHub Pages
+
+on:
+  workflow_run:
+    workflows: ["Build Hexo Static Pages"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: '强制部署'
+        required: false
+        type: boolean
+        default: false
+
+# 并发控制
+concurrency:
+  group: deploy-github-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: hexo-static-files
+          path: public/
+
+      - name: Setup GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload to GitHub Pages
+        id: deployment
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          force_orphan: true
+
+      - name: Deployment notification
+        if: always()
+        run: echo "::notice::部署到 GitHub Pages ${{ job.status }}"

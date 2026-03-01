@@ -1,0 +1,62 @@
+# .github/workflows/deploy-aliyun-ftp.yml
+# 部署到阿里云FTP主机（子目录）
+name: Deploy to Aliyun FTP
+
+on:
+  workflow_run:
+    workflows: ["Build Hexo Static Pages"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: '目标环境'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+# 并发控制
+concurrency:
+  group: deploy-aliyun-ftp-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    permissions:
+      contents: read
+
+    environment:
+      name: production
+      url: https://www.hxfund.cn/blog/
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: hexo-static-files
+          path: public/
+
+      - name: Deploy to Aliyun FTP (/blog subdirectory)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          local-dir: public/
+          server-dir: /htdocs/public/blog/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+          dangerous-clean-slate: false
+
+      - name: Deployment notification
+        if: always()
+        run: echo "::notice::部署到阿里云FTP主机(/blog) ${{ job.status }}"
