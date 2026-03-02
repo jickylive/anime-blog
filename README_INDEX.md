@@ -116,17 +116,19 @@ anime-blog/
 
 ```bash
 # FTP 部署
-FTP_HOST=qxu1606470020.my3w.com
-FTP_USER=qxu1606470020
-FTP_PASSWORD=your_password
+FTP_HOST=<你的 FTP 主机>
+FTP_USER=<你的 FTP 用户名>
+FTP_PASSWORD=<你的 FTP 密码>
 FTP_PORT=21
 FTP_REMOTE=/htdocs/public
 
 # AI 服务（可选）
-GEMINI_API_KEY=your_key
-PROXY_API_KEY=your_proxy_key
+GEMINI_API_KEY=<你的 Gemini API 密钥>
+PROXY_API_KEY=<你的代理 API 密钥>
 WORKER_URL=https://your-worker.workers.dev
 ```
+
+> ⚠️ **安全提示:** 敏感信息应存储在 GitHub Secrets 中，不要提交到版本控制系统。
 
 ### 配置文件
 

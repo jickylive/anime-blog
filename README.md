@@ -1,172 +1,105 @@
-# Anime Blog Template
+# 黄氏寻宗博客
 
-A personal blog template specifically designed for anime enthusiasts, built with modern frontend technology stack. It features interactive Live2D character animations and dynamic particle background effects using particles.js, creating an immersive anime-style experience. This project provides anime culture enthusiasts with a beautiful and practical blog solution.
+基于 Hexo 的个人博客，用于记录和传承黄氏宗族文化。
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Node Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)
-![Yarn Version](https://img.shields.io/badge/yarn-%3E%3D1.22.0-blue.svg)
+## 快速开始
 
-## 🚀 Deploy
-
-You can quickly deploy this template to EdgeOne Pages with just one click:
-
-[![Deploy to EdgeOne](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?template=https://github.com/tomcomtang/anime-blog-demo1&output-directory=./public&build-command=npm%20run%20build)
-
-[More Templates](https://edgeone.ai/pages/templates)
-
-## ✨ Features
-
-- 🎨 Anime-style UI with Live2D character animations
-- ✨ Dynamic particle background effects
-- 📱 Responsive design for all devices
-- 📝 Markdown-based content management
-- 🎯 SEO optimized
-- 💬 Multiple comment system support
-
-## ⚠️ Important Notice
-
-This project is intended for **private deployment only**. For commercial use, please refer to the license terms of:
-- [hexo-theme-redefine](https://github.com/EvanNotFound/hexo-theme-redefine)
-- [Live2D](https://www.live2d.com/en/terms/)
-
-## 🚀 Quick Start
-
-### Requirements
+### 环境要求
 
 - Node.js >= 16.0.0
-- Yarn >= 1.22.0
+- npm >= 8.0.0
 
-### Installation Steps
+### 安装
 
-1. Clone the project
 ```bash
-git clone https://github.com/tomcomtang/anime-blog-demo1.git
-cd anime-blog-demo1
+npm install
 ```
 
-2. Install dependencies
+### 本地开发
+
 ```bash
-yarn install
+npm run server
 ```
 
-3. Start development server
+### 构建
+
 ```bash
-yarn dev
+npm run build
 ```
 
-4. Build for production
-```bash
-yarn build
+## 项目结构
+
+```
+anime-blog/
+├── source/_posts/      # 博客文章
+├── source/_drafts/     # 草稿
+├── themes/defaultone/  # 自定义主题
+├── scripts/           # 自动化脚本
+├── config/            # 配置文件
+└── public/            # 生成的静态文件
 ```
 
-## 📝 Content Management
+## 常用命令
 
-### Writing Posts
+| 命令 | 说明 |
+|------|------|
+| `npm run server` | 启动本地开发服务器 |
+| `npm run build` | 生成静态文件 |
+| `npm run clean` | 清理缓存 |
+| `npm run news` | 生成每日新闻 |
+| `npm run news:proxy` | 通过代理生成新闻 |
 
-Create Markdown files in the `source/_posts` directory using the following format:
+## 创建新文章
 
-```markdown
+```bash
+npx hexo new post "文章标题"
+```
+
+文章 Front-matter 格式：
+
+```yaml
 ---
-title: Post Title
+title: 文章标题
 date: 2024-03-21 12:00:00
+tags: [标签 1, 标签 2]
+categories: [分类]
 ---
-
-Post content...
 ```
 
-### Draft Management
+## 配置
 
-- Place unfinished posts in the `source/_drafts` directory
-- Use `yarn draft` command to preview drafts
+### 站点配置
 
-## ⚙️ Configuration
-
-### Site Configuration
-
-Configure in `config/site.yml`:
+编辑 `_config.yml`：
 
 ```yaml
-title: My Anime Blog
-subtitle: Sharing Anime Culture
-description: A personal blog about anime culture
-keywords: anime,ACG,culture
-author: Your Name
-language: en-US
-timezone: UTC
+title: 黄氏寻宗
+subtitle: 一个黄氏宗族历史记录网站
+description: 黄氏宗族历史记录网站
+author: jicky huang
 ```
 
-### Theme Configuration
+### 主题配置
 
-Configure in `config/theme.yml`:
+编辑 `themes/defaultone/_config.yml` 调整主题样式和功能。
 
-```yaml
-# Theme color
-theme_color: "#FF69B4"
+## 部署
 
-# Navigation menu
-menu:
-  - name: Home
-    path: /
-  - name: Archives
-    path: /archives
-  - name: About
-    path: /about
+本项目配置为部署到 `/blog/` 子目录。
+
+```bash
+npm run deploy
 ```
 
-## 📦 Project Structure
+## 特性
 
-```
-.
-├── public/          # Build output directory
-├── source/          # Blog source files
-│   ├── _posts/     # Blog posts
-│   ├── _drafts/    # Draft posts
-│   └── assets/     # Static assets
-├── themes/         # Theme files
-└── config/         # Configuration files
-```
+- 响应式设计
+- 支持暗黑模式
+- Live2D 角色动画
+- 粒子背景效果
+- Waline 评论系统
+- SEO 优化
 
-## 🚀 Deployment
+## 许可证
 
-Supports multiple deployment methods:
-
-- **GitHub Pages**
-  - Push `public` directory contents to `gh-pages` branch
-  - Enable GitHub Pages in repository settings
-
-- **Vercel**
-  - Connect Vercel account
-  - Select `public` as output directory
-  - Automatic deployment
-
-- **EdgeOne**
-  - Upload static files to EdgeOne
-  - Configure CDN acceleration
-
-## ❓ FAQ
-
-### 1. How to modify theme styles?
-Theme style files are located in `themes/default/assets/css/` directory, you can modify the corresponding CSS files directly.
-
-### 2. How to add new pages?
-Create corresponding Markdown files in the `source` directory and add menu items in the `menu` configuration in `config/theme.yml`.
-
-### 3. How to add comment system?
-Configure Gitalk or Valine comment system parameters in `config/theme.yml`.
-
-## 🤝 Contributing
-
-Pull requests are welcome to improve this project. Before submitting, please ensure:
-
-1. Code follows project coding standards
-2. Add necessary tests
-3. Update relevant documentation
-
-## 📚 References
-
-This project is inspired by and uses resources from the following projects:
-
-- [hexo-theme-redefine](https://github.com/EvanNotFound/hexo-theme-redefine) - A beautiful and feature-rich Hexo theme
-- [Live2D Widget](https://github.com/stevenjoezhang/live2d-widget) - A web platform Live2D widget
-
-If you like this project, please consider giving a star to these amazing projects that made this possible!
+主题基于 [hexo-theme-redefine](https://github.com/EvanNotFound/hexo-theme-redefine) 修改，遵循 GPL-3.0 许可证。

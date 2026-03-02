@@ -1,7 +1,7 @@
 # 📋 blog.hxfund.cn 部署指南
 
-**部署时间:** 2026-02-27  
-**目标域名:** https://blog.hxfund.cn  
+**部署时间:** 2026-02-27
+**目标域名:** https://blog.hxfund.cn
 **部署方式:** 虚拟主机 FTP / 阿里云 ESA
 
 ---
@@ -65,10 +65,12 @@ deploy:
 # FTP 部署配置（虚拟主机）
 FTP_HOST=qxu1606470020.my3w.com
 FTP_USER=qxu1606470020
-FTP_PASSWORD=Qq803200
+FTP_PASSWORD=<你的 FTP 密码，请从 GitHub Secrets 获取>
 FTP_PORT=21
 FTP_REMOTE=/htdocs/public
 ```
+
+> ⚠️ **安全提示:** FTP 密码已存储在 GitHub Secrets 中，不应在文档中明文显示。
 
 ---
 
@@ -107,12 +109,12 @@ FTP_REMOTE=/htdocs/public
 
 ### FTP 部署（必需）
 
-| Secret | 值 | 说明 |
-|--------|-----|------|
-| `FTP_HOST` | qxu1606470020.my3w.com | FTP 主机 |
-| `FTP_USER` | qxu1606470020 | FTP 用户名 |
-| `FTP_PASS` | Qq803200 | FTP 密码 |
-| `FTP_PORT` | 21 | FTP 端口 |
+| Secret | 说明 |
+|--------|------|
+| `FTP_HOST` | FTP 主机地址 |
+| `FTP_USER` | FTP 用户名 |
+| `FTP_PASS` | FTP 密码 |
+| `FTP_PORT` | FTP 端口 (默认 21) |
 
 ### ESA 部署（可选）
 
@@ -312,7 +314,7 @@ npx hexo deploy
 
 ```bash
 # 健康检查
-./health-check.sh
+./bin/health-check.sh
 
 # 检查 FTP 连接
 ftp qxu1606470020.my3w.com
