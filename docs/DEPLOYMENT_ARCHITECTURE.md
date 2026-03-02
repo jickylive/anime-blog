@@ -136,12 +136,12 @@ pm2 restart hxfund-api
 
 ### 虚拟主机 FTP
 
-| Secret | 值 | 说明 |
-|--------|-----|------|
-| `FTP_HOST` | qxu1606470020.my3w.com | FTP 主机 |
-| `FTP_USER` | qxu1606470020 | FTP 用户名 |
-| `FTP_PASS` | Qq803200 | FTP 密码 |
-| `FTP_PORT` | 21 | FTP 端口 |
+| Secret | 说明 |
+|--------|------|
+| `FTP_HOST` | FTP 主机地址 |
+| `FTP_USER` | FTP 用户名 |
+| `FTP_PASS` | FTP 密码（机密） |
+| `FTP_PORT` | FTP 端口（默认 21） |
 
 ### ECS 后端
 
