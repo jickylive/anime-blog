@@ -8,17 +8,18 @@ const AZURE_OPENAI_KEY = process.env.AZURE_OPENAI_KEY;
 const AZURE_OPENAI_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT;
 const AZURE_OPENAI_DEPLOYMENT = process.env.AZURE_OPENAI_DEPLOYMENT;
 
-if (!AZURE_OPENAI_KEY || !AZURE_OPENAI_ENDPOINT || !AZURE_OPENAI_DEPLOYMENT) {
-    console.error('请设置 AZURE_OPENAI_KEY、AZURE_OPENAI_ENDPOINT 和 AZURE_OPENAI_DEPLOYMENT 环境变量。');
-    process.exit(1);
-}
-
 const POSTS_DIR = path.join(__dirname, 'source', '_posts');
 
 /**
  * 调用 Azure OpenAI 获取整理后的新闻摘要
  */
 async function getAzureOpenAINewsSummary() {
+    // 检查环境变量
+    if (!AZURE_OPENAI_KEY || !AZURE_OPENAI_ENDPOINT || !AZURE_OPENAI_DEPLOYMENT) {
+        console.error('请设置 AZURE_OPENAI_KEY、AZURE_OPENAI_ENDPOINT 和 AZURE_OPENAI_DEPLOYMENT 环境变量。');
+        throw new Error('Azure OpenAI 环境变量未设置');
+    }
+
     console.log('正在调用 Azure OpenAI 整理新闻...');
     try {
         const url = `${AZURE_OPENAI_ENDPOINT}openai/deployments/${AZURE_OPENAI_DEPLOYMENT}/chat/completions?api-version=2024-02-15-preview`;

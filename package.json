@@ -11,8 +11,8 @@
     "news": "node ./scripts/daily-news.js",
     "news:proxy": "node ./scripts/daily-news-proxy.js",
     "news:copilot": "node ./scripts/copilot-news.js",
-    "check": "./scripts/health-check.sh",
-    "dns": "./scripts/dns-setup.sh",
+    "check": "./bin/health-check.sh",
+    "dns": "./bin/dns-setup.sh",
     "config:deploy": "node ./scripts/generate_deploy_config.js"
   },
   "hexo": {

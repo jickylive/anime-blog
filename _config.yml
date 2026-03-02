@@ -24,9 +24,10 @@ pretty_urls:
 # Directory
 source_dir: source
 public_dir: public
+scripts_dir: _scripts_disabled
 # tag_dir: tags
 # archive_dir: archives
-# category_dir: 
+# category_dir:
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
@@ -93,6 +94,10 @@ pagination_dir: page
 include:
 exclude:
 ignore:
+  - scripts/**/*.sh
+  - scripts/**/*.md
+  - scripts/**/*.conf
+  - scripts/**/*.bat
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
