@@ -30,6 +30,8 @@
 | `npm run news` 或 `npm run news:gemini` | 使用 Google Gemini 生成新闻 |
 | `npm run news:azure` | 使用 Azure OpenAI 生成新闻 |
 | `npm run news:openai` | 使用 OpenAI 生成新闻 |
+| `npm run news:qwen` | 使用阿里云通义千问生成新闻 |
+| `npm run news:qwen-cli` | 使用 Qwen CLI 工具生成新闻 |
 
 ### 配置生成
 
@@ -97,7 +99,12 @@ AZURE_OPENAI_DEPLOYMENT=your_deployment_name
 OPENAI_API_KEY=your_openai_key
 
 # 选择 AI 提供商 (可选，默认为 gemini)
-AI_PROVIDER=gemini # 可选值: gemini, azure, openai
+AI_PROVIDER=gemini # 可选值: gemini, azure, openai, qwen
+
+# 阿里云通义千问配置 (可选)
+QWEN_API_KEY=your_dashscope_api_key
+QWEN_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions
+QWEN_MODEL=qwen-max # 可选模型: qwen-max, qwen-plus, qwen-turbo, qwen-long 等
 ```
 
 ---

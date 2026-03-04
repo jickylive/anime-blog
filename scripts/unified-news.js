@@ -15,8 +15,8 @@ switch (AI_PROVIDER.toLowerCase()) {
             apiKey: process.env.GEMINI_API_KEY,
             proxyApiKey: process.env.PROXY_API_KEY,
             workerUrl: process.env.WORKER_URL,
-            apiUrl: process.env.WORKER_URL ? 
-                `${process.env.WORKER_URL}/google-ai-studio/v1beta/models/gemini-2.5-flash:generateContent` : 
+            apiUrl: process.env.WORKER_URL ?
+                `${process.env.WORKER_URL}/google-ai-studio/v1beta/models/gemini-2.5-flash:generateContent` :
                 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
             providerName: 'Gemini'
         };
@@ -26,8 +26,8 @@ switch (AI_PROVIDER.toLowerCase()) {
             apiKey: process.env.AZURE_OPENAI_KEY,
             endpoint: process.env.AZURE_OPENAI_ENDPOINT,
             deployment: process.env.AZURE_OPENAI_DEPLOYMENT,
-            apiUrl: process.env.AZURE_OPENAI_ENDPOINT ? 
-                `${process.env.AZURE_OPENAI_ENDPOINT}openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT}/chat/completions?api-version=2024-02-15-preview` : 
+            apiUrl: process.env.AZURE_OPENAI_ENDPOINT ?
+                `${process.env.AZURE_OPENAI_ENDPOINT}openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT}/chat/completions?api-version=2024-02-15-preview` :
                 '',
             providerName: 'Azure OpenAI'
         };
@@ -39,15 +39,22 @@ switch (AI_PROVIDER.toLowerCase()) {
             providerName: 'OpenAI'
         };
         break;
+    case 'qwen':
+        config = {
+            apiKey: process.env.QWEN_API_KEY || process.env.BAILIAN_API_KEY,
+            apiUrl: process.env.QWEN_BASE_URL || 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+            providerName: 'Qwen'
+        };
+        break;
     default:
-        console.error(`不支持的 AI 提供商: ${AI_PROVIDER}. 支持的选项: gemini, azure, openai`);
+        console.error(`不支持的 AI 提供商: ${AI_PROVIDER}. 支持的选项: gemini, azure, openai, qwen`);
         process.exit(1);
 }
 
 // Validate required environment variables
 function validateConfig() {
     const required = [];
-    
+
     switch (AI_PROVIDER.toLowerCase()) {
         case 'gemini':
             required.push('GEMINI_API_KEY', 'PROXY_API_KEY', 'WORKER_URL');
@@ -58,16 +65,19 @@ function validateConfig() {
         case 'openai':
             required.push('OPENAI_API_KEY');
             break;
+        case 'qwen':
+            required.push('QWEN_API_KEY');
+            break;
     }
-    
+
     const missing = required.filter(key => !process.env[key]);
-    
+
     if (missing.length > 0) {
         console.error(`❌ 错误：缺少必需的环境变量：${missing.join(', ')}`);
         console.error('请在 .env 文件中设置这些值');
         process.exit(1);
     }
-    
+
     console.log(`✅ ${config.providerName} 环境变量验证通过`);
 }
 
@@ -222,7 +232,7 @@ async function getAzureNewsSummary(dateStr) {
  */
 async function getOpenAINewsSummary(dateStr) {
     console.log(`正在调用 ${config.providerName} API 获取${dateStr}新闻摘要...`);
-    
+
     try {
         const response = await axios.post(
             config.apiUrl,
@@ -248,7 +258,7 @@ async function getOpenAINewsSummary(dateStr) {
                 }
             }
         );
-        
+
         return response.data.choices[0].message.content;
     } catch (error) {
         if (error.response) {
@@ -257,6 +267,94 @@ async function getOpenAINewsSummary(dateStr) {
             console.error('OpenAI API 错误:', error.message);
         }
         throw new Error('获取 OpenAI 新闻失败');
+    }
+}
+
+/**
+ * 调用 Qwen 获取新闻摘要
+ */
+async function getQwenNewsSummary(dateStr) {
+    console.log(`正在调用 ${config.providerName} API 获取${dateStr}新闻摘要...`);
+
+    const promotionWords = loadPromotionWordsFromFile();
+    const selectedWord = promotionWords[Math.floor(Math.random() * promotionWords.length)];
+    console.log(`本次使用的提升词: "${selectedWord}"`);
+
+    const promptText = `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。` +
+                     `请用中文总结 ${dateStr} 今日的5条热点新闻摘要，每条新闻包含一个合适的标题和一段简短的描述（约100字）。` +
+                     `简要介绍历史上的今天，增加文章的多样性。` +
+                     `请直接返回 Markdown 格式的内容用于 Hexo 部署静态网站。` +
+                     `在文章的末尾，请加上一句推广语：“${selectedWord}”。` +
+                     `最后，在推广语后面新起一行，加上免责声明：以上内容由互联网 AI 生成，如有侵权请联系删除。`;
+
+    try {
+        // 检查是否可以使用本地 Qwen 服务
+        const localQwenService = process.env.LOCAL_QWEN_SERVICE;
+        if (localQwenService) {
+            console.log('使用本地 Qwen 服务...');
+            // 尝试连接到本地 Qwen 服务
+            const localResponse = await axios.post(
+                `${localQwenService}/api/chat`,
+                {
+                    model: process.env.QWEN_MODEL || "qwen-max",
+                    messages: [
+                        {
+                            role: "system",
+                            content: "你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。"
+                        },
+                        {
+                            role: "user",
+                            content: promptText
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 2048
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${process.env.LOCAL_QWEN_API_KEY || config.apiKey}`
+                    }
+                }
+            );
+            
+            return localResponse.data.choices[0].message.content;
+        } else {
+            // 使用云端 API
+            const response = await axios.post(
+                config.apiUrl,
+                {
+                    model: process.env.QWEN_MODEL || "qwen-max",
+                    messages: [
+                        {
+                            role: "system",
+                            content: "你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。"
+                        },
+                        {
+                            role: "user",
+                            content: promptText
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 2048
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${config.apiKey}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            return response.data.choices[0].message.content;
+        }
+    } catch (error) {
+        if (error.response) {
+            console.error('Qwen API 错误:', JSON.stringify(error.response.data, null, 2));
+        } else {
+            console.error('Qwen API 错误:', error.message);
+        }
+        throw new Error('获取 Qwen 新闻失败');
     }
 }
 
@@ -271,6 +369,8 @@ async function getNewsSummary(dateStr) {
             return await getAzureNewsSummary(dateStr);
         case 'openai':
             return await getOpenAINewsSummary(dateStr);
+        case 'qwen':
+            return await getQwenNewsSummary(dateStr);
         default:
             throw new Error(`不支持的 AI 提供商: ${AI_PROVIDER}`);
     }

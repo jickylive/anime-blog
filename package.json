@@ -12,6 +12,8 @@
     "news:gemini": "AI_PROVIDER=gemini node ./scripts/unified-news.js",
     "news:azure": "AI_PROVIDER=azure node ./scripts/unified-news.js",
     "news:openai": "AI_PROVIDER=openai node ./scripts/unified-news.js",
+    "news:qwen": "AI_PROVIDER=qwen node ./scripts/unified-news.js",
+    "news:qwen-cli": "node ./scripts/qwen-cli-news.js",
     "check": "./scripts/health-check.sh",
     "dns": "./scripts/dns-setup.sh",
     "config:deploy": "node ./scripts/generate_deploy_config.js"
