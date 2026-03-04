@@ -1,19 +1,20 @@
 /**
- * 每日新闻生成器 - 使用 hxfund Qwen AI
+ * 每日新闻生成器 - 支持多种 AI 供应商
  *
- * 调用 hxfund 后端的 Qwen AI API 生成每日新闻博客文章
+ * 调用多种 AI 服务生成每日新闻博客文章
+ * 支持：Qwen, Gemini, Azure OpenAI, OpenAI
  * 使用方法：
  *   node scripts/daily-news-qwen.js
- *   node scripts/daily-news-qwen.js --topic "科技新闻"
+ *   node scripts/daily-news-qwen.js --topic "科技新闻" --provider qwen
  *
  * 依赖：
- *   - hxfund 后端 API 运行中
- *   - 配置 Qwen API Key (在 ~/.qwen-code/config.json)
+ *   - 配置相应 AI 服务的 API Key
  */
 
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const axios = require('axios');
 const { exec } = require('child_process');
 
 // ============================================
@@ -22,34 +23,46 @@ const { exec } = require('child_process');
 
 const HEXO_ROOT = path.resolve(__dirname, '..');
 const POSTS_DIR = path.join(HEXO_ROOT, 'source', '_posts');
-const CONFIG_FILE = path.join(process.env.HOME || process.env.USERPROFILE, '.qwen-code', 'config.json');
+
+// Determine AI provider from environment variable or command line (defaults to 'qwen')
+let AI_PROVIDER = process.env.AI_PROVIDER || 'qwen';
 
 // hxfund Qwen API 配置
 const QWEN_API_CONFIG = {
-  baseURL: 'https://coding.dashscope.aliyuncs.com/v1',
-  model: 'qwen3.5-plus',
+  baseURL: process.env.QWEN_BASE_URL || 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+  model: process.env.QWEN_MODEL || 'qwen-max',
   temperature: 0.7,
-  systemPrompt: `你是一个专业的科技新闻编辑，负责为 Hexo 博客生成每日新闻摘要文章。
+  systemPrompt: `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。
+请用中文总结今日的5条热点新闻摘要，每条新闻包含一个合适的标题和一段简短的描述（约100字）。
+简要介绍历史上的今天，增加文章的多样性。
+请直接返回 Markdown 格式的内容用于 Hexo 部署静态网站。
+在文章的末尾，请加上一句推广语："本文由 AI 生成"。
+最后，在推广语后面新起一行，加上免责声明：以上内容由互联网 AI 生成，如有侵权请联系删除。`
+};
 
-你的任务：
-1. 根据用户提供的主题或关键词，生成一篇 800-1500 字的新闻摘要文章
-2. 文章格式符合 Hexo博客文章规范，包含 Front-matter
-3. 语言风格：专业但不失亲和力，适合技术博客读者
-4. 结构清晰：包含标题、引言、正文（分小节）、总结
-5. 在文章末尾添加 "本文由阿里云通义千问 AI 辅助生成" 的说明
+// Google Gemini API 配置
+const GEMINI_API_CONFIG = {
+  baseURL: process.env.GEMINI_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta',
+  model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
+  temperature: 0.7,
+  systemPrompt: `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。`
+};
 
-文章 Front-matter 格式：
----
-title: "文章标题"
-date: YYYY-MM-DD HH:MM:SS
-tags: [标签 1, 标签 2, 标签 3]
-categories: [分类名称]
----
+// Azure OpenAI 配置
+const AZURE_API_CONFIG = {
+  baseURL: process.env.AZURE_OPENAI_ENDPOINT,
+  deployment: process.env.AZURE_OPENAI_DEPLOYMENT,
+  model: process.env.AZURE_OPENAI_MODEL || 'gpt-4',
+  temperature: 0.7,
+  systemPrompt: `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。`
+};
 
-注意：
-- 标题要吸引人但不过度夸张
--  tags 3-5 个，体现文章核心主题
-- categories 一般为"每日新闻"或根据内容确定`
+// OpenAI 配置
+const OPENAI_API_CONFIG = {
+  baseURL: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1',
+  model: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
+  temperature: 0.7,
+  systemPrompt: `你是一个专业的中文新闻摘要助手，善于用简洁、分点的 Markdown 风格整理信息。`
 };
 
 // ============================================
@@ -57,15 +70,68 @@ categories: [分类名称]
 // ============================================
 
 function loadConfig() {
-  try {
-    if (fs.existsSync(CONFIG_FILE)) {
-      const saved = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf-8'));
-      return { ...QWEN_API_CONFIG, ...saved };
-    }
-  } catch (error) {
-    console.error('读取 Qwen 配置文件失败:', error.message);
+  // 根据 AI_PROVIDER 返回相应的配置
+  switch (AI_PROVIDER.toLowerCase()) {
+    case 'qwen':
+      return {
+        ...QWEN_API_CONFIG,
+        apiKey: process.env.QWEN_API_KEY || process.env.BAILIAN_API_KEY,
+        providerName: 'Qwen'
+      };
+    case 'gemini':
+      return {
+        ...GEMINI_API_CONFIG,
+        apiKey: process.env.GEMINI_API_KEY,
+        apiUrl: `${GEMINI_API_CONFIG.baseURL}/models/${GEMINI_API_CONFIG.model}:generateContent`,
+        providerName: 'Gemini'
+      };
+    case 'azure':
+      return {
+        ...AZURE_API_CONFIG,
+        apiKey: process.env.AZURE_OPENAI_KEY,
+        apiUrl: `${AZURE_API_CONFIG.baseURL}openai/deployments/${AZURE_API_CONFIG.deployment}/chat/completions?api-version=2024-02-15-preview`,
+        providerName: 'Azure OpenAI'
+      };
+    case 'openai':
+      return {
+        ...OPENAI_API_CONFIG,
+        apiKey: process.env.OPENAI_API_KEY,
+        apiUrl: `${OPENAI_API_CONFIG.baseURL}/chat/completions`,
+        providerName: 'OpenAI'
+      };
+    default:
+      console.error(`不支持的 AI 提供商: ${AI_PROVIDER}. 支持的选项: qwen, gemini, azure, openai`);
+      process.exit(1);
   }
-  return { ...QWEN_API_CONFIG };
+}
+
+function validateConfig(config) {
+  const required = [];
+  
+  switch (AI_PROVIDER.toLowerCase()) {
+    case 'qwen':
+      required.push('QWEN_API_KEY');
+      break;
+    case 'gemini':
+      required.push('GEMINI_API_KEY');
+      break;
+    case 'azure':
+      required.push('AZURE_OPENAI_KEY', 'AZURE_OPENAI_ENDPOINT', 'AZURE_OPENAI_DEPLOYMENT');
+      break;
+    case 'openai':
+      required.push('OPENAI_API_KEY');
+      break;
+  }
+  
+  const missing = required.filter(key => !process.env[key]);
+  
+  if (missing.length > 0) {
+    console.error(`❌ 错误：缺少必需的环境变量：${missing.join(', ')}`);
+    console.error('请在 .env 文件中设置这些值');
+    process.exit(1);
+  }
+  
+  console.log(`✅ ${config.providerName} 环境变量验证通过`);
 }
 
 function getTodayDate() {
@@ -92,66 +158,147 @@ function runCommand(command) {
   });
 }
 
-function callQwenAPI(config, prompt) {
-  return new Promise((resolve, reject) => {
-    const url = new URL(config.baseURL + '/chat/completions');
+async function callAIProvider(config, prompt) {
+  const messages = [
+    { role: 'system', content: config.systemPrompt },
+    { role: 'user', content: prompt }
+  ];
 
-    const messages = [
-      { role: 'system', content: config.systemPrompt },
-      { role: 'user', content: prompt }
-    ];
+  switch (AI_PROVIDER.toLowerCase()) {
+    case 'qwen':
+      return await callQwenAPI(config, messages);
+    case 'gemini':
+      return await callGeminiAPI(config, prompt); // Gemini uses text instead of messages
+    case 'azure':
+      return await callAzureAPI(config, messages);
+    case 'openai':
+      return await callOpenAIAPI(config, messages);
+    default:
+      throw new Error(`不支持的 AI 提供商: ${AI_PROVIDER}`);
+  }
+}
 
-    const requestBody = {
-      model: config.model,
-      messages: messages,
-      temperature: config.temperature,
-      stream: false
-    };
-
-    const data = JSON.stringify(requestBody);
-
-    const options = {
-      hostname: 'coding.dashscope.aliyuncs.com',
-      port: 443,
-      path: url.pathname,
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${config.apiKey}`,
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(data)
+async function callQwenAPI(config, messages) {
+  try {
+    const response = await axios.post(
+      config.baseURL + '/chat/completions',
+      {
+        model: config.model,
+        messages: messages,
+        temperature: config.temperature,
+        max_tokens: 2048
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${config.apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        timeout: 60000
       }
+    );
+
+    return {
+      content: response.data.choices[0].message.content,
+      usage: response.data.usage || {}
     };
+  } catch (error) {
+    throw new Error(`Qwen API 调用失败: ${error.message}`);
+  }
+}
 
-    const req = https.request(options, (res) => {
-      let chunks = [];
-      res.on('data', (chunk) => chunks.push(chunk));
-      res.on('end', () => {
-        const body = Buffer.concat(chunks).toString();
-        try {
-          const result = JSON.parse(body);
-          if (res.statusCode !== 200) {
-            reject(new Error(result.error?.message || `HTTP ${res.statusCode}`));
-            return;
-          }
-          const content = result.choices[0].message?.content;
-          resolve({
-            content: content,
-            usage: result.usage || {}
-          });
-        } catch (e) {
-          reject(new Error(`解析响应失败：${e.message}`));
+async function callGeminiAPI(config, prompt) {
+  try {
+    const response = await axios.post(
+      config.apiUrl,
+      {
+        contents: [{
+          parts: [{
+            text: config.systemPrompt + "\n\n" + prompt
+          }]
+        }],
+        generationConfig: {
+          temperature: config.temperature,
+          maxOutputTokens: 2048
         }
-      });
-    });
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          key: config.apiKey
+        },
+        timeout: 60000
+      }
+    );
 
-    req.on('error', (error) => reject(new Error(`网络错误：${error.message}`)));
-    req.setTimeout(60000, () => {
-      req.destroy();
-      reject(new Error('请求超时 (60 秒)'));
-    });
-    req.write(data);
-    req.end();
-  });
+    if (response.data.candidates && response.data.candidates.length > 0) {
+      return {
+        content: response.data.candidates[0].content.parts[0].text,
+        usage: response.data.usageMetadata || {}
+      };
+    } else {
+      throw new Error('Gemini API 返回格式异常');
+    }
+  } catch (error) {
+    throw new Error(`Gemini API 调用失败: ${error.message}`);
+  }
+}
+
+async function callAzureAPI(config, messages) {
+  try {
+    const response = await axios.post(
+      config.apiUrl,
+      {
+        model: config.model,
+        messages: messages,
+        temperature: config.temperature,
+        max_tokens: 2048
+      },
+      {
+        headers: {
+          'api-key': config.apiKey,
+          'Content-Type': 'application/json'
+        },
+        timeout: 60000
+      }
+    );
+
+    return {
+      content: response.data.choices[0].message.content,
+      usage: response.data.usage || {}
+    };
+  } catch (error) {
+    throw new Error(`Azure OpenAI API 调用失败: ${error.message}`);
+  }
+}
+
+async function callOpenAIAPI(config, messages) {
+  try {
+    const response = await axios.post(
+      config.apiUrl,
+      {
+        model: config.model,
+        messages: messages,
+        temperature: config.temperature,
+        max_tokens: 2048
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${config.apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        timeout: 60000
+      }
+    );
+
+    return {
+      content: response.data.choices[0].message.content,
+      usage: response.data.usage || {}
+    };
+  } catch (error) {
+    throw new Error(`OpenAI API 调用失败: ${error.message}`);
+  }
 }
 
 // ============================================
@@ -160,20 +307,13 @@ function callQwenAPI(config, prompt) {
 
 async function generateDailyNews(topic = null) {
   console.log('\n' + '═'.repeat(60));
-  console.log('  每日新闻生成器 - 使用 Qwen AI');
+  console.log(`  每日新闻生成器 - 使用 ${AI_PROVIDER.toUpperCase()} AI`);
   console.log('═'.repeat(60) + '\n');
 
   const config = loadConfig();
+  validateConfig(config);
+  
   const dateInfo = getTodayDate();
-
-  // 验证 API Key
-  if (!config.apiKey) {
-    console.log('❌ 错误：未配置 Qwen API Key');
-    console.log('\n请先配置 API Key:');
-    console.log('  1. 运行：node /root/hxfund/scripts/qwen-code.js --init');
-    console.log('  2. 或手动编辑：~/.qwen-code/config.json');
-    process.exit(1);
-  }
 
   // 构建提示词
   const dateStr = `${dateInfo.year}年${dateInfo.month}月${dateInfo.day}日 星期${dateInfo.weekday}`;
@@ -200,11 +340,11 @@ async function generateDailyNews(topic = null) {
 
   console.log('📅 生成日期:', dateStr);
   console.log('🎯 主题:', topic || '综合科技新闻');
-  console.log('🤖 调用 Qwen AI 生成内容...\n');
+  console.log(`🤖 调用 ${config.providerName} AI 生成内容...\n`);
 
   try {
-    // 调用 Qwen API
-    const result = await callQwenAPI(config, prompt);
+    // 调用 AI 服务
+    const result = await callAIProvider(config, prompt);
 
     console.log('✅ AI 生成完成');
     console.log(`📊 Token 用量：${result.usage?.total_tokens || 0}`);
@@ -236,7 +376,7 @@ categories: [每日新闻]`;
     }
 
     // 生成文件名
-    const fileName = `daily-news-${dateInfo.dateStr}.md`;
+    const fileName = `daily-news-${dateInfo.dateStr}-${AI_PROVIDER.toLowerCase()}.md`;
     const filePath = path.join(POSTS_DIR, fileName);
 
     // 写入文件
@@ -247,7 +387,7 @@ ${frontMatter}
 ${content}
 
 ---
-*本文内容由阿里云通义千问 AI 辅助生成，仅供参考。*
+*本文内容由 ${config.providerName} AI 辅助生成，仅供参考。*
 `;
 
     fs.writeFileSync(filePath, fileContent, 'utf-8');
@@ -274,6 +414,7 @@ ${content}
 function parseArgs() {
   const args = process.argv.slice(2);
   let topic = null;
+  let provider = null;
   let showHelp = false;
 
   for (let i = 0; i < args.length; i++) {
@@ -281,18 +422,24 @@ function parseArgs() {
       showHelp = true;
     } else if (args[i] === '-t' || args[i] === '--topic') {
       topic = args[++i];
+    } else if (args[i] === '--provider' || args[i] === '-p') {
+      provider = args[++i];
     } else if (!args[i].startsWith('-')) {
-      topic = args[i];
+      if (!topic) topic = args[i];
     }
   }
 
-  return { showHelp, topic };
+  if (provider) {
+    AI_PROVIDER = provider.toLowerCase();
+  }
+
+  return { showHelp, topic, provider };
 }
 
 function printHelp() {
   console.log(`
 ╔═══════════════════════════════════════════════════════════╗
-║         每日新闻生成器 - 使用 Qwen AI                      ║
+║         每日新闻生成器 - 支持多种 AI 供应商               ║
 ╚═══════════════════════════════════════════════════════════╝
 
 用法：node scripts/daily-news-qwen.js [选项] [主题]
@@ -300,20 +447,25 @@ function printHelp() {
 选项:
   -h, --help              显示帮助信息
   -t, --topic <主题>      指定新闻主题
-                          (不指定则生成综合科技新闻)
+  -p, --provider <供应商> 指定 AI 供应商 (qwen, gemini, azure, openai)
+                          (默认: qwen)
 
 示例:
   node scripts/daily-news-qwen.js
   node scripts/daily-news-qwen.js "AI 技术发展"
   node scripts/daily-news-qwen.js -t "开源动态"
+  node scripts/daily-news-qwen.js --provider gemini
+  node scripts/daily-news-qwen.js -p qwen -t "云计算新闻"
 
 前置条件:
-  1. 配置 Qwen API Key:
-     node /root/hxfund/scripts/qwen-code.js --init
-  2. 确保有足够的 API 额度
+  根据使用的 AI 供应商配置相应的 API Key:
+  - Qwen: 配置 QWEN_API_KEY
+  - Gemini: 配置 GEMINI_API_KEY
+  - Azure: 配置 AZURE_OPENAI_KEY, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_DEPLOYMENT
+  - OpenAI: 配置 OPENAI_API_KEY
 
 输出:
-  文章保存到：source/_posts/daily-news-YYYY-MM-DD.md
+  文章保存到：source/_posts/daily-news-YYYY-MM-DD-[provider].md
 `);
 }
 
