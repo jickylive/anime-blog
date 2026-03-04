@@ -31,3 +31,6 @@ Thumbs.db
 # 临时文件
 tmp/
 temp/
+
+# 待清理目录
+.pending_cleanup/

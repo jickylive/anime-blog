@@ -22,7 +22,7 @@ npm run server
 
 ```bash
 # 方式 1: 使用部署脚本
-./scripts/deploy.sh
+./bin/deploy.sh
 
 # 方式 2: 使用 npm 命令
 npm run deploy
@@ -40,13 +40,18 @@ git push origin main
 ```
 anime-blog/
 ├── docs/              # 📚 部署文档
-│   ├── DEPLOYMENT.md
-│   ├── BLOG_DEPLOYMENT_GUIDE.md
-│   └── ...
-├── scripts/           # 🔧 脚本文件
+│   ├── README.md                  # 文档导航
+│   ├── BLOG_DEPLOYMENT_GUIDE.md   # 完整部署指南
+│   └── DEPLOYMENT_ARCHITECTURE.md # 部署架构
+├── bin/               # 🔧 脚本文件
 │   ├── deploy.sh
 │   ├── health-check.sh
+│   ├── dns-setup.sh
+│   └── ...
+├── scripts/           # 📜 Node.js 脚本
 │   ├── daily-news.js
+│   ├── daily-news-proxy.js
+│   ├── daily-news-qwen.js
 │   └── ...
 ├── source/            # 📝 博客内容
 │   ├── _posts/       # 文章
@@ -63,34 +68,33 @@ anime-blog/
 
 ## 📚 文档索引
 
-### 部署文档 (`docs/`)
+### 核心文档
 
 | 文档 | 说明 |
 |------|------|
-| [DEPLOYMENT.md](./docs/DEPLOYMENT.md) | 部署文档索引 |
-| [BLOG_DEPLOYMENT_GUIDE.md](./docs/BLOG_DEPLOYMENT_GUIDE.md) | 完整部署指南 |
-| [DEPLOYMENT_CHECKLIST.md](./docs/DEPLOYMENT_CHECKLIST.md) | 部署验证清单 |
-| [DEPLOYMENT_ARCHITECTURE.md](./docs/DEPLOYMENT_ARCHITECTURE.md) | 部署架构图 |
-| [DEPLOY.md](./docs/DEPLOY.md) | 快速部署命令 |
+| [README.md](../README.md) | 项目简介和快速上手 |
+| [docs/README.md](../docs/README.md) | 文档导航 |
+| [BLOG_DEPLOYMENT_GUIDE.md](./BLOG_DEPLOYMENT_GUIDE.md) | 完整部署指南 |
+| [DEPLOYMENT_ARCHITECTURE.md](./DEPLOYMENT_ARCHITECTURE.md) | 部署架构文档 |
+| [CLAUDE.md](../CLAUDE.md) | AI 助手配置指南 |
 
-### 脚本文件 (`scripts/`)
+### 脚本文件
 
 | 脚本 | 说明 |
 |------|------|
-| [deploy.sh](./scripts/deploy.sh) | 部署主脚本 |
-| [health-check.sh](./scripts/health-check.sh) | 健康检查 |
-| [dns-setup.sh](./scripts/dns-setup.sh) | DNS 配置辅助 |
-| [daily-news.js](./scripts/daily-news.js) | AI 新闻生成 |
-| [README.md](./scripts/README.md) | 脚本使用说明 |
+| [bin/deploy.sh](../bin/deploy.sh) | 部署主脚本 |
+| [bin/health-check.sh](../bin/health-check.sh) | 健康检查 |
+| [bin/dns-setup.sh](../bin/dns-setup.sh) | DNS 配置辅助 |
+| [scripts/daily-news.js](../scripts/daily-news.js) | AI 新闻生成 (Gemini) |
+| [scripts/daily-news-proxy.js](../scripts/daily-news-proxy.js) | 代理新闻生成 |
+| [scripts/daily-news-qwen.js](../scripts/daily-news-qwen.js) | Qwen AI 新闻生成 |
 
 ### GitHub Actions (`.github/workflows/`)
 
 | 工作流 | 说明 |
 |--------|------|
 | `deploy-blog.yml` | 博客部署（主要） |
-| `deploy-full.yml` | 完整部署 |
 | `daily-news-updater.yml` | 每日新闻更新 |
-| `ci.yml` | 持续集成 |
 
 ---
 
@@ -116,17 +120,19 @@ anime-blog/
 
 ```bash
 # FTP 部署
-FTP_HOST=qxu1606470020.my3w.com
-FTP_USER=qxu1606470020
-FTP_PASSWORD=your_password
+FTP_HOST=<你的 FTP 主机>
+FTP_USER=<你的 FTP 用户名>
+FTP_PASSWORD=<你的 FTP 密码>
 FTP_PORT=21
 FTP_REMOTE=/htdocs/public
 
 # AI 服务（可选）
-GEMINI_API_KEY=your_key
-PROXY_API_KEY=your_proxy_key
+GEMINI_API_KEY=<你的 Gemini API 密钥>
+PROXY_API_KEY=<你的代理 API 密钥>
 WORKER_URL=https://your-worker.workers.dev
 ```
+
+> ⚠️ **安全提示:** 敏感信息应存储在 GitHub Secrets 中，不要提交到版本控制系统。
 
 ### 配置文件
 
@@ -174,10 +180,10 @@ WORKER_URL=https://your-worker.workers.dev
 
 如有问题，请查看：
 
-1. [部署故障排查指南](./docs/BLOG_DEPLOYMENT_GUIDE.md#故障排查)
-2. [健康检查脚本](./scripts/health-check.sh)
+1. [部署故障排查指南](./BLOG_DEPLOYMENT_GUIDE.md#故障排查)
+2. [健康检查脚本](../bin/health-check.sh)
 3. GitHub Issues
 
 ---
 
-**最后更新:** 2026-03-01
+**最后更新:** 2026-03-02

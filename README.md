@@ -1,172 +1,213 @@
-# Anime Blog Template
+# 黄氏寻宗博客
 
-A personal blog template specifically designed for anime enthusiasts, built with modern frontend technology stack. It features interactive Live2D character animations and dynamic particle background effects using particles.js, creating an immersive anime-style experience. This project provides anime culture enthusiasts with a beautiful and practical blog solution.
+基于 Hexo 的个人博客，用于记录和传承黄氏宗族文化。
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen.svg)
-![Yarn Version](https://img.shields.io/badge/yarn-%3E%3D1.22.0-blue.svg)
+![Hexo](https://img.shields.io/badge/Hexo-8.1.1-red.svg)
 
-## 🚀 Deploy
+## 🚀 快速开始
 
-You can quickly deploy this template to EdgeOne Pages with just one click:
-
-[![Deploy to EdgeOne](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?template=https://github.com/tomcomtang/anime-blog-demo1&output-directory=./public&build-command=npm%20run%20build)
-
-[More Templates](https://edgeone.ai/pages/templates)
-
-## ✨ Features
-
-- 🎨 Anime-style UI with Live2D character animations
-- ✨ Dynamic particle background effects
-- 📱 Responsive design for all devices
-- 📝 Markdown-based content management
-- 🎯 SEO optimized
-- 💬 Multiple comment system support
-
-## ⚠️ Important Notice
-
-This project is intended for **private deployment only**. For commercial use, please refer to the license terms of:
-- [hexo-theme-redefine](https://github.com/EvanNotFound/hexo-theme-redefine)
-- [Live2D](https://www.live2d.com/en/terms/)
-
-## 🚀 Quick Start
-
-### Requirements
+### 环境要求
 
 - Node.js >= 16.0.0
-- Yarn >= 1.22.0
+- npm >= 8.0.0
 
-### Installation Steps
+### 安装
 
-1. Clone the project
 ```bash
-git clone https://github.com/tomcomtang/anime-blog-demo1.git
-cd anime-blog-demo1
+npm install
 ```
 
-2. Install dependencies
+### 本地开发
+
 ```bash
-yarn install
+npm run server
 ```
 
-3. Start development server
+访问 http://localhost:4000
+
+### 构建
+
 ```bash
-yarn dev
+npm run build
 ```
 
-4. Build for production
+---
+
+## 📝 内容管理
+
+### 创建文章
+
 ```bash
-yarn build
+npx hexo new post "文章标题"
 ```
 
-## 📝 Content Management
-
-### Writing Posts
-
-Create Markdown files in the `source/_posts` directory using the following format:
+编辑生成的文件 `source/_posts/文章标题.md`：
 
 ```markdown
 ---
-title: Post Title
+title: 文章标题
 date: 2024-03-21 12:00:00
+tags: [标签 1, 标签 2]
+categories: [分类]
 ---
 
-Post content...
+文章内容...
 ```
 
-### Draft Management
+### 创建草稿
 
-- Place unfinished posts in the `source/_drafts` directory
-- Use `yarn draft` command to preview drafts
+```bash
+npx hexo new draft "草稿标题"
+```
 
-## ⚙️ Configuration
+### 发布草稿
 
-### Site Configuration
+```bash
+npx hexo publish "草稿标题"
+```
 
-Configure in `config/site.yml`:
+---
+
+## ⚙️ 配置
+
+### 站点配置 (`_config.yml`)
 
 ```yaml
-title: My Anime Blog
-subtitle: Sharing Anime Culture
-description: A personal blog about anime culture
-keywords: anime,ACG,culture
-author: Your Name
-language: en-US
-timezone: UTC
+title: 黄氏寻宗
+subtitle: 一个黄氏宗族历史记录网站
+description: 黄氏宗族历史记录网站
+author: jicky huang
+language: zh-CN
+timezone: Asia/Shanghai
 ```
 
-### Theme Configuration
+### 主题配置 (`themes/defaultone/_config.yml`)
 
-Configure in `config/theme.yml`:
+调整主题样式、菜单、颜色等配置。
+
+### 站点配置 (`config/site.yml`)
 
 ```yaml
-# Theme color
-theme_color: "#FF69B4"
-
-# Navigation menu
-menu:
-  - name: Home
-    path: /
-  - name: Archives
-    path: /archives
-  - name: About
-    path: /about
+title: 黄氏寻宗
+subtitle: 一个黄氏宗族历史记录网站
+description: 黄氏宗族历史记录网站 - 寻根问祖，族谱查询
+keywords: 黄氏，族谱，寻根，字辈，宗亲会
+author: jicky huang
+language: zh-CN
 ```
 
-## 📦 Project Structure
+---
+
+## 📁 项目结构
 
 ```
-.
-├── public/          # Build output directory
-├── source/          # Blog source files
-│   ├── _posts/     # Blog posts
-│   ├── _drafts/    # Draft posts
-│   └── assets/     # Static assets
-├── themes/         # Theme files
-└── config/         # Configuration files
+anime-blog/
+├── docs/                 # 项目文档
+│   ├── README.md                    # 文档导航
+│   ├── BLOG_DEPLOYMENT_GUIDE.md     # 部署指南
+│   └── DEPLOYMENT_ARCHITECTURE.md   # 架构文档
+├── scripts/              # 自动化脚本
+│   ├── daily-news.js     # 每日新闻生成 (Gemini)
+│   ├── daily-news-proxy.js
+│   ├── daily-news-qwen.js  # 每日新闻生成 (Qwen)
+│   └── generate_deploy_config.js
+├── source/               # 博客源文件
+│   ├── _posts/          # 文章
+│   ├── _drafts/         # 草稿
+│   ├── _data/           # 数据文件
+│   ├── about/           # 关于页面
+│   └── links/           # 友链页面
+├── themes/defaultone/    # 自定义主题
+├── config/               # 配置文件
+│   ├── site.yml         # 站点配置
+│   └── theme.yml        # 主题配置
+├── bin/                  # Shell 脚本
+│   ├── health-check.sh   # 健康检查
+│   ├── deploy.sh         # 部署脚本
+│   └── dns-setup.sh      # DNS 配置
+├── _config.yml           # Hexo 主配置
+├── package.json          # npm 配置
+└── public/               # 生成的静态文件
 ```
 
-## 🚀 Deployment
+---
 
-Supports multiple deployment methods:
+## 📦 常用命令
 
-- **GitHub Pages**
-  - Push `public` directory contents to `gh-pages` branch
-  - Enable GitHub Pages in repository settings
+### 开发
 
-- **Vercel**
-  - Connect Vercel account
-  - Select `public` as output directory
-  - Automatic deployment
+| 命令 | 说明 |
+|------|------|
+| `npm run server` | 启动本地开发服务器 (端口 4000) |
+| `npm run clean` | 清理缓存文件 |
 
-- **EdgeOne**
-  - Upload static files to EdgeOne
-  - Configure CDN acceleration
+### 构建
 
-## ❓ FAQ
+| 命令 | 说明 |
+|------|------|
+| `npm run build` | 生成静态文件到 public/ |
+| `npx hexo generate` | 同上 |
 
-### 1. How to modify theme styles?
-Theme style files are located in `themes/default/assets/css/` directory, you can modify the corresponding CSS files directly.
+### 部署
 
-### 2. How to add new pages?
-Create corresponding Markdown files in the `source` directory and add menu items in the `menu` configuration in `config/theme.yml`.
+| 命令 | 说明 |
+|------|------|
+| `npm run deploy` | 部署到服务器 |
+| `./bin/deploy.sh` | 运行部署脚本 |
 
-### 3. How to add comment system?
-Configure Gitalk or Valine comment system parameters in `config/theme.yml`.
+### 自动化
 
-## 🤝 Contributing
+| 命令 | 说明 |
+|------|------|
+| `npm run news` | 生成每日新闻 (Gemini API) |
+| `npm run news:proxy` | 通过代理生成新闻 |
+| `npm run news:copilot` | 使用 Azure OpenAI 生成新闻 |
+| `./bin/health-check.sh` | 运行健康检查 |
+| `./bin/dns-setup.sh` | DNS 配置检查 |
 
-Pull requests are welcome to improve this project. Before submitting, please ensure:
+---
 
-1. Code follows project coding standards
-2. Add necessary tests
-3. Update relevant documentation
+## 🔗 文档导航
 
-## 📚 References
+| 文档 | 说明 |
+|------|------|
+| [部署指南](docs/BLOG_DEPLOYMENT_GUIDE.md) | 完整的部署流程和配置说明 |
+| [架构文档](docs/DEPLOYMENT_ARCHITECTURE.md) | 项目部署架构和技术栈 |
+| [CLAUDE.md](CLAUDE.md) | AI 助手配置和开发指南 |
 
-This project is inspired by and uses resources from the following projects:
+---
 
-- [hexo-theme-redefine](https://github.com/EvanNotFound/hexo-theme-redefine) - A beautiful and feature-rich Hexo theme
-- [Live2D Widget](https://github.com/stevenjoezhang/live2d-widget) - A web platform Live2D widget
+## 🌐 部署目标
 
-If you like this project, please consider giving a star to these amazing projects that made this possible!
+- **主域名:** https://blog.hxfund.cn
+- **备用域名:** https://hxfund.cn/blog/
+- **部署方式:** GitHub Actions + FTP / 阿里云 ESA
+
+---
+
+## 🎨 主题特性
+
+- 响应式设计
+- 支持暗黑模式
+- Live2D 角色动画
+- 粒子背景效果
+- Waline 评论系统
+- SEO 优化
+
+主题基于 [hexo-theme-redefine](https://github.com/EvanNotFound/hexo-theme-redefine) 修改。
+
+---
+
+## 📞 支持
+
+如有问题，请查看：
+
+1. [部署指南](docs/BLOG_DEPLOYMENT_GUIDE.md)
+2. [健康检查脚本](bin/health-check.sh)
+3. GitHub Issues
+
+---
+
+**最后更新:** 2026-03-02
