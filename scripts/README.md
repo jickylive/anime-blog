@@ -21,9 +21,15 @@
 
 | 脚本 | 说明 | 用法 |
 |------|------|------|
-| [daily-news.js](./daily-news.js) | Gemini AI 新闻生成 | `node daily-news.js` |
-| [daily-news-proxy.js](./daily-news-proxy.js) | 通过代理调用 Gemini | `node daily-news-proxy.js` |
-| [copilot-news.js](./copilot-news.js) | Azure OpenAI 新闻生成 | `node copilot-news.js` |
+| [unified-news.js](./unified-news.js) | 统一新闻生成脚本（支持多种AI提供商） | `node unified-news.js` |
+
+### 使用不同AI提供商
+
+| 命令 | 说明 |
+|------|------|
+| `npm run news` 或 `npm run news:gemini` | 使用 Google Gemini 生成新闻 |
+| `npm run news:azure` | 使用 Azure OpenAI 生成新闻 |
+| `npm run news:openai` | 使用 OpenAI 生成新闻 |
 
 ### 配置生成
 
@@ -77,10 +83,21 @@ FTP_HOST=qxu1606470020.my3w.com
 FTP_USER=qxu1606470020
 FTP_PASSWORD=your_password
 
-# AI 服务
+# AI 服务 - Google Gemini
 GEMINI_API_KEY=your_key
 PROXY_API_KEY=your_proxy_key
 WORKER_URL=https://your-worker.workers.dev
+
+# AI 服务 - Azure OpenAI
+AZURE_OPENAI_KEY=your_azure_key
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+AZURE_OPENAI_DEPLOYMENT=your_deployment_name
+
+# AI 服务 - OpenAI
+OPENAI_API_KEY=your_openai_key
+
+# 选择 AI 提供商 (可选，默认为 gemini)
+AI_PROVIDER=gemini # 可选值: gemini, azure, openai
 ```
 
 ---
