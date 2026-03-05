@@ -5,7 +5,7 @@ deploy:
   type: ftpsync
   host: ${FTP_HOST}
   user: ${FTP_USER}
-  pass: ${FTP_PASSWORD}
+  pass: ${FTP_PASS}
   port: ${FTP_PORT}
   remote: ${FTP_REMOTE}  # /htdocs/public/blog
   clear: false
