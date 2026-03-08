@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "hexo generate",
+    "build:dist": "node build-to-dist.js",
+    "build:clean": "node build-to-dist.js --clean",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "server": "hexo server",

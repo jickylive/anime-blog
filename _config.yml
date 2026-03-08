@@ -15,6 +15,9 @@ timezone: 'Asia/Shanghai'
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://www.hxfund.cn/blog
 root: /blog/
+## 本地开发时临时改为 / 可避免重定向 (但部署时需改回 /blog/)
+## root: /  # 本地开发用
+## root: /blog/  # 生产环境用
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
