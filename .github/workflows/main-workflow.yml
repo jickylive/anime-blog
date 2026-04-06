@@ -297,7 +297,7 @@ jobs:
           path: public/
 
       - name: Deploy to Aliyun ESA via SSH
-        uses: easingthemes/ssh-deploy@v4
+        uses: easingthemes/ssh-deploy@v6
         with:
           SSH_PRIVATE_KEY: ${{ secrets.ESA_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.ESA_HOST }}
