@@ -115,10 +115,10 @@ home_banner:
   style: fixed # static or fixed
   # Home banner image
   image: 
-    light: /images/main_bg_ligth.png # light mode
-    dark: /images/main_bg.png # dark mode
+    light: /images/main_bg_ligth.webp # light mode
+    dark: /images/main_bg.webp # dark mode
   # Home banner title
-  title: 黄氏寻宗
+  title: 黄氏家族寻根平台
   # Home banner subtitle
   subtitle:
     text: ['Welcome'] # subtitle text, array
