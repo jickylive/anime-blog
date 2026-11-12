@@ -17,7 +17,7 @@ on:
       - 'public/**'
       - 'package*.json'
       - '_config*.yml'
-      - 'scripts/daily-news-scnet.js'
+      - '_scripts/daily-news-scnet.js'
       - '.github/workflows/main-workflow.yml'
 
   # 手动触发
@@ -72,8 +72,8 @@ jobs:
         run: npm install
         if: ${{ github.event_name != 'schedule' }}
 
-      - name: Run daily-news-scnet.js script for AI content generation
-        run: node scripts/daily-news-scnet.js
+      - name: Run _scripts/daily-news-scnet.js script for AI content generation
+        run: node _scripts/daily-news-scnet.js
         env:
           SCNET_API_KEY: ${{ secrets.SCNET_API_KEY }}
 

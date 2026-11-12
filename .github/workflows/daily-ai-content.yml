@@ -42,10 +42,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run daily-news-scnet.js script for AI content generation
+      - name: Run _scripts/daily-news-scnet.js script for AI content generation
         run: |
           echo "Starting AI content generation..."
-          node scripts/daily-news-scnet.js
+          node _scripts/daily-news-scnet.js
         env:
           SCNET_API_KEY: ${{ secrets.SCNET_API_KEY }}
 

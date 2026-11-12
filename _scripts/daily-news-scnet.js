@@ -196,8 +196,13 @@ async function main() {
   console.log('--- 任务成功完成 ---');
 }
 
-main().catch((err) => {
-  console.error('--- 任务执行失败 ---');
-  console.error(err.message);
-  process.exit(1);
-});
+// 只在直接运行时执行。Hexo 会自动加载 scripts/ 目录下的 JS，
+// 所以本文件放在 _scripts/（不会被 Hexo 加载），这里再加一道保护，
+// 即使被加载也不会在 hexo clean/generate 时擅自跑起来。
+if (require.main === module) {
+  main().catch((err) => {
+    console.error('--- 任务执行失败 ---');
+    console.error(err.message);
+    process.exit(1);
+  });
+}
