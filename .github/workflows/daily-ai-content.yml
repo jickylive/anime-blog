@@ -4,8 +4,8 @@ name: Daily AI Content Generation
 
 on:
   schedule:
-    # 北京时间每天早上8点运行 (UTC 0:00)
-    - cron: '0 0 * * *'
+    # 北京时间每天晚上22点运行 (UTC 14:00)，SCNet 免费窗口 21:00-09:00
+    - cron: '0 14 * * *'
   workflow_dispatch:
     inputs:
       force_run:
@@ -42,14 +42,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run daily-news.js script for AI content generation
+      - name: Run daily-news-scnet.js script for AI content generation
         run: |
           echo "Starting AI content generation..."
-          node daily-news.js
+          node scripts/daily-news-scnet.js
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          PROXY_API_KEY: ${{ secrets.PROXY_API_KEY }}
-          WORKER_URL: ${{ secrets.WORKER_URL }}
+          SCNET_API_KEY: ${{ secrets.SCNET_API_KEY }}
 
       - name: Check for changes and commit
         run: |

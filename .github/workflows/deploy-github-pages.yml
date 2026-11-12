@@ -29,6 +29,7 @@ jobs:
       contents: write
       pages: write
       id-token: write
+      actions: read
 
     environment:
       name: github-pages
@@ -40,6 +41,10 @@ jobs:
         with:
           name: hexo-static-files
           path: public/
+          # workflow_run 触发时，产物在触发本次运行的构建运行里，
+          # 必须用 run-id 指过去，否则默认只在当前运行里找，必然找不到。
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup GitHub Pages
         id: pages

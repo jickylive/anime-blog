@@ -10,7 +10,7 @@
     "deploy": "hexo deploy",
     "server": "hexo server",
     "renew": "node ./scripts/daily-news-proxy.js && hexo clean && hexo generate",
-    "news": "node ./scripts/daily-news.js",
+    "news": "node ./scripts/daily-news-scnet.js",
     "news:proxy": "node ./scripts/daily-news-proxy.js",
     "news:copilot": "node ./scripts/copilot-news.js",
     "check": "./bin/health-check.sh",
